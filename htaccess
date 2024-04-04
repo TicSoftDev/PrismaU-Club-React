@@ -1,0 +1,11 @@
+RewriteEngine On
+# Redirige HTTP a HTTPS automáticamente
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Sirve el archivo index.html como la respuesta a todas las rutas no encontradas
+RewriteBase /
+RewriteRule ^index\.html$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]

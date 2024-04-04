@@ -1,0 +1,13 @@
+.active {
+    background-color: #28a745b3;
+    color: #fff;
+}
+
+.active>i {
+    color: #fff;
+}
+
+.active .rounded-full {
+    color: #28a745b3;
+    background-color: #fff;
+}
