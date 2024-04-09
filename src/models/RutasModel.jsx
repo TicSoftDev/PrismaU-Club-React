@@ -19,4 +19,6 @@ export const PrivateRoutes = {
     PERFIL: "/perfil",
     INVITADOS : "/invitados",
     INVITACIONES : "/invitaciones",
+    ACCESOS : "/accesos",
+    ESTADOS : "/estados",
 };

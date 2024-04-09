@@ -16,6 +16,8 @@ import PerfilPage from '../pages/perfil/PerfilPage';
 import HobbiesPage from '../pages/admin/hobbies/HobbiesPage';
 import InvitadosPage from '../pages/socio/invitados/InvitadosPage';
 import InvitacionesPage from '../pages/admin/invitaciones/InvitacionesPage';
+import AccesosPage from '../pages/admin/accesos/AccesosPage';
+import LogEstadosPage from '../pages/admin/estados/LogEstadosPage';
 
 
 const Rutas = () => {
@@ -37,6 +39,8 @@ const Rutas = () => {
                     <Route element={<RolesPage />} path={PrivateRoutes.ROLES} />
                     <Route element={<InvitadosPage />} path={PrivateRoutes.INVITADOS} />
                     <Route element={<InvitacionesPage />} path={PrivateRoutes.INVITACIONES} />
+                    <Route element={<AccesosPage />} path={PrivateRoutes.ACCESOS} />
+                    <Route element={<LogEstadosPage />} path={PrivateRoutes.ESTADOS} />
                 </Route>
             </Routes>
         </BrowserRouter>
