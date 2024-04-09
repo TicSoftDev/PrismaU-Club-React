@@ -14,8 +14,11 @@ function UlAside() {
         { icono: "map-marked-alt", texto: "Espacios", color: "yellow", opacidad: '400', link: PrivateRoutes.ESPACIOS },
         { icono: "user-cog", texto: "Roles", color: "green", opacidad: '500', link: PrivateRoutes.ROLES },
         { icono: "magic", texto: "Hobbies", color: "purple", opacidad: '600', link: PrivateRoutes.HOBBIES },
+        { icono: "user-clock", texto: "Invitaciones", color: "pink", opacidad: '600', link: PrivateRoutes.INVITACIONES },
     ];
-    const socio = [];
+    const socio = [
+        { icono: "user-clock", texto: "Invitados", color: "purple", opacidad: '600', link: PrivateRoutes.INVITADOS },
+    ];
     const usuario = useSelector((state) => state.credenciales);
     const items = usuario.Rol === "1" ? admin : socio;
 

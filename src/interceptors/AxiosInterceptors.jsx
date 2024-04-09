@@ -6,7 +6,7 @@ import { TokenGuard } from "../utilities/guards/TokenGuard";
 export const AxiosInterceptor = () => {
 
     const updateHeader = (request) => {
-        const token = usarStorage("token");
+        const token = usarStorage("@token");
         if (token && isTokenExpired(token)) {
             alert("Token expirado. Por favor, inicie sesión de nuevo.");
             TokenGuard();

@@ -96,7 +96,7 @@ function FormFamiliar({ familiar, hanleChange }) {
                         <option>Casado (a)</option>
                         <option>Union Libre</option>
                         <option>Viudo (a)</option>
-                        <option>Divorsiado (a)</option>
+                        <option>Divorciado (a)</option>
                     </Select>
                 </div>
             </div>

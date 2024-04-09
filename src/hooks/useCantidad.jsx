@@ -5,6 +5,7 @@ import { getCantidadAdherentes } from '../services/AdherentesService';
 import { getCantidadEmpleados } from '../services/EmpleadosService';
 import { getCantidadFamiliares } from '../services/FamiliaresService';
 import { getCantidadEspacios } from '../services/EspaciosService';
+import { getCantidadInvitados } from '../services/InvitadosService';
 
 function useCantidad() {
 
@@ -13,6 +14,7 @@ function useCantidad() {
     const [contEmpleados, setContEmpleados] = useState(0);
     const [contFamiliares, setContFamiliares] = useState(0);
     const [contEspacios, setContEspacios] = useState(0);
+    const [contInvitados, setContInvitados] = useState(0);
 
     const cantidadAsociados = async () => {
         try {
@@ -22,7 +24,6 @@ function useCantidad() {
             alertWarning("Count", error.message);
         }
     };
-
     const cantidadEmpleados = async () => {
         try {
             const data = await getCantidadEmpleados();
@@ -47,6 +48,14 @@ function useCantidad() {
             alertWarning("Count", error.message);
         }
     };
+    const cantidadInvitados = async () => {
+        try {
+            const data = await getCantidadInvitados();
+            setContInvitados(data);
+        } catch (error) {
+            alertWarning("Count", error.message);
+        }
+    };
     const cantidadEspacios = async () => {
         try {
             const data = await getCantidadEspacios();
@@ -62,10 +71,11 @@ function useCantidad() {
         cantidadEmpleados();
         cantidadFamiliares();
         cantidadEspacios();
+        cantidadInvitados();
     }, []);
 
     return {
-        contAdherentes, contAsociados, contEmpleados, contFamiliares, contEspacios
+        contAdherentes, contAsociados, contEmpleados, contFamiliares, contEspacios, contInvitados
     };
 }
 

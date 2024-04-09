@@ -33,13 +33,14 @@ function Navbar({ toggleNav, toggleAside, open }) {
             cancelButtonText: 'No'
         }).then((result) => {
             if (result.isConfirmed) {
-                removerStorage("token");
+                removerStorage("@token");
                 dispatch(resetUser());
                 dispatch(resetAcceso());
                 navigate(PublicRoutes.LOGIN, { replace: true });
             }
         })
     }
+    
     return (
         <Nav>
             <Contenedor>

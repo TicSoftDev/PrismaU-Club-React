@@ -46,7 +46,7 @@ function useLogin() {
                 alertWarning("Credenciales Invalidas");
             } else {
                 dispatch(createUser(resultado.user));
-                crearStorage("token", resultado.token);
+                crearStorage("@token", resultado.token);
                 dispatch(createAcceso(resultado.credenciales));
                 navigate(PrivateRoutes.DASHBOARD, { replace: true });
             }

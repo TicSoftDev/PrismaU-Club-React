@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { crearStorage, removerStorage, usarStorage } from "../utilities/localstorage/localstorage";
 
-const key = "usuario";
+const key = "@usuario";
 const localStorage = usarStorage(key);
 
 const userEmpty = {}

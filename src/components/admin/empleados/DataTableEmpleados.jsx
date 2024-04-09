@@ -1,6 +1,6 @@
 import React from 'react'
 import DataTable from 'react-data-table-component'
-import { FaEdit, FaFilePdf, FaRegImages, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaRegImages, FaTrash } from 'react-icons/fa';
 import { RouteBack } from '../../../models/RutasModel';
 import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 
