@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { PrivateRoutes } from '../models/RutasModel';
+import { createAcceso } from '../redux/credencialSlice';
+import { createUser } from '../redux/userSlice';
 import { iniciarSesion } from '../services/LoginService';
 import { alertError, alertWarning } from '../utilities/alerts/Alertas';
 import { crearStorage } from '../utilities/localstorage/localstorage';
-import { createUser } from '../redux/userSlice';
-import { PrivateRoutes } from '../models/RutasModel';
-import { createAcceso } from '../redux/credencialSlice';
 
 function useLogin() {
 
@@ -55,13 +55,7 @@ function useLogin() {
             alertError(error.message);
         }
     };
-
-    useEffect(() => {
-        if (localStorage.getItem("token")) {
-            navigate(PrivateRoutes.DASHBOARD, { replace: true });
-        }
-    }, []);
-
+    
     return {
         loading, usuario, visible, toggleVisible, handleSubmit, handleChange
     };

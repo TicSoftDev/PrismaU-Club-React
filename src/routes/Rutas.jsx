@@ -18,13 +18,16 @@ import InvitadosPage from '../pages/socio/invitados/InvitadosPage';
 import InvitacionesPage from '../pages/admin/invitaciones/InvitacionesPage';
 import AccesosPage from '../pages/admin/accesos/AccesosPage';
 import LogEstadosPage from '../pages/admin/estados/LogEstadosPage';
+import { VerifyGuard } from '../utilities/guards/VerifyGuard';
 
 
 const Rutas = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route element={<LoginPage />} path={PublicRoutes.LOGIN} />
+                <Route element={<VerifyGuard />}>
+                    <Route element={<LoginPage />} path={PublicRoutes.LOGIN} />
+                </Route>
                 <Route element={<AuthGuard />}>
                     <Route element={<DashboardPage />} path={PrivateRoutes.DASHBOARD} />
                     <Route element={<PerfilPage />} path={PrivateRoutes.PERFIL} />
