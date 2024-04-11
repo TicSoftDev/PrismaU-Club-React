@@ -1,29 +1,24 @@
-import React, { useCallback, useState } from 'react';
-import Navbar from './nav/Navbar';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Outlet } from 'react-router-dom';
+import useLogin from '../../hooks/useLogin';
 import Sidebar from './aside/Sidebar';
 import ContainerContenido from './content/ContainerContenido';
+import Navbar from './nav/Navbar';
 
-function Plantilla(props) {
+function Plantilla() {
 
-    const [openAside, setOpenAside] = useState(false);
-    const [openNav, setOpenNav] = useState(false);
-
-    const toggleAside = useCallback(() => {
-        setOpenAside(!openAside);
-        setOpenNav(false);
-    }, [openAside]);
-
-    const toggleNav = useCallback(() => {
-        setOpenNav(!openNav);
-        setOpenAside(false);
-    }, [openNav]);
+    const usuario = useSelector((state) => state.user);
+    const credenciales = useSelector((state) => state.credenciales);
+    const { openAside, toggleAside, openNav, toggleNav, logout, } = useLogin();
 
     return (
         <>
-            <Navbar toggleNav={toggleNav} toggleAside={toggleAside} open={openNav} />
-            <Sidebar open={openAside} />            
+            <Navbar toggleNav={toggleNav} toggleAside={toggleAside} open={openNav} credenciales={credenciales}
+                usuario={usuario} logout={logout} />
+            <Sidebar open={openAside} />
             <ContainerContenido>
-                {props.children}
+                <Outlet />
             </ContainerContenido>
         </>
     );

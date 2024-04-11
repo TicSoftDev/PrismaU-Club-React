@@ -1,10 +1,9 @@
 import React from 'react';
-import Plantilla from '../../components/layouts/Plantilla';
-import TituloPage from '../../utilities/helpers/TituloPage';
-import ContenedorDashboard from '../../components/dashboard/ContenedorDashboard';
-import Cards from '../../components/dashboard/Cards';
-import useCantidad from '../../hooks/useCantidad';
 import { useSelector } from 'react-redux';
+import Cards from '../../components/dashboard/Cards';
+import ContenedorDashboard from '../../components/dashboard/ContenedorDashboard';
+import useCantidad from '../../hooks/useCantidad';
+import TituloPage from '../../utilities/helpers/TituloPage';
 import './../../assets/styles/cards.css';
 
 
@@ -33,7 +32,7 @@ function DashboardPage() {
     const cards = credenciales.Rol === '1' ? adminCards : asociadoCards;
 
     return (
-        <Plantilla >
+        <>
             <TituloPage titulo={titulo} />
             <ContenedorDashboard>
                 {
@@ -42,7 +41,7 @@ function DashboardPage() {
                     ))
                 }
             </ContenedorDashboard>
-        </Plantilla>
+        </>
     );
 }
 

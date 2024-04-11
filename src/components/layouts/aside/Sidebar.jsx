@@ -1,7 +1,5 @@
 import React from 'react';
 import UlAside from './UlAside';
-import { PrivateRoutes } from '../../../models/RutasModel';
-import useCantidad from '../../../hooks/useCantidad';
 
 const Sidebar = React.memo(function Sidebar({ open }) {
 

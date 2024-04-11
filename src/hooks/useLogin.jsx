@@ -1,23 +1,36 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { PrivateRoutes } from '../models/RutasModel';
-import { createAcceso } from '../redux/credencialSlice';
-import { createUser } from '../redux/userSlice';
+import Swal from 'sweetalert2';
+import { PrivateRoutes, PublicRoutes } from '../models/RutasModel';
+import { createAcceso, resetAcceso } from '../redux/credencialSlice';
+import { createUser, resetUser } from '../redux/userSlice';
 import { iniciarSesion } from '../services/LoginService';
 import { alertError, alertWarning } from '../utilities/alerts/Alertas';
-import { crearStorage } from '../utilities/localstorage/localstorage';
+import { crearStorage, removerStorage } from '../utilities/localstorage/localstorage';
 
 function useLogin() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [openAside, setOpenAside] = useState(false);
+    const [openNav, setOpenNav] = useState(false);
     const [visible, setVisible] = useState(false);
     const [loading, setLoading] = useState(false);
     const [usuario, setUsuario] = useState({
         Documento: "",
         password: ""
     });
+
+    const toggleAside = useCallback(() => {
+        setOpenAside((prevOpenAside) => !prevOpenAside);
+        setOpenNav(false);
+    }, []);
+
+    const toggleNav = useCallback(() => {
+        setOpenNav((prevOpenNav) => !prevOpenNav);
+        setOpenAside(false);
+    }, []);
 
     const handleChange = ({ target }) => {
         setUsuario({
@@ -55,9 +68,32 @@ function useLogin() {
             alertError(error.message);
         }
     };
-    
+
+    const logout = useCallback((e) => {
+        e.preventDefault();
+        toggleNav();
+        Swal.fire({
+            title: '¿Desea salir del sistema?',
+            text: "Si, lo hace tendra que iniciar sesion nuevamente",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, salir!',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                removerStorage("@token");
+                dispatch(resetUser());
+                dispatch(resetAcceso());
+                navigate(PublicRoutes.LOGIN, { replace: true });
+            }
+        })
+    }, [toggleNav]);
+
     return {
-        loading, usuario, visible, toggleVisible, handleSubmit, handleChange
+        openNav, openAside, loading, usuario, visible, toggleVisible, handleSubmit, handleChange, logout,
+        toggleNav, toggleAside
     };
 }
 

@@ -1,14 +1,13 @@
 import React from 'react';
-import Plantilla from '../../../components/layouts/Plantilla';
-import TituloPage from '../../../utilities/helpers/TituloPage';
-import Container from '../../../utilities/helpers/Container';
-import VentanaModal from '../../../utilities/modals/VentanaModal';
-import useFamiliares from '../../../hooks/useFamiliares';
 import { useParams } from 'react-router-dom';
-import MenuEmpleados from '../../../components/admin/empleados/MenuEmpleados';
-import TablaFamiliares from '../../../components/admin/familiares/TablaFamiliares';
-import FormFamiliar from '../../../components/admin/familiares/FormFamiliar';
 import FormImagenAdherente from '../../../components/admin/adherentes/FormImagenAdherente';
+import MenuEmpleados from '../../../components/admin/empleados/MenuEmpleados';
+import FormFamiliar from '../../../components/admin/familiares/FormFamiliar';
+import TablaFamiliares from '../../../components/admin/familiares/TablaFamiliares';
+import useFamiliares from '../../../hooks/useFamiliares';
+import Container from '../../../utilities/helpers/Container';
+import TituloPage from '../../../utilities/helpers/TituloPage';
+import VentanaModal from '../../../utilities/modals/VentanaModal';
 
 function FamiliaresPage() {
 
@@ -20,7 +19,7 @@ function FamiliaresPage() {
     const handler = familiar.id ? handleUpdate : handleSubmit;
 
     return (
-        <Plantilla>
+        <>
             <TituloPage titulo={titulo} />
             <Container>
                 <MenuEmpleados toggleModal={toggleModal} />
@@ -28,13 +27,13 @@ function FamiliaresPage() {
                     <FormFamiliar familiar={familiar} hanleChange={handleChange} />
                 </VentanaModal>
                 <TablaFamiliares cargarEmpleado={cargarFamiliar} usuarios={listadoFamiliares} eliminar={eliminarFamiliar}
-                    loading={loading} cargar={cargarImagen } />
+                    loading={loading} cargar={cargarImagen} />
                 <VentanaModal size={'2xl'} titulo={tituloModalImage} openModal={openModalImage} cerrarModal={toggleModalImage}
                     hanleSubmit={handleUpdateImage}>
                     <FormImagenAdherente handleChangeImage={handleChangeImagen} />
                 </VentanaModal>
             </Container>
-        </Plantilla>
+        </>
     );
 }
 

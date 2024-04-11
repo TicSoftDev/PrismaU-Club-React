@@ -1,13 +1,12 @@
 import React from 'react';
-import Plantilla from '../../../components/layouts/Plantilla';
-import TituloPage from '../../../utilities/helpers/TituloPage';
-import Container from '../../../utilities/helpers/Container';
-import VentanaModal from '../../../utilities/modals/VentanaModal';
-import FormEmpleados from '../../../components/admin/empleados/FormEmpleados';
-import useEmpleado from '../../../hooks/useEmpleado';
-import MenuEmpleados from '../../../components/admin/empleados/MenuEmpleados';
 import FormImagenAdherente from '../../../components/admin/adherentes/FormImagenAdherente';
 import DataTableEmpleados from '../../../components/admin/empleados/DataTableEmpleados';
+import FormEmpleados from '../../../components/admin/empleados/FormEmpleados';
+import MenuEmpleados from '../../../components/admin/empleados/MenuEmpleados';
+import useEmpleado from '../../../hooks/useEmpleado';
+import Container from '../../../utilities/helpers/Container';
+import TituloPage from '../../../utilities/helpers/TituloPage';
+import VentanaModal from '../../../utilities/modals/VentanaModal';
 
 function EmpleadosPage() {
 
@@ -18,11 +17,11 @@ function EmpleadosPage() {
     const handler = empleado.id ? handleUpdate : handleSubmit;
 
     return (
-        <Plantilla>
+        <>
             <TituloPage titulo={titulo} />
             <Container>
-                <MenuEmpleados toggleModal={toggleModal} busqueda={busqueda} handleBusqueda={handleBusqueda} 
-                entidad={true} titulo={titulo} data={lista} />
+                <MenuEmpleados toggleModal={toggleModal} busqueda={busqueda} handleBusqueda={handleBusqueda}
+                    entidad={true} titulo={titulo} data={lista} />
                 <VentanaModal size={'7xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal} hanleSubmit={handler}>
                     <FormEmpleados empleado={empleado} hanleChange={handleChange} />
                 </VentanaModal>
@@ -33,7 +32,7 @@ function EmpleadosPage() {
                     <FormImagenAdherente handleChangeImage={handleChangeImagen} />
                 </VentanaModal>
             </Container>
-        </Plantilla>
+        </>
     );
 }
 

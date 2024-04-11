@@ -1,13 +1,12 @@
 import React from 'react';
-import Plantilla from '../../../components/layouts/Plantilla';
-import TituloPage from '../../../utilities/helpers/TituloPage';
-import Container from '../../../utilities/helpers/Container';
-import CardEspacio from '../../../components/admin/espacios/CardEspacio';
-import useEspacios from '../../../hooks/useEspacios';
 import MenuEmpleados from '../../../components/admin/empleados/MenuEmpleados';
-import VentanaModal from '../../../utilities/modals/VentanaModal';
+import CardEspacio from '../../../components/admin/espacios/CardEspacio';
 import FormEspacio from '../../../components/admin/espacios/FormEspacio';
 import FormImagenEspacio from '../../../components/admin/espacios/FormImagenEspacio';
+import useEspacios from '../../../hooks/useEspacios';
+import Container from '../../../utilities/helpers/Container';
+import TituloPage from '../../../utilities/helpers/TituloPage';
+import VentanaModal from '../../../utilities/modals/VentanaModal';
 
 function EspaciosPage() {
 
@@ -18,7 +17,7 @@ function EspaciosPage() {
     const handler = espacio.id ? handleUpdate : handleSubmit;
 
     return (
-        <Plantilla>
+        <>
             <TituloPage titulo={titulo} />
             <Container>
                 <MenuEmpleados toggleModal={toggleModal} />
@@ -32,7 +31,7 @@ function EspaciosPage() {
                     <FormImagenEspacio handleChangeImage={handleChangeImagen} />
                 </VentanaModal>
             </Container>
-        </Plantilla>
+        </>
     );
 }
 

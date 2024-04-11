@@ -1,14 +1,13 @@
 import React from 'react';
-import Plantilla from '../../../components/layouts/Plantilla';
-import TituloPage from '../../../utilities/helpers/TituloPage';
-import Container from '../../../utilities/helpers/Container';
-import useAsociados from '../../../hooks/useAsociados';
-import VentanaModal from '../../../utilities/modals/VentanaModal';
-import FormAsociados from '../../../components/admin/asociados/FormAsociados';
-import MenuAsociadosInactivos from '../../../components/admin/asociados/MenuAsociadosInactivos';
 import FormImagenAdherente from '../../../components/admin/adherentes/FormImagenAdherente';
 import DataTableAsociado from '../../../components/admin/asociados/DataTableAsociado';
+import FormAsociados from '../../../components/admin/asociados/FormAsociados';
 import FormMotivo from '../../../components/admin/asociados/FormMotivo';
+import MenuAsociadosInactivos from '../../../components/admin/asociados/MenuAsociadosInactivos';
+import useAsociados from '../../../hooks/useAsociados';
+import Container from '../../../utilities/helpers/Container';
+import TituloPage from '../../../utilities/helpers/TituloPage';
+import VentanaModal from '../../../utilities/modals/VentanaModal';
 
 function AsociadosInactivosPage() {
 
@@ -19,7 +18,7 @@ function AsociadosInactivosPage() {
     } = useAsociados();
 
     return (
-        <Plantilla>
+        <>
             <TituloPage titulo={titulo2} />
             <Container>
                 <MenuAsociadosInactivos busqueda={busquedaInactivo} handleBusqueda={handleBusquedaInactivo}
@@ -38,7 +37,7 @@ function AsociadosInactivosPage() {
                     <FormMotivo handleChangeEstado={handleChangeEstado} />
                 </VentanaModal>
             </Container>
-        </Plantilla>
+        </>
     );
 }
 

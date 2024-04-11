@@ -1,14 +1,13 @@
 import React from 'react';
-import Plantilla from '../../../components/layouts/Plantilla';
-import TituloPage from '../../../utilities/helpers/TituloPage';
-import Container from '../../../utilities/helpers/Container';
-import VentanaModal from '../../../utilities/modals/VentanaModal';
-import FormAsociados from '../../../components/admin/asociados/FormAsociados';
-import useAdherente from '../../../hooks/useAdherente';
-import MenuAsociadosInactivos from '../../../components/admin/asociados/MenuAsociadosInactivos';
-import FormImagenAdherente from '../../../components/admin/adherentes/FormImagenAdherente';
 import DataTableAdherente from '../../../components/admin/adherentes/DataTableAdherente';
+import FormImagenAdherente from '../../../components/admin/adherentes/FormImagenAdherente';
+import FormAsociados from '../../../components/admin/asociados/FormAsociados';
 import FormMotivo from '../../../components/admin/asociados/FormMotivo';
+import MenuAsociadosInactivos from '../../../components/admin/asociados/MenuAsociadosInactivos';
+import useAdherente from '../../../hooks/useAdherente';
+import Container from '../../../utilities/helpers/Container';
+import TituloPage from '../../../utilities/helpers/TituloPage';
+import VentanaModal from '../../../utilities/modals/VentanaModal';
 
 function AdherentesInactivosPage() {
 
@@ -20,7 +19,7 @@ function AdherentesInactivosPage() {
     const handler = adherente.id ? handleUpdate : handleSubmit;
 
     return (
-        <Plantilla>
+        <>
             <TituloPage titulo={titulo2} />
             <Container>
                 <MenuAsociadosInactivos busqueda={busquedaInactivo} handleBusqueda={handleBusquedaInactivos}
@@ -39,7 +38,7 @@ function AdherentesInactivosPage() {
                     <FormMotivo handleChangeEstado={handleChangeEstado} />
                 </VentanaModal>
             </Container>
-        </Plantilla>
+        </>
     );
 }
 

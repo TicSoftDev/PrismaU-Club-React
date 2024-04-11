@@ -1,14 +1,13 @@
 import React from 'react';
-import Plantilla from '../../../components/layouts/Plantilla';
-import TituloPage from '../../../utilities/helpers/TituloPage';
-import Container from '../../../utilities/helpers/Container';
-import MenuAsociados from '../../../components/admin/asociados/MenuAsociados';
-import useAsociados from '../../../hooks/useAsociados';
-import VentanaModal from '../../../utilities/modals/VentanaModal';
-import FormAsociados from '../../../components/admin/asociados/FormAsociados';
 import FormImagenAdherente from '../../../components/admin/adherentes/FormImagenAdherente';
 import DataTableAsociado from '../../../components/admin/asociados/DataTableAsociado';
+import FormAsociados from '../../../components/admin/asociados/FormAsociados';
 import FormMotivo from '../../../components/admin/asociados/FormMotivo';
+import MenuAsociados from '../../../components/admin/asociados/MenuAsociados';
+import useAsociados from '../../../hooks/useAsociados';
+import Container from '../../../utilities/helpers/Container';
+import TituloPage from '../../../utilities/helpers/TituloPage';
+import VentanaModal from '../../../utilities/modals/VentanaModal';
 
 function AsociadosPage() {
 
@@ -20,7 +19,7 @@ function AsociadosPage() {
     const handler = asociado.id ? handleUpdate : handleSubmit;
 
     return (
-        <Plantilla>
+        <>
             <TituloPage titulo={titulo} />
             <Container>
                 <MenuAsociados toggleModal={toggleModal} busqueda={busqueda} handleBusqueda={handleBusqueda}
@@ -39,7 +38,7 @@ function AsociadosPage() {
                     <FormMotivo handleChangeEstado={handleChangeEstado} />
                 </VentanaModal>
             </Container>
-        </Plantilla>
+        </>
     );
 }
 

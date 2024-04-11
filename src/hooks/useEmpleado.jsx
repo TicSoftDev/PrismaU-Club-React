@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { alertError, alertSucces, alertWarning } from '../utilities/alerts/Alertas';
 import Swal from 'sweetalert2';
 import { createEmpleado, deleteEmpleado, getEmpleados, updateEmpleado, updateImageEmpleado } from '../services/EmpleadosService';
+import { alertError, alertSucces, alertWarning } from '../utilities/alerts/Alertas';
 
 function useEmpleado() {
 

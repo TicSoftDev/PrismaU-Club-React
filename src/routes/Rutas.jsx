@@ -19,6 +19,7 @@ import InvitacionesPage from '../pages/admin/invitaciones/InvitacionesPage';
 import AccesosPage from '../pages/admin/accesos/AccesosPage';
 import LogEstadosPage from '../pages/admin/estados/LogEstadosPage';
 import { VerifyGuard } from '../utilities/guards/VerifyGuard';
+import Plantilla from '../components/layouts/Plantilla';
 
 
 const Rutas = () => {
@@ -29,21 +30,23 @@ const Rutas = () => {
                     <Route element={<LoginPage />} path={PublicRoutes.LOGIN} />
                 </Route>
                 <Route element={<AuthGuard />}>
-                    <Route element={<DashboardPage />} path={PrivateRoutes.DASHBOARD} />
-                    <Route element={<PerfilPage />} path={PrivateRoutes.PERFIL} />
-                    <Route element={<AsociadosPage />} path={PrivateRoutes.ASOCIADOS} />
-                    <Route element={<AsociadosInactivosPage />} path={PrivateRoutes.ASOCIADOSINACTIVOS} />
-                    <Route element={<AdherentesPage />} path={PrivateRoutes.ADHERENTES} />
-                    <Route element={<AdherentesInactivosPage />} path={PrivateRoutes.ADHERENTESINACTIVOS} />
-                    <Route element={<EmpleadosPage />} path={PrivateRoutes.EMPLEADOS} />
-                    <Route element={<FamiliaresPage />} path={`${PrivateRoutes.FAMILIARES}/:id`} />
-                    <Route element={<EspaciosPage />} path={PrivateRoutes.ESPACIOS} />
-                    <Route element={<HobbiesPage />} path={PrivateRoutes.HOBBIES} />
-                    <Route element={<RolesPage />} path={PrivateRoutes.ROLES} />
-                    <Route element={<InvitadosPage />} path={PrivateRoutes.INVITADOS} />
-                    <Route element={<InvitacionesPage />} path={PrivateRoutes.INVITACIONES} />
-                    <Route element={<AccesosPage />} path={PrivateRoutes.ACCESOS} />
-                    <Route element={<LogEstadosPage />} path={PrivateRoutes.ESTADOS} />
+                    <Route element={<Plantilla />}>
+                        <Route element={<DashboardPage />} path={PrivateRoutes.DASHBOARD} />
+                        <Route element={<AccesosPage />} path={PrivateRoutes.ACCESOS} />
+                        <Route element={<PerfilPage />} path={PrivateRoutes.PERFIL} />
+                        <Route element={<AsociadosPage />} path={PrivateRoutes.ASOCIADOS} />
+                        <Route element={<AsociadosInactivosPage />} path={PrivateRoutes.ASOCIADOSINACTIVOS} />
+                        <Route element={<AdherentesPage />} path={PrivateRoutes.ADHERENTES} />
+                        <Route element={<AdherentesInactivosPage />} path={PrivateRoutes.ADHERENTESINACTIVOS} />
+                        <Route element={<EmpleadosPage />} path={PrivateRoutes.EMPLEADOS} />
+                        <Route element={<FamiliaresPage />} path={`${PrivateRoutes.FAMILIARES}/:id`} />
+                        <Route element={<EspaciosPage />} path={PrivateRoutes.ESPACIOS} />
+                        <Route element={<HobbiesPage />} path={PrivateRoutes.HOBBIES} />
+                        <Route element={<RolesPage />} path={PrivateRoutes.ROLES} />
+                        <Route element={<InvitadosPage />} path={PrivateRoutes.INVITADOS} />
+                        <Route element={<InvitacionesPage />} path={PrivateRoutes.INVITACIONES} />
+                        <Route element={<LogEstadosPage />} path={PrivateRoutes.ESTADOS} />
+                    </Route>
                 </Route>
             </Routes>
         </BrowserRouter>
