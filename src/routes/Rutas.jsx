@@ -1,25 +1,26 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { PrivateRoutes, PublicRoutes } from '../models/RutasModel';
-import AuthGuard from '../utilities/guards/AuthGuard';
-import LoginPage from '../pages/login/LoginPage';
-import DashboardPage from '../pages/dashboard/DashboardPage';
-import AsociadosPage from '../pages/admin/asociados/AsociadosPage';
-import AdherentesPage from '../pages/admin/adherentes/AdherentesPage';
-import EmpleadosPage from '../pages/admin/empleados/EmpleadosPage';
-import FamiliaresPage from '../pages/admin/familiares/FamiliaresPage';
-import RolesPage from '../pages/admin/roles/RolesPage';
-import EspaciosPage from '../pages/admin/espacios/EspaciosPage';
-import AsociadosInactivosPage from '../pages/admin/asociados/AsociadosInactivosPage';
-import AdherentesInactivosPage from '../pages/admin/adherentes/AdherentesInactivosPage';
-import PerfilPage from '../pages/perfil/PerfilPage';
-import HobbiesPage from '../pages/admin/hobbies/HobbiesPage';
-import InvitadosPage from '../pages/socio/invitados/InvitadosPage';
-import InvitacionesPage from '../pages/admin/invitaciones/InvitacionesPage';
-import AccesosPage from '../pages/admin/accesos/AccesosPage';
-import LogEstadosPage from '../pages/admin/estados/LogEstadosPage';
-import { VerifyGuard } from '../utilities/guards/VerifyGuard';
 import Plantilla from '../components/layouts/Plantilla';
+import { PrivateRoutes, PublicRoutes } from '../models/RutasModel';
+import AccesosPage from '../pages/admin/accesos/AccesosPage';
+import AdherentesInactivosPage from '../pages/admin/adherentes/AdherentesInactivosPage';
+import AdherentesPage from '../pages/admin/adherentes/AdherentesPage';
+import AsociadosInactivosPage from '../pages/admin/asociados/AsociadosInactivosPage';
+import AsociadosPage from '../pages/admin/asociados/AsociadosPage';
+import CargosPage from '../pages/admin/cargos/CargosPage';
+import EmpleadosPage from '../pages/admin/empleados/EmpleadosPage';
+import EspaciosPage from '../pages/admin/espacios/EspaciosPage';
+import LogEstadosPage from '../pages/admin/estados/LogEstadosPage';
+import FamiliaresPage from '../pages/admin/familiares/FamiliaresPage';
+import HobbiesPage from '../pages/admin/hobbies/HobbiesPage';
+import InvitacionesPage from '../pages/admin/invitaciones/InvitacionesPage';
+import RolesPage from '../pages/admin/roles/RolesPage';
+import DashboardPage from '../pages/dashboard/DashboardPage';
+import LoginPage from '../pages/login/LoginPage';
+import PerfilPage from '../pages/perfil/PerfilPage';
+import InvitadosPage from '../pages/socio/invitados/InvitadosPage';
+import AuthGuard from '../utilities/guards/AuthGuard';
+import { VerifyGuard } from '../utilities/guards/VerifyGuard';
 
 
 const Rutas = () => {
@@ -44,6 +45,7 @@ const Rutas = () => {
                         <Route element={<HobbiesPage />} path={PrivateRoutes.HOBBIES} />
                         <Route element={<RolesPage />} path={PrivateRoutes.ROLES} />
                         <Route element={<InvitadosPage />} path={PrivateRoutes.INVITADOS} />
+                        <Route element={<CargosPage />} path={PrivateRoutes.CARGOS} />
                         <Route element={<InvitacionesPage />} path={PrivateRoutes.INVITACIONES} />
                         <Route element={<LogEstadosPage />} path={PrivateRoutes.ESTADOS} />
                     </Route>

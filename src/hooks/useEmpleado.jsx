@@ -25,7 +25,7 @@ function useEmpleado() {
         DireccionResidencia: "",
         CiudadResidencia: "",
         EstadoCivil: "",
-        Cargo: "",
+        Cargo_id: 0,
         Estado: "",
         Rol: "4"
     });
@@ -47,7 +47,7 @@ function useEmpleado() {
             DireccionResidencia: "",
             CiudadResidencia: "",
             EstadoCivil: "",
-            Cargo: "",
+            Cargo_id: 0,
             Estado: "",
             Rol: "4"
         });
@@ -69,7 +69,6 @@ function useEmpleado() {
                 return;
             }
             const data = await createEmpleado(empleado);
-            console.log(data);
             if (data.message === 'hecho') {
                 alertSucces("Creado correctamente");
                 await getListadoEmpleados();

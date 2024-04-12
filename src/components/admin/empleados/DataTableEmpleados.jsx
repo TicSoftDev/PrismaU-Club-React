@@ -78,7 +78,7 @@ export default function DataTableEmpleados({ usuarios, cargarEmpleado, eliminar,
                 pagination
                 progressPending={loading}
                 progressComponent={<TableSkeleton />}
-                noDataComponent="No hay ningun empleado registrado"
+                noDataComponent={<div className='flex justify-center font-bold my-20 text-gray-500'>No hay ningun empleado registrado</div>}
             />
         </div>
     )

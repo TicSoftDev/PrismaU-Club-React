@@ -43,7 +43,7 @@ function DataTableInvitaciones({ data, loading }) {
                 pagination
                 progressPending={loading}
                 progressComponent={<TableSkeleton />}
-                noDataComponent="No hay ninguna invitación"
+                noDataComponent={<div className='flex justify-center font-bold my-20 text-gray-500'>No hay ninguna invitación</div>}
             />
         </>
     );

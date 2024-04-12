@@ -1,5 +1,5 @@
-// export const RouteBack = "http://127.0.0.1:8000";
-export const RouteBack = "https://www.apiclubsincelejo.prismau.co";
+export const RouteBack = "http://127.0.0.1:8000";
+// export const RouteBack = "https://www.apiclubsincelejo.prismau.co";
 
 export const PublicRoutes = {
     LOGIN: "/",
@@ -19,6 +19,7 @@ export const PrivateRoutes = {
     PERFIL: "/perfil",
     INVITADOS : "/invitados",
     INVITACIONES : "/invitaciones",
+    CARGOS : "/cargos",
     ACCESOS : "/accesos",
     ESTADOS : "/estados",
 };

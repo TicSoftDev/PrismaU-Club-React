@@ -2,8 +2,8 @@ import React from 'react';
 
 function TableSkeleton() {
     return (
-        <div role="status" className="max-w-full animate-pulse flex justify-center items-center border-2 rounded-lg flex-col">
-            <div className='h-10 bg-gray-300 w-full'></div>
+        <div role="status" className="w-full animate-pulse flex justify-center items-center border-2 rounded-lg flex-col">
+            <div className='h-10 bg-gray-200 w-full'></div>
             <div className='flex flex-row my-3'>
                 <div className='flex my-2'>
                     <div className='h-9 w-9 bg-gray-200 rounded-full'></div>

@@ -1,9 +1,11 @@
 import { Label, Select, TextInput } from 'flowbite-react';
 import React from 'react';
-import { FaCalendarAlt, FaCity, FaEnvelope, FaEye, FaIdCard, FaKeyboard, FaMapMarkerAlt, FaMercury, FaPhoneAlt, FaSuitcase, FaUserTag } from 'react-icons/fa';
+import { FaBriefcase, FaCalendarAlt, FaCity, FaEnvelope, FaEye, FaIdCard, FaKeyboard, FaMapMarkerAlt, FaMercury, FaPhoneAlt, FaUserTag } from 'react-icons/fa';
 import { FaMapLocation } from 'react-icons/fa6';
+import useCargos from '../../../hooks/useCargos';
 
-function FormEmpleados({ empleado, hanleChange }) {
+function FormEmpleados({ empleado, hanleChange, cargos }) {
+
     return (
         <>
             <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4">
@@ -118,8 +120,15 @@ function FormEmpleados({ empleado, hanleChange }) {
                     <div className="mb-2 block">
                         <Label htmlFor="cargo" value="Cargo" />
                     </div>
-                    <TextInput id="cargo" type="text" icon={FaSuitcase} onChange={hanleChange}
-                        value={empleado.Cargo} name='Cargo' placeholder="Escriba el cargo que ocupa" />
+                    <Select id="cargo" icon={FaBriefcase} onChange={hanleChange} name='Cargo_id'
+                        defaultValue={empleado.Cargo_id ? empleado.Cargo_id : "Escoja una opcion..."} required >
+                        <option disabled>Escoja una opcion...</option>
+                        {cargos.map((cargo) => (
+                            <option key={cargo.id} value={cargo.id}>
+                                {cargo.Descripcion}
+                            </option>
+                        ))}
+                    </Select>
                 </div>
                 <div className="w-full">
                     <div className="mb-2 block">

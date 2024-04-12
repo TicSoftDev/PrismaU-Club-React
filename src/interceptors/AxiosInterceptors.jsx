@@ -1,25 +1,21 @@
-import axios from "axios"
-import { usarStorage } from "../utilities/localstorage/localstorage";
+import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { usarStorage } from "../utilities/localstorage/localstorage";
 import { TokenGuard } from "../utilities/guards/TokenGuard";
 
 export const AxiosInterceptor = () => {
-
-    const updateHeader = (request) => {
+    axios.interceptors.request.use(request => {
         const token = usarStorage("@token");
-        if (token && isTokenExpired(token)) {
-            alert("Token expirado. Por favor, inicie sesión de nuevo.");
-            TokenGuard();
-            return Promise.reject(new axios.Cancel("Token de autenticación expirado"));
-        }
         if (token) {
+            if (isTokenExpired(token)) {
+                alert("Token expirado. Por favor, inicie sesión de nuevo.");
+                TokenGuard();
+                return Promise.reject(new axios.Cancel("Token de autenticación expirado"));
+            }
             request.headers['Authorization'] = `Bearer ${token}`;
         }
-
         return request;
-    }
-
-    axios.interceptors.request.use(updateHeader, error => Promise.reject(error));
+    }, error => Promise.reject(error));
 
     const isTokenExpired = (token) => {
         try {
