@@ -7,7 +7,6 @@ import AdherentesInactivosPage from '../pages/admin/adherentes/AdherentesInactiv
 import AdherentesPage from '../pages/admin/adherentes/AdherentesPage';
 import AsociadosInactivosPage from '../pages/admin/asociados/AsociadosInactivosPage';
 import AsociadosPage from '../pages/admin/asociados/AsociadosPage';
-import CargosPage from '../pages/admin/cargos/CargosPage';
 import EmpleadosPage from '../pages/admin/empleados/EmpleadosPage';
 import EspaciosPage from '../pages/admin/espacios/EspaciosPage';
 import LogEstadosPage from '../pages/admin/estados/LogEstadosPage';
@@ -45,7 +44,6 @@ const Rutas = () => {
                         <Route element={<HobbiesPage />} path={PrivateRoutes.HOBBIES} />
                         <Route element={<RolesPage />} path={PrivateRoutes.ROLES} />
                         <Route element={<InvitadosPage />} path={PrivateRoutes.INVITADOS} />
-                        <Route element={<CargosPage />} path={PrivateRoutes.CARGOS} />
                         <Route element={<InvitacionesPage />} path={PrivateRoutes.INVITACIONES} />
                         <Route element={<LogEstadosPage />} path={PrivateRoutes.ESTADOS} />
                     </Route>
