@@ -25,9 +25,9 @@ function useEmpleado() {
         DireccionResidencia: "",
         CiudadResidencia: "",
         EstadoCivil: "",
-        Cargo_id: 0,
+        Cargo: "",
         Estado: "",
-        Rol: "4"
+        Rol: ""
     });
     const [imagen, setImagen] = useState(null);
     const tituloModal = empleado.id ? "Actualizar Empleado" : "Crear Empleado";
@@ -47,9 +47,9 @@ function useEmpleado() {
             DireccionResidencia: "",
             CiudadResidencia: "",
             EstadoCivil: "",
-            Cargo_id: 0,
+            Cargo: "",
             Estado: "",
-            Rol: "4"
+            Rol: ""
         });
     };
 
@@ -84,10 +84,17 @@ function useEmpleado() {
     };
 
     const handleChange = ({ target }) => {
-        setEmpleado({
+        const { name, value } = target;
+        const updatedEmpleado = {
             ...empleado,
-            [target.name]: target.value
-        });
+            [name]: value
+        };
+        if (name === 'Rol' && value === '6') {
+            updatedEmpleado.Cargo = 'Portero'; 
+        } else if (name === 'Rol' && value !== '6') {
+            updatedEmpleado.Cargo = ''; 
+        }
+        setEmpleado(updatedEmpleado);
     };
 
     const getListadoEmpleados = async () => {

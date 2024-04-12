@@ -2,10 +2,8 @@ import { Label, Select, TextInput } from 'flowbite-react';
 import React from 'react';
 import { FaBriefcase, FaCalendarAlt, FaCity, FaEnvelope, FaEye, FaIdCard, FaKeyboard, FaMapMarkerAlt, FaMercury, FaPhoneAlt, FaUserTag } from 'react-icons/fa';
 import { FaMapLocation } from 'react-icons/fa6';
-import useCargos from '../../../hooks/useCargos';
 
-function FormEmpleados({ empleado, hanleChange, cargos }) {
-
+function FormEmpleados({ empleado, hanleChange }) {
     return (
         <>
             <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4">
@@ -118,18 +116,25 @@ function FormEmpleados({ empleado, hanleChange, cargos }) {
                 </div>
                 <div className="w-full">
                     <div className="mb-2 block">
-                        <Label htmlFor="cargo" value="Cargo" />
+                        <Label htmlFor="Portero" value="¿Es un portero?" />
                     </div>
-                    <Select id="cargo" icon={FaBriefcase} onChange={hanleChange} name='Cargo_id'
-                        defaultValue={empleado.Cargo_id ? empleado.Cargo_id : "Escoja una opcion..."} required >
+                    <Select id="Portero" onChange={hanleChange} name='Rol'
+                        defaultValue={empleado.Rol ? empleado.Estado : "Escoja una opcion..."} required >
                         <option disabled>Escoja una opcion...</option>
-                        {cargos.map((cargo) => (
-                            <option key={cargo.id} value={cargo.id}>
-                                {cargo.Descripcion}
-                            </option>
-                        ))}
+                        <option value={6}>Si</option>
+                        <option value={4}>No </option>
                     </Select>
                 </div>
+                {empleado.Rol === '4' &&
+                    <div className="w-full">
+                        <div className="mb-2 block">
+                            <Label htmlFor="cargo" value="Cargo" />
+                        </div>
+                        <TextInput id="cargo" type="text" icon={FaBriefcase} onChange={hanleChange}
+                            value={empleado.Cargo} name='Cargo' placeholder="Escriba el cargo que ocupa" />
+                        {empleado.Cargo == 'Portero'}
+                    </div>
+                }
                 <div className="w-full">
                     <div className="mb-2 block">
                         <Label htmlFor="Estado" value="Estado" />

@@ -7,11 +7,9 @@ import useEmpleado from '../../../hooks/useEmpleado';
 import Container from '../../../utilities/helpers/Container';
 import TituloPage from '../../../utilities/helpers/TituloPage';
 import VentanaModal from '../../../utilities/modals/VentanaModal';
-import useCargos from '../../../hooks/useCargos';
 
 function EmpleadosPage() {
 
-    const { cargos } = useCargos();
     const { titulo, tituloModal, openModal, lista, busqueda, empleado, loading, openModalImage, tituloModalImage,
         toggleModal, handleChange, handleSubmit, handleBusqueda, cargarEmpleado, handleUpdate, eliminarEmpleado,
         handleChangeImagen, handleUpdateImage, toggleModalImage, cargarImagen
@@ -25,7 +23,7 @@ function EmpleadosPage() {
                 <MenuEmpleados toggleModal={toggleModal} busqueda={busqueda} handleBusqueda={handleBusqueda}
                     entidad={true} titulo={titulo} data={lista} />
                 <VentanaModal size={'7xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal} hanleSubmit={handler}>
-                    <FormEmpleados cargos={cargos} empleado={empleado} hanleChange={handleChange} />
+                    <FormEmpleados empleado={empleado} hanleChange={handleChange} />
                 </VentanaModal>
                 <DataTableEmpleados cargarEmpleado={cargarEmpleado} usuarios={lista} eliminar={eliminarEmpleado}
                     cargar={cargarImagen} loading={loading} />
