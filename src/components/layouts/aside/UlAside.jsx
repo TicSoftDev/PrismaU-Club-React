@@ -24,8 +24,8 @@ function UlAside() {
         { icono: "user-clock", texto: "Invitados", color: "purple", opacidad: '600', link: PrivateRoutes.INVITADOS },
     ];
     const usuario = useSelector((state) => state.credenciales);
-    const items = usuario.Rol === 0 ? superAdmin : usuario.Rol === 1 ? admin : socio;
-
+    const items = usuario.Rol == 0 ? superAdmin : usuario.Rol == 1 ? admin : socio;
+    console.log(typeof( usuario.Rol))
     return (
         <ul className="space-y-2 font-medium">
             <LinkInicio />

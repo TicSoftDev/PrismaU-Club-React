@@ -104,7 +104,7 @@ function useAdherente() {
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            if (adherente.Nombre === "" || adherente.Apellidos === "" || adherente.Documento === "" || adherente.TipoDocumento === "" || adherente.Correo === "" || adherente.Telefono === "" || adherente.FechaNacimiento === "" || adherente.LugarNacimiento === "" || adherente.Sexo === "" || adherente.DireccionResidencia === "" || adherente.CiudadResidencia === "" || adherente.TiempoResidencia === "" || adherente.EstadoCivil === "" || adherente.Profesion === "" || adherente.Trabajo === "" || adherente.Cargo === "" || adherente.TiempoServicio === "" || adherente.TelOficina === "" || adherente.DireccionOficina === "" || adherente.CiudadOficina === "" || adherente.Estado === "") {
+            if (adherente.Nombre === "" || adherente.Apellidos === "" || adherente.Documento === "" || adherente.TipoDocumento === "" || adherente.Correo === "" || adherente.Telefono === "" || adherente.FechaNacimiento === "" || adherente.LugarNacimiento === "" || adherente.Sexo === "" || adherente.DireccionResidencia === "" || adherente.CiudadResidencia === "" || adherente.TiempoResidencia === "" || adherente.EstadoCivil === "" || adherente.Profesion === "" || adherente.Trabajo === "" || adherente.Cargo === "" || adherente.TiempoServicio === "" || adherente.TelOficina === "" || adherente.DireccionOficina === "" || adherente.CiudadOficina === "") {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
             }
@@ -164,7 +164,7 @@ function useAdherente() {
 
     const handleUpdate = async (e) => {
         try {
-            if (adherente.Nombre === "" || adherente.Apellidos === "" || adherente.Documento === "" || adherente.TipoDocumento === "" || adherente.Correo === "" || adherente.Telefono === "" || adherente.FechaNacimiento === "" || adherente.LugarNacimiento === "" || adherente.Sexo === "" || adherente.DireccionResidencia === "" || adherente.CiudadResidencia === "" || adherente.TiempoResidencia === "" || adherente.EstadoCivil === "" || adherente.Profesion === "" || adherente.Trabajo === "" || adherente.Cargo === "" || adherente.TiempoServicio === "" || adherente.TelOficina === "" || adherente.DireccionOficina === "" || adherente.CiudadOficina === "" || adherente.Estado === "") {
+            if (adherente.Nombre === "" || adherente.Apellidos === "" || adherente.Documento === "" || adherente.TipoDocumento === "" || adherente.Correo === "" || adherente.Telefono === "" || adherente.FechaNacimiento === "" || adherente.LugarNacimiento === "" || adherente.Sexo === "" || adherente.DireccionResidencia === "" || adherente.CiudadResidencia === "" || adherente.TiempoResidencia === "" || adherente.EstadoCivil === "" || adherente.Profesion === "" || adherente.Trabajo === "" || adherente.Cargo === "" || adherente.TiempoServicio === "" || adherente.TelOficina === "" || adherente.DireccionOficina === "" || adherente.CiudadOficina === "") {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
             }

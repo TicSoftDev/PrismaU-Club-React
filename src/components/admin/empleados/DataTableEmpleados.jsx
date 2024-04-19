@@ -22,8 +22,8 @@ export default function DataTableEmpleados({ usuarios, cargarEmpleado, eliminar,
             name: "Estado",
             cell: row => (
                 <div className="flex items-center">
-                    <div className={`h-2.5 w-2.5 rounded-full ${row.empleado.Estado === 1 ? 'bg-green-500' : 'bg-red-600'} mr-2`}></div>
-                    {row.empleado.Estado === 1 ? "Activo" : "Inactivo"}
+                    <div className={`h-2.5 w-2.5 rounded-full ${row.empleado.Estado == 1 ? 'bg-green-500' : 'bg-red-600'} mr-2`}></div>
+                    {row.empleado.Estado == 1 ? "Activo" : "Inactivo"}
                 </div>
             ),
             width: '100px'
@@ -36,7 +36,7 @@ export default function DataTableEmpleados({ usuarios, cargarEmpleado, eliminar,
                         {
                             row.empleado.imagen ?
                                 <img className="w-10 h-10 rounded-full object-cover" src={RouteBack + row.empleado.imagen} alt="Imagen del empleado" /> :
-                                row.empleado.Sexo === "Femenino" ?
+                                row.empleado.Sexo == "Femenino" ?
                                     <img className="w-10 h-10 rounded-full object-cover" src="https://cdn-icons-png.flaticon.com/128/4140/4140047.png" alt="Imagen predeterminada de mujer" />
                                     : <img className="w-10 h-10 rounded-full object-cover" src="https://cdn-icons-png.flaticon.com/128/3135/3135715.png" alt="Imagen predeterminada de hombre" />
                         }

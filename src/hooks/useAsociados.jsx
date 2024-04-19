@@ -104,7 +104,7 @@ function useAsociados() {
 
     const handleSubmit = async (e) => {
         try {
-            if (asociado.Nombre === "" || asociado.Apellidos === "" || asociado.Documento === "" || asociado.TipoDocumento === "" || asociado.Correo === "" || asociado.Telefono === "" || asociado.FechaNacimiento === "" || asociado.LugarNacimiento === "" || asociado.Sexo === "" || asociado.DireccionResidencia === "" || asociado.CiudadResidencia === "" || asociado.TiempoResidencia === "" || asociado.EstadoCivil === "" || asociado.Profesion === "" || asociado.Trabajo === "" || asociado.Cargo === "" || asociado.TiempoServicio === "" || asociado.TelOficina === "" || asociado.DireccionOficina === "" || asociado.CiudadOficina === "" || asociado.Estado === "") {
+            if (asociado.Nombre === "" || asociado.Apellidos === "" || asociado.Documento === "" || asociado.TipoDocumento === "" || asociado.Correo === "" || asociado.Telefono === "" || asociado.FechaNacimiento === "" || asociado.LugarNacimiento === "" || asociado.Sexo === "" || asociado.DireccionResidencia === "" || asociado.CiudadResidencia === "" || asociado.TiempoResidencia === "" || asociado.EstadoCivil === "" || asociado.Profesion === "" || asociado.Trabajo === "" || asociado.Cargo === "" || asociado.TiempoServicio === "" || asociado.TelOficina === "" || asociado.DireccionOficina === "" || asociado.CiudadOficina === "") {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
             }
@@ -164,7 +164,7 @@ function useAsociados() {
 
     const handleUpdate = async (e) => {
         try {
-            if (asociado.Nombre === "" || asociado.Apellidos === "" || asociado.Documento === "" || asociado.TipoDocumento === "" || asociado.Correo === "" || asociado.Telefono === "" || asociado.FechaNacimiento === "" || asociado.LugarNacimiento === "" || asociado.Sexo === "" || asociado.DireccionResidencia === "" || asociado.CiudadResidencia === "" || asociado.TiempoResidencia === "" || asociado.EstadoCivil === "" || asociado.Profesion === "" || asociado.Trabajo === "" || asociado.Cargo === "" || asociado.TiempoServicio === "" || asociado.TelOficina === "" || asociado.DireccionOficina === "" || asociado.CiudadOficina === "" || asociado.Estado === "") {
+            if (asociado.Nombre === "" || asociado.Apellidos === "" || asociado.Documento === "" || asociado.TipoDocumento === "" || asociado.Correo === "" || asociado.Telefono === "" || asociado.FechaNacimiento === "" || asociado.LugarNacimiento === "" || asociado.Sexo === "" || asociado.DireccionResidencia === "" || asociado.CiudadResidencia === "" || asociado.TiempoResidencia === "" || asociado.EstadoCivil === "" || asociado.Profesion === "" || asociado.Trabajo === "" || asociado.Cargo === "" || asociado.TiempoServicio === "" || asociado.TelOficina === "" || asociado.DireccionOficina === "" || asociado.CiudadOficina === "") {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
             }
