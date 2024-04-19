@@ -25,7 +25,7 @@ function UlAside() {
     ];
     const usuario = useSelector((state) => state.credenciales);
     const items = usuario.Rol == 0 ? superAdmin : usuario.Rol == 1 ? admin : socio;
-    console.log(typeof( usuario.Rol))
+
     return (
         <ul className="space-y-2 font-medium">
             <LinkInicio />

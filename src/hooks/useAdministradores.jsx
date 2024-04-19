@@ -5,8 +5,10 @@ import { createAdmin, deleteAdmin, getAdmins, updateAdmin } from '../services/Ad
 
 function useAdministradores() {
 
+    let lista = [];
     const titulo = 'Administradores';
     const [openModal, setOpenModal] = useState(false);
+    const [busqueda, setBusqueda] = useState('');
     const [loading, setLoading] = useState(false);
     const [administradores, setAdministradores] = useState([]);
     const [admin, setAdmin] = useState({
@@ -30,6 +32,10 @@ function useAdministradores() {
             Telefono: "",
             Rol: 1
         });
+    };
+
+    const handleBusqueda = ({ target }) => {
+        setBusqueda(target.value);
     };
 
     const toggleModal = () => {
@@ -135,13 +141,21 @@ function useAdministradores() {
         }
     };
 
+    if (!busqueda) {
+        lista = administradores;
+    } else {
+        lista = administradores.filter((dato) =>
+            dato.admin.Nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
+            dato.admin.Apellidos.toLowerCase().includes(busqueda.toLowerCase()))
+    }
+
     useEffect(() => {
         getListadoAdmins();
     }, []);
 
     return {
-        titulo, loading, admin, tituloModal, openModal, administradores,
-        handleChange, handleSubmit, toggleModal, handleUpdate, handleDelete, cargar
+        titulo, loading, admin, tituloModal, openModal, lista,
+        handleChange, handleSubmit, toggleModal, handleUpdate, handleDelete, cargar, handleBusqueda
     };
 }
 

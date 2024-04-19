@@ -19,8 +19,8 @@ function DataTableAdmins({ data, cargarAdmin, eliminar, loading }) {
             name: "Estado",
             cell: row => (
                 <div className="flex items-center">
-                    <div className={`h-2.5 w-2.5 rounded-full ${row.admin.Estado === 1 ? 'bg-green-500' : 'bg-red-600'} mr-2`}></div>
-                    {row.admin.Estado === 1 ? "Activo" : "Inactivo"}
+                    <div className={`h-2.5 w-2.5 rounded-full ${row.admin.Estado == 1 ? 'bg-green-500' : 'bg-red-600'} mr-2`}></div>
+                    {row.admin.Estado == 1 ? "Activo" : "Inactivo"}
                 </div>
             ),
             width: '100px'

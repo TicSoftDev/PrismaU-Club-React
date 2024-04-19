@@ -9,9 +9,9 @@ import FormAdmin from '../../../components/superAdmin/administradores/FormAdmin'
 
 function AdministradoresPage() {
 
-    const { titulo, tituloModal, openModal, lista, busqueda, handleBusqueda, administradores, loading, admin,
+    const { titulo, tituloModal, openModal, lista, busqueda, handleBusqueda, loading, admin,
         handleChange, handleSubmit, toggleModal, cargar, handleDelete, handleUpdate } = useAdministradores();
-        const handler = admin.id ? handleUpdate : handleSubmit;
+    const handler = admin.id ? handleUpdate : handleSubmit;
 
     return (
         <>
@@ -22,7 +22,7 @@ function AdministradoresPage() {
                 <VentanaModal size={'7xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal} hanleSubmit={handler}>
                     <FormAdmin admin={admin} hanleChange={handleChange} />
                 </VentanaModal>
-                <DataTableAdmins loading={loading} cargarAdmin={cargar} data={administradores} eliminar={handleDelete} />
+                <DataTableAdmins loading={loading} cargarAdmin={cargar} data={lista} eliminar={handleDelete} />
             </Container>
         </>
     );
