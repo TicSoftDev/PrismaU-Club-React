@@ -1,11 +1,18 @@
 import axios from "axios";
 
-// const URL_EMPLEADOS = "https://www.apiclubsincelejo.prismau.co/api/empleados";
-const URL_EMPLEADOS = "http://127.0.0.1:8000/api/empleados";
+const URL_EMPLEADOS = "https://www.apiclubsincelejo.prismau.co/api/empleados";
+// const URL_EMPLEADOS = "http://127.0.0.1:8000/api/empleados";
 
 export async function createEmpleado(empleado) {
-    const res = await axios.post(URL_EMPLEADOS, empleado);
-    return res.data;
+    try {
+        const res = await axios.post(URL_EMPLEADOS, empleado);
+        return res.data;
+    } catch (error) {
+        if (error.response && error.response.status === 422) {
+            throw new Error('Duplicado');
+        }
+        throw error;
+    }
 };
 
 export async function getEmpleados() {
@@ -19,8 +26,15 @@ export async function getCantidadEmpleados() {
 };
 
 export async function updateEmpleado(empleado, id) {
-    const res = await axios.put(URL_EMPLEADOS + "/" + id, empleado);
-    return res.data;
+    try {
+        const res = await axios.put(URL_EMPLEADOS + "/" + id, empleado);
+        return res.data;
+    } catch (error) {
+        if (error.response && error.response.status === 422) {
+            throw new Error('Duplicado');
+        }
+        throw error;
+    }
 };
 
 export async function updateImageEmpleado(foto, id) {

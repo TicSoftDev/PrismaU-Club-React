@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { getCantidadAsociados } from '../services/AsociadosService';
 import { alertWarning } from '../utilities/alerts/Alertas';
 import { getCantidadAdherentes } from '../services/AdherentesService';
-// import { getCantidadEmpleados } from '../services/EmpleadosService';
+import { getCantidadEmpleados } from '../services/EmpleadosService';
 import { getCantidadFamiliares } from '../services/FamiliaresService';
 import { getCantidadEspacios } from '../services/EspaciosService';
 import { getCantidadInvitados } from '../services/InvitadosService';
@@ -24,14 +24,14 @@ function useCantidad() {
             alertWarning("Count", error.message);
         }
     };
-    // const cantidadEmpleados = async () => {
-    //     try {
-    //         const data = await getCantidadEmpleados();
-    //         setContEmpleados(data);
-    //     } catch (error) {
-    //         alertWarning("Count", error.message);
-    //     }
-    // };
+    const cantidadEmpleados = async () => {
+        try {
+            const data = await getCantidadEmpleados();
+            setContEmpleados(data);
+        } catch (error) {
+            alertWarning("Count", error.message);
+        }
+    };
     const cantidadAdherentes = async () => {
         try {
             const data = await getCantidadAdherentes();
@@ -68,7 +68,7 @@ function useCantidad() {
     useEffect(() => {
         cantidadAsociados();
         cantidadAdherentes();
-        // cantidadEmpleados();
+        cantidadEmpleados();
         cantidadFamiliares();
         cantidadEspacios();
         cantidadInvitados();

@@ -29,7 +29,7 @@ function DashboardPage() {
         { color: "yellow", cantidad: contEspacios, titulo: "Espacios", icono: "map-marked-alt", opacidad: "400" },
         { color: "green", cantidad: '12', titulo: "Hobbies", icono: "magic", opacidad: "500" },
     ];
-    const cards = credenciales.Rol === '1' ? adminCards : asociadoCards;
+    const cards = credenciales.Rol === 1 ? adminCards : asociadoCards;
 
     return (
         <>

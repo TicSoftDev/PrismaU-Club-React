@@ -26,7 +26,7 @@ function useEmpleado() {
         CiudadResidencia: "",
         EstadoCivil: "",
         Cargo: "",
-        Estado: "",
+        Estado: null,
         Rol: ""
     });
     const [imagen, setImagen] = useState(null);
@@ -74,12 +74,16 @@ function useEmpleado() {
                 await getListadoEmpleados();
                 toggleModal();
             } else if (data.message === 'error') {
-                alertWarning("Por favor, revisa el formulario hay campos con valores que ya existen. ");
+                alertWarning("No se pudo crear el Empleado.");
             } else {
                 alertWarning("No se pudo crear el Empleado");
             }
         } catch (error) {
-            alertError(error.message);
+            if (error.message === 'Duplicado') {
+                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
+            } else {
+                alertError("Ocurrió un error al crear el empleado: " + error.message);
+            }
         }
     };
 
@@ -90,9 +94,9 @@ function useEmpleado() {
             [name]: value
         };
         if (name === 'Rol' && value === '6') {
-            updatedEmpleado.Cargo = 'Portero'; 
+            updatedEmpleado.Cargo = 'Portero';
         } else if (name === 'Rol' && value !== '6') {
-            updatedEmpleado.Cargo = ''; 
+            updatedEmpleado.Cargo = '';
         }
         setEmpleado(updatedEmpleado);
     };
@@ -128,14 +132,15 @@ function useEmpleado() {
                 alertSucces("Actualizado correctamente");
                 await getListadoEmpleados();
                 toggleModal();
-            } else if (resultado.message === 'error') {
-                empleado.id = id;
-                alertWarning("Por favor, revisa el formulario hay campos con valores que ya existen. ");
             } else {
                 alertWarning("No se pudo crear el Empleado");
             }
         } catch (error) {
-            alertError("No se pudo conectar al servidor");
+            if (error.message === 'Duplicado') {
+                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
+            } else {
+                alertError("Ocurrió un error al crear el empleado: " + error.message);
+            }
         }
     };
 

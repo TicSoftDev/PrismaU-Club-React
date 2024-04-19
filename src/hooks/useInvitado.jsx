@@ -19,6 +19,8 @@ function useInvitado() {
         Telefono: "",
         TipoDocumento: "",
         Documento: "",
+        Status: false,
+
     });
     const ahora = new Date();
     const vencimiento = new Date(ahora.getTime() + 24 * 60 * 60 * 1000);
@@ -38,6 +40,7 @@ function useInvitado() {
             Telefono: "",
             TipoDocumento: "",
             Documento: "",
+            Status: false,
         });
         setGenerado(false);
         setLoading(false);

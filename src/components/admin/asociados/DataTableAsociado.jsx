@@ -17,7 +17,7 @@ function DataTableAsociado({ usuarios, cargarAsociado, eliminar, loading, change
                     <Button onClick={() => cargarAsociado(row.personal)} className='rounded-full w-9 bg-blue-700 text-white' title='Editar' > <FaEdit /> </Button>
                     <Button onClick={() => eliminar(row.id)} className='rounded-full w-9 bg-red-600 text-white' title='Eliminar'> <FaTrash /> </Button>
                     <Button onClick={() => navigate(`${PrivateRoutes.FAMILIARES}/${row.personal.id}`)} className='rounded-full w-9 bg-green-600 text-white' title='Familiares'> <FaUserPlus /> </Button>
-                    <Button onClick={() => change(row.personal.id)} className='rounded-full w-9 bg-yellow-400 text-white' title='Cambiar Estado'> {row.personal.Estado === "1" ? <FaUserSlash /> : <FaUserCheck />}  </Button>
+                    <Button onClick={() => change(row.personal.id)} className='rounded-full w-9 bg-yellow-400 text-white' title='Cambiar Estado'> {row.personal.Estado === 1 ? <FaUserSlash /> : <FaUserCheck />}  </Button>
                     <Button onClick={() => cargar(row.personal.id)} className='rounded-full w-9 bg-fuchsia-600 text-white' title='Cambiar Imagen'> <FaRegImages />  </Button>
                 </div>
             ),
@@ -27,8 +27,8 @@ function DataTableAsociado({ usuarios, cargarAsociado, eliminar, loading, change
             name: "Estado",
             cell: row => (
                 <div className="flex items-center">
-                    <div className={`h-2.5 w-2.5 rounded-full ${row.personal.Estado === "1" ? 'bg-green-500' : 'bg-red-600'} mr-2`}></div>
-                    {row.personal.Estado === "1" ? "Activo" : "Inactivo"}
+                    <div className={`h-2.5 w-2.5 rounded-full ${row.personal.Estado === 1 ? 'bg-green-500' : 'bg-red-600'} mr-2`}></div>
+                    {row.personal.Estado === 1 ? "Activo" : "Inactivo"}
                 </div>
             ),
             width: '100px'

@@ -22,7 +22,7 @@ function CardEspacio({ espacios, cargar, eliminar, loading, change }) {
                         />
                         <div className="p-5">
                             <div className="flex items-center">
-                                <div className={`h-2.5 w-2.5 rounded-full ${espacio.Estado == "1" ? 'bg-green-600' : 'bg-red-600'} mr-2`}></div>
+                                <div className={`h-2.5 w-2.5 rounded-full ${espacio.Estado === 1 ? 'bg-green-600' : 'bg-red-600'} mr-2`}></div>
                                 <h5 className="text-md font-bold tracking-tight text-gray-900 dark:text-white">{espacio.Descripcion}</h5>
                             </div>
                             <div className="inline-flex rounded-md shadow-sm mt-2" role="group">

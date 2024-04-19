@@ -45,7 +45,7 @@ function useAsociados() {
         DireccionOficina: "",
         CiudadOficina: "",
         Estado: "",
-        Rol: "2"
+        Rol: 2
     });
     const [motivo, setMotivo] = useState({
         Motivo: ""
@@ -85,8 +85,7 @@ function useAsociados() {
             TelOficina: "",
             DireccionOficina: "",
             CiudadOficina: "",
-            Estado: "",
-            Rol: "2"
+            Rol: 2
         });
     };
 
@@ -116,12 +115,14 @@ function useAsociados() {
                 await getListadoAsociadosInactivos();
                 toggleModal();
             } else if (data.message === 'error') {
-                alertWarning("Por favor, revisa el formulario hay campos con valores que ya existen. ");
-            } else {
                 alertWarning("No se pudo crear el Asociado");
             }
         } catch (error) {
-            alertError(error.message);
+            if (error.message === 'Duplicado') {
+                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
+            } else {
+                alertError("Ocurrió un error al crear el asociado: " + error.message);
+            }
         }
     };
 
@@ -178,12 +179,14 @@ function useAsociados() {
                 toggleModal();
             } else if (resultado.message === 'error') {
                 asociado.id = id;
-                alertWarning("Por favor, revisa el formulario campos con valores que ya existen. ");
-            } else {
                 alertWarning("No se pudo actualizar el Asociado");
             }
         } catch (error) {
-            alertError("No se pudo conectar al servidor");
+            if (error.message === 'Duplicado') {
+                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
+            } else {
+                alertError("Ocurrió un error al crear el asociado: " + error.message);
+            }
         }
     };
 
@@ -256,7 +259,6 @@ function useAsociados() {
         try {
             e.preventDefault();
             const resultado = await changeStatusAsociado(asociado.id, motivo);
-            console.log(resultado);
             if (resultado.message === "hecho") {
                 alertSucces("Se cambio correctamente");
                 await getListadoAsociados();

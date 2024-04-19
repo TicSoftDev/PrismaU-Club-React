@@ -193,17 +193,6 @@ function FormAsociados({ asociado, hanleChange, show }) {
                     <TextInput id="CiudadOficina" type="text" icon={FaCity} onChange={hanleChange}
                         value={asociado.CiudadOficina} name='CiudadOficina' placeholder="Escriba la Ciudad de la Oficina" />
                 </div>
-                <div className="w-full">
-                    <div className="mb-2 block">
-                        <Label htmlFor="Estado" value="Estado" />
-                    </div>
-                    <Select id="Estado" icon={FaEye} onChange={hanleChange} name='Estado'
-                        defaultValue={asociado.Estado ? asociado.Estado : "Escoja una opcion..."} required >
-                        <option disabled>Escoja una opcion...</option>
-                        <option value={1}>Activo (a)</option>
-                        <option value={0}>Inactivo (a)</option>
-                    </Select>
-                </div>
             </div>
         </>
     );

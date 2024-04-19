@@ -1,22 +1,34 @@
 import { useEffect, useState } from 'react';
-import { createCargo, deleteCargo, getcCargos, updateCargo } from '../services/CargosService';
 import { alertError, alertSucces, alertWarning } from '../utilities/alerts/Alertas';
 import Swal from 'sweetalert2';
+import { createAdmin, deleteAdmin, getAdmins, updateAdmin } from '../services/AdminsService';
 
-function useCargos() {
+function useAdministradores() {
 
-    const titulo = 'Cargos de empleados';
+    const titulo = 'Administradores';
     const [openModal, setOpenModal] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [cargos, setCargos] = useState([]);
-    const [cargo, setCargo] = useState({
-        Descripcion: "",
+    const [administradores, setAdministradores] = useState([]);
+    const [admin, setAdmin] = useState({
+        Nombre: "",
+        Apellidos: "",
+        Documento: "",
+        Clave: "",
+        Correo: "",
+        Telefono: "",
+        Rol: 1
     });
-    const tituloModal = cargo.id ? 'Editar cargo' : 'Crear cargo';
+    const tituloModal = admin.id ? 'Editar Administrador' : 'Crear Administrador';
 
     const recargar = () => {
-        setCargo({
-            Descripcion: "",
+        setAdmin({
+            Nombre: "",
+            Apellidos: "",
+            Documento: "",
+            Clave: "",
+            Correo: "",
+            Telefono: "",
+            Rol: 1
         });
     };
 
@@ -25,12 +37,12 @@ function useCargos() {
         recargar();
     }
 
-    const getListadoCargos = async () => {
+    const getListadoAdmins = async () => {
         try {
             setLoading(true);
-            let data = await getcCargos();
+            let data = await getAdmins();
             setLoading(false);
-            setCargos(data);
+            setAdministradores(data);
         } catch (error) {
             setLoading(false);
             alertError(error.message);
@@ -39,60 +51,68 @@ function useCargos() {
 
     const handleSubmit = async (e) => {
         try {
-            if (cargo.Descripcion === "") {
+            if (admin.Nombre === "" || admin.Apellidos === "" || admin.Correo === "" || admin.Telefono === "" || admin.Estado === null) {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
             }
-            const data = await createCargo(cargo);
+            const data = await createAdmin(admin);
             if (data.status) {
                 alertSucces("Creado correctamente");
                 recargar();
                 toggleModal();
-                await getListadoCargos();
+                await getListadoAdmins();
             } else {
                 alertWarning("No se pudo crear.");
             }
         } catch (error) {
-            alertError(error.message);
+            if (error.message === 'Duplicado') {
+                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
+            } else {
+                alertError("Ocurrió un error al crear el administrador: " + error.message);
+            }
         }
     };
 
     const handleChange = ({ target }) => {
-        setCargo({
-            ...cargo,
+        setAdmin({
+            ...admin,
             [target.name]: target.value
         });
     };
 
-    const cargar = async (cargo) => {
-        setCargo(cargo);
+    const cargar = async (admin) => {
+        setAdmin(admin);
         setOpenModal(true);
     };
 
     const handleUpdate = async (e) => {
         try {
-            if (cargo.Descripcion === "") {
+            if (admin.Nombre === "" || admin.Apellidos === "" || admin.Correo === "" || admin.Telefono === "" || admin.Estado === null) {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
             }
-            const data = await updateCargo(cargo, cargo.id);
+            const data = await updateAdmin(admin, admin.user_id);
             if (data.status) {
                 alertSucces("Actualizado correctamente");
                 toggleModal();
                 recargar();
-                await getListadoCargos();
+                await getListadoAdmins();
             } else {
                 alertWarning("No se pudo actualizar.");
             }
         } catch (error) {
-            alertError(error.message);
+            if (error.message === 'Duplicado') {
+                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
+            } else {
+                alertError("Ocurrió un error al crear el administrador: " + error.message);
+            }
         }
     };
 
     const handleDelete = async (id) => {
         try {
             Swal.fire({
-                title: '¿Seguro que quiere eliminar este cargo?',
+                title: '¿Seguro que quiere eliminar este admin?',
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -101,10 +121,10 @@ function useCargos() {
                 cancelButtonText: 'No, cancelar'
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    const data = await deleteCargo(id);
+                    const data = await deleteAdmin(id);
                     if (data.status) {
                         alertSucces("Eliminado correctamente");
-                        await getListadoCargos();
+                        await getListadoAdmins();
                     } else {
                         alertWarning("No se pudo eliminar.");
                     }
@@ -116,13 +136,13 @@ function useCargos() {
     };
 
     useEffect(() => {
-        getListadoCargos();
+        getListadoAdmins();
     }, []);
 
     return {
-        titulo, loading, cargos, cargo, tituloModal, openModal,
+        titulo, loading, admin, tituloModal, openModal, administradores,
         handleChange, handleSubmit, toggleModal, handleUpdate, handleDelete, cargar
     };
 }
 
-export default useCargos;
+export default useAdministradores;

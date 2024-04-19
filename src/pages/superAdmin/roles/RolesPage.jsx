@@ -1,5 +1,5 @@
 import React from 'react';
-import TablaRoles from '../../../components/admin/roles/TablaRoles';
+import TablaRoles from '../../../components/superAdmin/roles/TablaRoles';
 import Container from '../../../utilities/helpers/Container';
 import TituloPage from '../../../utilities/helpers/TituloPage';
 

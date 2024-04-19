@@ -44,8 +44,7 @@ function useAdherente() {
         TelOficina: "",
         DireccionOficina: "",
         CiudadOficina: "",
-        Estado: "",
-        Rol: "3"
+        Rol: 3
     });
     const [motivo, setMotivo] = useState({
         Motivo: ""
@@ -85,8 +84,7 @@ function useAdherente() {
             TelOficina: "",
             DireccionOficina: "",
             CiudadOficina: "",
-            Estado: "",
-            Rol: "3"
+            Rol: 3
         });
     };
 
@@ -117,12 +115,14 @@ function useAdherente() {
                 await getListadoAdherentesInactivos();
                 toggleModal();
             } else if (data.message === 'error') {
-                alertWarning("Por favor, revisa el formulario hay errores. Hay campos vacíos o con valores que ya existen. ");
-            } else {
                 alertWarning("No se pudo crear el Adherente");
             }
         } catch (error) {
-            alertError(error.message);
+            if (error.message === 'Duplicado') {
+                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
+            } else {
+                alertError("Ocurrió un error al crear el adherente: " + error.message);
+            }
         }
     };
 
@@ -179,12 +179,14 @@ function useAdherente() {
                 toggleModal();
             } else if (resultado.message === 'error') {
                 adherente.id = id;
-                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
-            } else {
                 alertWarning("No se pudo crear el Adherente");
             }
         } catch (error) {
-            alertError("No se pudo conectar al servidor");
+            if (error.message === 'Duplicado') {
+                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
+            } else {
+                alertError("Ocurrió un error al crear el adherente: " + error.message);
+            }
         }
     };
 

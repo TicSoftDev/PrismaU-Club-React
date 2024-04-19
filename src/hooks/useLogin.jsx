@@ -73,8 +73,7 @@ function useLogin() {
         e.preventDefault();
         toggleNav();
         Swal.fire({
-            title: '¿Desea salir del sistema?',
-            text: "Si, lo hace tendra que iniciar sesion nuevamente",
+            title: '¿Quiere cerrar la sesión actual?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

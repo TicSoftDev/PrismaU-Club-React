@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const URL_PERSONAL = "https://www.apiclubsincelejo.prismau.co/api/personal";
-const URL_PERSONAL = "http://127.0.0.1:8000/api/personal";
+const URL_PERSONAL = "https://www.apiclubsincelejo.prismau.co/api/personal";
+// const URL_PERSONAL = "http://127.0.0.1:8000/api/personal";
 
 export async function createPersonal(personal) {
     const options = {
@@ -9,13 +9,27 @@ export async function createPersonal(personal) {
             'Content-Type': 'application/json',
         },
     };
-    const res = await axios.post(URL_PERSONAL, personal, options);
-    return res.data;
+    try {
+        const res = await axios.post(URL_PERSONAL, personal, options);
+        return res.data;
+    } catch (error) {
+        if (error.response && error.response.status === 422) {
+            throw new Error('Duplicado');
+        }
+        throw error;
+    }
 };
 
 export async function updatePersonal(personal, id) {
-    const res = await axios.put(URL_PERSONAL + "/" + id, personal);
-    return res.data;
+    try {
+        const res = await axios.put(URL_PERSONAL + "/" + id, personal);
+        return res.data;
+    } catch (error) {
+        if (error.response && error.response.status === 422) {
+            throw new Error('Duplicado');
+        }
+        throw error;
+    }
 };
 
 export async function updateImagePersonal(foto, id) {

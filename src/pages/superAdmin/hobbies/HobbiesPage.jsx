@@ -1,7 +1,7 @@
 import React from 'react';
-import TablaHobbies from '../../../components/admin/hobbies/TablaHobbies';
 import Container from '../../../utilities/helpers/Container';
 import TituloPage from '../../../utilities/helpers/TituloPage';
+import TablaHobbies from '../../../components/superAdmin/hobbies/TablaHobbies';
 
 function HobbiesPage() {
 

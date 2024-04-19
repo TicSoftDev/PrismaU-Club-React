@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const URL_ADHERENTES = "https://www.apiclubsincelejo.prismau.co/api/adherentes";
-const URL_ADHERENTES = "http://127.0.0.1:8000/api/adherentes";
+const URL_ADHERENTES = "https://www.apiclubsincelejo.prismau.co/api/adherentes";
+// const URL_ADHERENTES = "http://127.0.0.1:8000/api/adherentes";
 
 export async function getAdherentes() {
     const res = await axios.get(URL_ADHERENTES);
