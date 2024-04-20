@@ -25,6 +25,11 @@ export async function getAdmins() {
     return res.data;
 };
 
+export async function getCantidadAdmins() {
+    const res = await axios.get(URL_ADMIN + "/cantidad");
+    return res.data;
+};
+
 export async function updateAdmin(admin, id) {
     try {
         const res = await axios.put(URL_ADMIN + "/" + id, admin);
@@ -36,7 +41,6 @@ export async function updateAdmin(admin, id) {
         throw error;
     }
 };
-
 
 export async function deleteAdmin(id) {
     const res = await axios.delete(URL_ADMIN + "/" + id);

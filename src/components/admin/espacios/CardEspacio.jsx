@@ -17,7 +17,7 @@ function CardEspacio({ espacios, cargar, eliminar, loading, change }) {
                     <div className="w-full m-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" key={espacio.id}>
                         <img
                             className="rounded-t-lg w-full h-40 object-cover"
-                            src={espacio.imagen ? (RouteBack + '/images/espacio.png') : imagen.logoPrisma}
+                            src={espacio.imagen ? (RouteBack + espacio.imagen) : imagen.logoPrisma}
                             alt="Imagen del espacio"
                         />
                         <div className="p-5">

@@ -18,6 +18,11 @@ export async function getCantidadFamiliares() {
     return res.data;
 };
 
+export async function getCantidadFamiliaresSocio(id) {
+    const res = await axios.get(URL_FAMILIAR + "/cantidad/" + id);
+    return res.data;
+};
+
 export async function updateFamiliar(familiar, id) {
     const res = await axios.put(URL_FAMILIAR + "/" + id, familiar);
     return res.data;

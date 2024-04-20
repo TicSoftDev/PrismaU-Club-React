@@ -22,3 +22,8 @@ export async function getCantidadInvitados() {
     const res = await axios.get(URL_INVITADO + "/cantidad");
     return res.data;
 };
+
+export async function getCantidadInvitadosSocio(id) {
+    const res = await axios.get(URL_INVITADO + "/cantidad/" + id);
+    return res.data;
+};

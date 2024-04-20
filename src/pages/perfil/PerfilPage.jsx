@@ -9,13 +9,14 @@ function PerfilPage() {
 
     const titulo = "Perfil";
     const user = useSelector((state) => state.user);
+    const credenciales = useSelector((state) => state.credenciales);
     const { usuario, cambiarClave, handleChange } = useUsuario();
 
     return (
         <>
             <TituloPage titulo={titulo} />
             <Container>
-                <FormPerfil user={user} usuario={usuario} hanleChange={handleChange} change={cambiarClave} />
+                <FormPerfil credenciales={credenciales} user={user} usuario={usuario} hanleChange={handleChange} change={cambiarClave} />
             </Container>
         </>
     );
