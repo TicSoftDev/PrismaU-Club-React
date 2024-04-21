@@ -22,12 +22,12 @@ function useInvitado() {
         Status: false,
 
     });
+    const [invitacion, setInvitacion] = useState({});
     const ahora = new Date();
     const vencimiento = new Date(ahora.getTime() + 24 * 60 * 60 * 1000);
     const fechaVencimiento = vencimiento.toISOString();
     const datosQR = {
-        usuario: invitado,
-        // rol: credenciales.Rol,
+        usuario: invitacion,
         vencimiento: fechaVencimiento
     };
     const dataString = JSON.stringify(datosQR);
@@ -42,6 +42,7 @@ function useInvitado() {
             Documento: "",
             Status: false,
         });
+        setInvitacion({});
         setGenerado(false);
         setLoading(false);
     };
@@ -76,6 +77,7 @@ function useInvitado() {
             setLoading(false);
             if (data.status) {
                 setGenerado(true);
+                setInvitacion(data.data);
                 alertSucces("Se ha generado el codigo de invitación");
             } else {
                 alertWarning("Esta persona superó el límite de invitaciones mensuales.");
