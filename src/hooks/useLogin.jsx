@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -13,24 +13,12 @@ function useLogin() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [openAside, setOpenAside] = useState(false);
-    const [openNav, setOpenNav] = useState(false);
     const [visible, setVisible] = useState(false);
     const [loading, setLoading] = useState(false);
     const [usuario, setUsuario] = useState({
         Documento: "",
         password: ""
     });
-
-    const toggleAside = useCallback(() => {
-        setOpenAside((prevOpenAside) => !prevOpenAside);
-        setOpenNav(false);
-    }, []);
-
-    const toggleNav = useCallback(() => {
-        setOpenNav((prevOpenNav) => !prevOpenNav);
-        setOpenAside(false);
-    }, []);
 
     const handleChange = ({ target }) => {
         setUsuario({
@@ -69,7 +57,7 @@ function useLogin() {
         }
     };
 
-    const logout = useCallback((e) => {
+    const logout = (e) => {
         e.preventDefault();
         toggleNav();
         Swal.fire({
@@ -88,11 +76,10 @@ function useLogin() {
                 navigate(PublicRoutes.LOGIN, { replace: true });
             }
         })
-    }, [toggleNav]);
+    }
 
     return {
-        openNav, openAside, loading, usuario, visible, toggleVisible, handleSubmit, handleChange, logout,
-        toggleNav, toggleAside
+        loading, usuario, visible, toggleVisible, handleSubmit, handleChange, logout,
     };
 }
 

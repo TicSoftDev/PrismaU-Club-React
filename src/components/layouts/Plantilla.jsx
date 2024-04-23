@@ -10,13 +10,12 @@ function Plantilla() {
 
     const usuario = useSelector((state) => state.user);
     const credenciales = useSelector((state) => state.credenciales);
-    const { openAside, toggleAside, openNav, toggleNav, logout, } = useLogin();
+    const { logout, } = useLogin();
 
     return (
         <>
-            <Navbar toggleNav={toggleNav} toggleAside={toggleAside} open={openNav} credenciales={credenciales}
-                usuario={usuario} logout={logout} />
-            <Sidebar open={openAside} />
+            <Navbar credenciales={credenciales} usuario={usuario} logout={logout} />
+            <Sidebar />
             <ContainerContenido>
                 <Outlet />
             </ContainerContenido>
