@@ -7,6 +7,7 @@ function useEspacios() {
 
     const titulo = 'Espacios';
     let lista = [];
+    const [touched, setTouched] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [openModalImage, setOpenModalImage] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -49,6 +50,7 @@ function useEspacios() {
 
     const handleSubmit = async (e) => {
         try {
+            setTouched(true);
             e.preventDefault();
             if (espacio.Descripcion === "" || espacio.Estado === "") {
                 alertWarning("Por favor, ingrese todos los campos. ");
@@ -60,9 +62,9 @@ function useEspacios() {
             formData.append('imagen', espacio.imagen);
             const data = await createEspacio(espacio);
             if (data.message === 'hecho') {
+                toggleModal();
                 alertSucces("Creado correctamente");
                 await getListadoEspacios();
-                toggleModal();
             } else if (data.message === 'error') {
                 alertWarning("Por favor, revisa el formulario hay campos con valores que ya existen. ");
             } else {
@@ -79,6 +81,7 @@ function useEspacios() {
             [target.name]: target.value
         });
     };
+
     const handleChangeImage = ({ target }) => {
         const file = target.files[0];
         setEspacio({
@@ -106,6 +109,7 @@ function useEspacios() {
 
     const handleUpdate = async (e) => {
         try {
+            setTouched(true);
             e.preventDefault();
             if (espacio.Descripcion === "" || espacio.Estado === "") {
                 alertWarning("Por favor, ingrese todos los campos. ");
@@ -113,9 +117,9 @@ function useEspacios() {
             }
             const resultado = await updateEspacio(espacio, espacio.id);
             if (resultado.message === 'hecho') {
+                toggleModal();
                 alertSucces("Actualizado correctamente");
                 await getListadoEspacios();
-                toggleModal();
             } else if (resultado.message === 'error') {
                 alertWarning("Por favor, revisa el formulario hay campos con valores que ya existen. ");
             } else {
@@ -157,6 +161,7 @@ function useEspacios() {
         espacio.id = id;
         setOpenModalImage(true);
     }
+
     const cambiarImagen = async () => {
         try {
             if (imagen === null) {
@@ -167,8 +172,8 @@ function useEspacios() {
             formData.append('imagen', imagen);
             const data = await updateImagenEspacio(formData, espacio.id);
             if (data.message === 'hecho') {
-                alertSucces("Imagen actualizada correctamente");
                 toggleModalImage();
+                alertSucces("Imagen actualizada correctamente");
                 await getListadoEspacios();
             } else {
                 alertWarning("No se pudo actualizar la imagen");
@@ -190,7 +195,7 @@ function useEspacios() {
     }, []);
 
     return {
-        titulo, tituloModal, openModal, espacio, lista, busqueda, loading, openModalImage, tituloModalImage,
+        titulo, tituloModal, openModal, espacio, lista, busqueda, loading, openModalImage, tituloModalImage, touched,
         handleChangeImage, handleChangeImagen, toggleModal, handleChange, handleBusqueda, handleSubmit, cargarEspacio,
         handleUpdate, eliminarEspacio, cambiarImagen, toggleModalImage, cargarImagen
     };

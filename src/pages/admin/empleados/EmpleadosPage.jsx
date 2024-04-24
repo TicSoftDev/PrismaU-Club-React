@@ -10,7 +10,7 @@ import VentanaModal from '../../../utilities/modals/VentanaModal';
 
 function EmpleadosPage() {
 
-    const { titulo, tituloModal, openModal, lista, busqueda, empleado, loading, openModalImage, tituloModalImage,
+    const { titulo, tituloModal, openModal, lista, busqueda, empleado, loading, openModalImage, tituloModalImage, touched,
         toggleModal, handleChange, handleSubmit, handleBusqueda, cargarEmpleado, handleUpdate, eliminarEmpleado,
         handleChangeImagen, handleUpdateImage, toggleModalImage, cargarImagen
     } = useEmpleado();
@@ -23,7 +23,7 @@ function EmpleadosPage() {
                 <MenuEmpleados toggleModal={toggleModal} busqueda={busqueda} handleBusqueda={handleBusqueda}
                     entidad={true} titulo={titulo} data={lista} />
                 <VentanaModal size={'7xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal} hanleSubmit={handler}>
-                    <FormEmpleados empleado={empleado} hanleChange={handleChange} />
+                    <FormEmpleados touched={touched} empleado={empleado} hanleChange={handleChange} />
                 </VentanaModal>
                 <DataTableEmpleados cargarEmpleado={cargarEmpleado} usuarios={lista} eliminar={eliminarEmpleado}
                     cargar={cargarImagen} loading={loading} />

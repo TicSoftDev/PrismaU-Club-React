@@ -25,16 +25,7 @@ function TablaFamiliares({ usuarios, cargarEmpleado, eliminar, loading, cargar }
                             Nombre Completo
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Correo
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Telefono
-                        </th>
-                        <th scope="col" className="px-6 py-3">
                             Identificación
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Dirección Residencia
                         </th>
                         <th scope="col" className="px-6 py-3">
                             Parentesco
@@ -72,16 +63,7 @@ function TablaFamiliares({ usuarios, cargarEmpleado, eliminar, loading, cargar }
                                         </div>
                                     </th>
                                     <td className="px-6 py-4">
-                                        {user.Correo}
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        {user.Telefono}
-                                    </td>
-                                    <td className="px-6 py-4">
                                         {user.TipoDocumento + ' ' + user.Documento}
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        {user.DireccionResidencia + " " + user.CiudadResidencia}
                                     </td>
                                     <td className="px-6 py-4">
                                         {user.Parentesco}

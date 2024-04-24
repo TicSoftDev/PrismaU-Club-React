@@ -10,7 +10,7 @@ import VentanaModal from '../../../utilities/modals/VentanaModal';
 
 function EspaciosPage() {
 
-    const { titulo, tituloModal, openModal, espacio, lista, loading, openModalImage, tituloModalImage,
+    const { titulo, tituloModal, openModal, espacio, lista, loading, openModalImage, tituloModalImage, touched,
         handleChangeImage, handleChangeImagen, toggleModal, eliminarEspacio, handleChange, handleSubmit, handleUpdate,
         cargarEspacio, cambiarImagen, toggleModalImage, cargarImagen
     } = useEspacios();
@@ -22,7 +22,7 @@ function EspaciosPage() {
             <Container>
                 <MenuEmpleados toggleModal={toggleModal} />
                 <VentanaModal size={'2xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal} hanleSubmit={handler}>
-                    <FormEspacio espacio={espacio} hanleChange={handleChange} handleChangeImage={handleChangeImage} />
+                    <FormEspacio espacio={espacio} hanleChange={handleChange} handleChangeImage={handleChangeImage} touched={touched}/>
                 </VentanaModal>
                 <CardEspacio espacios={lista} cargar={cargarEspacio} eliminar={eliminarEspacio} loading={loading}
                     change={cargarImagen} />

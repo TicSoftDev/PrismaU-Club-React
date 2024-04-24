@@ -59,7 +59,6 @@ function useLogin() {
 
     const logout = (e) => {
         e.preventDefault();
-        toggleNav();
         Swal.fire({
             title: '¿Quiere cerrar la sesión actual?',
             icon: 'question',

@@ -8,6 +8,7 @@ function useFamiliares(id) {
     const titulo = 'Familiares';
     let lista = [];
     const [openModal, setOpenModal] = useState(false);
+    const [touched, setTouched] = useState(false);
     const [openModalImage, setOpenModalImage] = useState(false);
     const [loading, setLoading] = useState(false);
     const [busqueda, setBusqueda] = useState('');
@@ -53,6 +54,7 @@ function useFamiliares(id) {
             Parentesco: '',
             Rol: "5"
         });
+        setTouched(false);
     };
 
     const handleBusqueda = ({ target }) => {
@@ -66,16 +68,17 @@ function useFamiliares(id) {
 
     const handleSubmit = async (e) => {
         try {
+            setTouched(true);
             e.preventDefault();
-            if (familiar.Nombre === "" || familiar.Apellidos === "" || familiar.Documento === "" || familiar.TipoDocumento === "" || familiar.Correo === "" || familiar.Telefono === "" || familiar.FechaNacimiento === "" || familiar.LugarNacimiento === "" || familiar.Sexo === "" || familiar.DireccionResidencia === "" || familiar.CiudadResidencia === "" || familiar.Cargo === "" || familiar.Parentesco === "") {
+            if (familiar.Nombre === "" || familiar.Apellidos === "" || familiar.Documento === "" || familiar.TipoDocumento === "" || familiar.Sexo === "" || familiar.Parentesco === "") {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
             }
             const data = await createFamiliar(familiar);
             if (data.message === 'hecho') {
+                toggleModal();
                 alertSucces("Creado correctamente");
                 await getListadoFamiliares();
-                toggleModal();
             } else if (data.message === 'error') {
                 alertWarning("Por favor, revisa el formulario hay campos con valores que ya existen. ");
             } else {
@@ -112,7 +115,8 @@ function useFamiliares(id) {
 
     const handleUpdate = async (e) => {
         try {
-            if (familiar.Nombre === "" || familiar.Apellidos === "" || familiar.Documento === "" || familiar.TipoDocumento === "" || familiar.Correo === "" || familiar.Telefono === "" || familiar.FechaNacimiento === "" || familiar.LugarNacimiento === "" || familiar.Sexo === "" || familiar.DireccionResidencia === "" || familiar.CiudadResidencia === "" || familiar.Cargo === "" || familiar.Parentesco === "") {
+            setTouched(true);
+            if (familiar.Nombre === "" || familiar.Apellidos === "" || familiar.Documento === "" || familiar.TipoDocumento === "" || familiar.Sexo === "" || familiar.Parentesco === "") {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
             }
@@ -120,11 +124,10 @@ function useFamiliares(id) {
             delete familiar.id;
             e.preventDefault();
             const resultado = await updateFamiliar(familiar, familiar.user_id);
-            console.log(resultado);
             if (resultado.message === 'hecho') {
+                toggleModal();
                 alertSucces("Actualizado correctamente");
                 await getListadoFamiliares();
-                toggleModal();
             } else if (resultado.message === 'error') {
                 familiar.id = id;
                 alertWarning("Por favor, revisa el formulario hay campos valores que ya existen. ");
@@ -188,8 +191,8 @@ function useFamiliares(id) {
             formData.append('imagen', imagen);
             const resultado = await updateImageFamiliar(formData, familiar.id);
             if (resultado.message === 'hecho') {
-                alertSucces("Imagen actualizada correctamente");
                 toggleModalImage();
+                alertSucces("Imagen actualizada correctamente");
                 await getListadoFamiliares();
             } else {
                 alertWarning("No se pudo actualizar la imagen");
@@ -215,7 +218,7 @@ function useFamiliares(id) {
 
     return {
         titulo, tituloModal, openModal, familiar, listadoFamiliares, busqueda, loading, openModalImage, tituloModalImage,
-        toggleModal, handleChange, handleBusqueda, handleSubmit, cargarFamiliar, handleUpdate, eliminarFamiliar,
+        touched, toggleModal, handleChange, handleBusqueda, handleSubmit, cargarFamiliar, handleUpdate, eliminarFamiliar,
         toggleModalImage, cargarImagen, handleUpdateImage, handleChangeImagen
 
     };

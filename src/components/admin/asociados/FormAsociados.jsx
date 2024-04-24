@@ -38,17 +38,17 @@ function FormAsociados({ asociado, hanleChange, touched }) {
                     </div>
                     <Select id="tipo" icon={FaIdCard} name='TipoDocumento'
                         className={inputClass(asociado.TipoDocumento)} onChange={hanleChange}
-                        defaultValue={asociado.TipoDocumento ? asociado.TipoDocumento : "Escoja una opcion..."} >
-                        <option disabled>Escoja una opcion...</option>
+                        defaultValue={asociado.TipoDocumento ? asociado.TipoDocumento : "Escoja una opción..."} >
+                        <option disabled>Escoja una opción...</option>
                         <option value="TI">Tarjeta Identidad</option>
-                        <option value="CC">Cedula Ciudadania</option>
-                        <option value="CE">Cedula Extranjeria</option>
+                        <option value="CC">Cédula Ciudadanía</option>
+                        <option value="CE">Cédula Extranjería</option>
                     </Select>
                     <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                 </div>
                 <div className="w-full sm:w-1/2">
                     <div className="mb-2 block">
-                        <Label htmlFor="documento" value="Numero Documento" />
+                        <Label htmlFor="documento" value="Número Documento" />
                     </div>
                     <TextInput id="documento" type="number" icon={FaIdCard} onChange={hanleChange}
                         className={inputClass(asociado.Documento)} name='Documento'
@@ -68,7 +68,7 @@ function FormAsociados({ asociado, hanleChange, touched }) {
             <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4 sm:mt-3">
                 <div className="w-full">
                     <div className="mb-2 block">
-                        <Label htmlFor="telefono" value="Telefono" />
+                        <Label htmlFor="telefono" value="Teléfono" />
                     </div>
                     <TextInput id="telefono" type="tel" icon={FaPhoneAlt} onChange={hanleChange}
                         className={inputClass(asociado.Telefono)} value={asociado.Telefono}
@@ -97,8 +97,8 @@ function FormAsociados({ asociado, hanleChange, touched }) {
                     </div>
                     <Select id="sexo" type="text" icon={FaMercury} onChange={hanleChange}
                         className={inputClass(asociado.Sexo)} name='Sexo'
-                        defaultValue={asociado.Sexo ? asociado.Sexo : "Escoja una opcion..."}  >
-                        <option disabled>Escoja una opcion...</option>
+                        defaultValue={asociado.Sexo ? asociado.Sexo : "Escoja una opción..."}  >
+                        <option disabled>Escoja una opción...</option>
                         <option>Masculino</option>
                         <option>Femenino</option>
                     </Select>
@@ -108,7 +108,7 @@ function FormAsociados({ asociado, hanleChange, touched }) {
             <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4 sm:mt-3">
                 <div className="w-full">
                     <div className="mb-2 block">
-                        <Label htmlFor="direccion" value="Dirección residencia" />
+                        <Label htmlFor="direccion" value="Dirección Residencia" />
                     </div>
                     <TextInput id="direccion" type="tel" icon={FaMapMarkerAlt} onChange={hanleChange}
                         value={asociado.DireccionResidencia ? asociado.DireccionResidencia : ""}
@@ -135,11 +135,11 @@ function FormAsociados({ asociado, hanleChange, touched }) {
                         <Label htmlFor="EstadoCivil" value="Estado Civil" />
                     </div>
                     <Select id="EstadoCivil" icon={FaUserTag} onChange={hanleChange} name='EstadoCivil'
-                        defaultValue={asociado.EstadoCivil ? asociado.EstadoCivil : "Escoja una opcion..."}  >
-                        <option disabled>Escoja una opcion...</option>
+                        defaultValue={asociado.EstadoCivil ? asociado.EstadoCivil : "Escoja una opción..."}  >
+                        <option disabled>Escoja una opción...</option>
                         <option>Soltero (a)</option>
                         <option>Casado (a)</option>
-                        <option>Union Libre</option>
+                        <option>Unión Libre </option>
                         <option>Viudo (a)</option>
                         <option>Divorciado (a)</option>
                     </Select>
@@ -148,7 +148,7 @@ function FormAsociados({ asociado, hanleChange, touched }) {
             <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4 sm:mt-3">
                 <div className="w-full">
                     <div className="mb-2 block">
-                        <Label htmlFor="Profesion" value="Profesion" />
+                        <Label htmlFor="Profesion" value="Profesión" />
                     </div>
                     <TextInput id="Profesion" type="tel" icon={FaUserGraduate} onChange={hanleChange}
                         value={asociado.Profesion ? asociado.Profesion : ""}
@@ -182,11 +182,11 @@ function FormAsociados({ asociado, hanleChange, touched }) {
             <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4 sm:mt-3">
                 <div className="w-full">
                     <div className="mb-2 block">
-                        <Label htmlFor="TelOficina" value="Telefono Oficina" />
+                        <Label htmlFor="TelOficina" value="Teléfono  Oficina" />
                     </div>
                     <TextInput id="TelOficina" type="tel" icon={FaPhoneAlt} onChange={hanleChange}
                         value={asociado.TelOficina ? asociado.TelOficina : ""} name='TelOficina'
-                        placeholder="Escriba el Telefono Oficina..." />
+                        placeholder="Escriba el teléfono de la oficina..." />
                 </div>
                 <div className="w-full">
                     <div className="mb-2 block">
@@ -194,7 +194,7 @@ function FormAsociados({ asociado, hanleChange, touched }) {
                     </div>
                     <TextInput id="DireccionOficina" type="text" icon={FaMapMarkerAlt} onChange={hanleChange}
                         value={asociado.DireccionOficina ? asociado.DireccionOficina : ""}
-                        name='DireccionOficina' placeholder="Escriba la Direccion de la Oficina..." />
+                        name='DireccionOficina' placeholder="Escriba la dirección  de la oficina..." />
                 </div>
                 <div className="w-full">
                     <div className="mb-2 block">
@@ -202,7 +202,7 @@ function FormAsociados({ asociado, hanleChange, touched }) {
                     </div>
                     <TextInput id="CiudadOficina" type="text" icon={FaCity} onChange={hanleChange}
                         value={asociado.CiudadOficina ? asociado.CiudadOficina : ""}
-                        name='CiudadOficina' placeholder="Escriba la Ciudad de la Oficina" />
+                        name='CiudadOficina' placeholder="Escriba la ciudad de la oficina" />
                 </div>
             </div>
         </>

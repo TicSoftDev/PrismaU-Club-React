@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const URL_ADMIN = "https://www.apiclubsincelejo.prismau.co/api/admin";
-const URL_ADMIN = "http://127.0.0.1:8000/api/admin";
+const URL_ADMIN = "https://www.apiclubsincelejo.prismau.co/api/admin";
+// const URL_ADMIN = "http://127.0.0.1:8000/api/admin";
 
 export async function createAdmin(admin) {
     const options = {

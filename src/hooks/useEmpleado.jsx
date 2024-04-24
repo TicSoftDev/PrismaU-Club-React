@@ -7,6 +7,7 @@ function useEmpleado() {
 
     const titulo = 'Empleados';
     let lista = [];
+    const [touched, setTouched] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [openModalImage, setOpenModalImage] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -51,6 +52,7 @@ function useEmpleado() {
             Estado: "",
             Rol: ""
         });
+        setTouched(false);
     };
 
     const handleBusqueda = ({ target }) => {
@@ -64,15 +66,17 @@ function useEmpleado() {
 
     const handleSubmit = async (e) => {
         try {
+            e.preventDefault();
+            setTouched(true);
             if (empleado.Nombre === "" || empleado.Apellidos === "" || empleado.Documento === "" || empleado.TipoDocumento === "" || empleado.Correo === "" || empleado.Telefono === "" || empleado.FechaNacimiento === "" || empleado.LugarNacimiento === "" || empleado.Sexo === "" || empleado.DireccionResidencia === "" || empleado.CiudadResidencia === "" || empleado.Cargo === "" || empleado.Estado === "") {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
             }
             const data = await createEmpleado(empleado);
             if (data.message === 'hecho') {
+                toggleModal();
                 alertSucces("Creado correctamente");
                 await getListadoEmpleados();
-                toggleModal();
             } else if (data.message === 'error') {
                 alertWarning("No se pudo crear el Empleado.");
             } else {
@@ -120,6 +124,7 @@ function useEmpleado() {
 
     const handleUpdate = async (e) => {
         try {
+            setTouched(true);
             if (empleado.Nombre === "" || empleado.Apellidos === "" || empleado.Documento === "" || empleado.TipoDocumento === "" || empleado.Correo === "" || empleado.Telefono === "" || empleado.FechaNacimiento === "" || empleado.LugarNacimiento === "" || empleado.Sexo === "" || empleado.DireccionResidencia === "" || empleado.CiudadResidencia === "" || empleado.Cargo === "" || empleado.Estado === "") {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
@@ -129,9 +134,9 @@ function useEmpleado() {
             e.preventDefault();
             const resultado = await updateEmpleado(empleado, empleado.user_id);
             if (resultado.message === 'hecho') {
+                toggleModal();
                 alertSucces("Actualizado correctamente");
                 await getListadoEmpleados();
-                toggleModal();
             } else {
                 alertWarning("No se pudo crear el Empleado");
             }
@@ -196,8 +201,8 @@ function useEmpleado() {
             formData.append('imagen', imagen);
             const resultado = await updateImageEmpleado(formData, empleado.id);
             if (resultado.message === 'hecho') {
-                alertSucces("Imagen actualizada correctamente");
                 toggleModalImage();
+                alertSucces("Imagen actualizada correctamente");
                 await getListadoEmpleados();
             } else {
                 alertWarning("No se pudo actualizar la imagen");
@@ -222,7 +227,7 @@ function useEmpleado() {
     }, []);
 
     return {
-        titulo, tituloModal, openModal, empleado, lista, busqueda, loading, openModalImage, tituloModalImage,
+        titulo, tituloModal, openModal, empleado, lista, busqueda, loading, openModalImage, tituloModalImage, touched,
         toggleModal, handleChange, handleBusqueda, handleSubmit, cargarEmpleado, handleUpdate, eliminarEmpleado,
         toggleModalImage, cargarImagen, handleUpdateImage, handleChangeImagen
     };

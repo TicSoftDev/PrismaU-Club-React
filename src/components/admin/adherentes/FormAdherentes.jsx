@@ -54,22 +54,22 @@ function FormAdherentes({ socio, adherente, hanleChange, handleChangeSelect, tou
                         <Label htmlFor="tipo" value="Tipo Documento" />
                     </div>
                     <Select2 id="tipo" icon={FaIdCard} name='TipoDocumento' onChange={hanleChange}
-                        defaultValue={adherente.TipoDocumento ? adherente.TipoDocumento : "Escoja una opcion..."}
+                        defaultValue={adherente.TipoDocumento ? adherente.TipoDocumento : "Escoja una opción..."}
                         className={inputClass(adherente.TipoDocumento)}>
-                        <option disabled>Escoja una opcion...</option>
+                        <option disabled>Escoja una opción...</option>
                         <option value="TI">Tarjeta Identidad</option>
-                        <option value="CC">Cedula Ciudadania</option>
-                        <option value="CE">Cedula Extranjeria</option>
+                        <option value="CC">Cédula Ciudadanía</option>
+                        <option value="CE">Cédula Extranjería</option>
                     </Select2>
                     <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                 </div>
                 <div className="w-full sm:w-1/2">
                     <div className="mb-2 block">
-                        <Label htmlFor="documento" value="Numero Documento" />
+                        <Label htmlFor="documento" value="Número Documento" />
                     </div>
                     <TextInput id="documento" type="number" icon={FaIdCard} onChange={hanleChange}
                         className={inputClass(adherente.Documento)} value={adherente.Documento}
-                        name='Documento' placeholder="Digite el numero de documento..." />
+                        name='Documento' placeholder="Digite el número de documento..." />
                     <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                 </div>
                 <div className="w-full">
@@ -85,11 +85,11 @@ function FormAdherentes({ socio, adherente, hanleChange, handleChangeSelect, tou
             <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4 sm:mt-3">
                 <div className="w-full">
                     <div className="mb-2 block">
-                        <Label htmlFor="telefono" value="Telefono" />
+                        <Label htmlFor="telefono" value="Teléfono" />
                     </div>
                     <TextInput id="telefono" type="tel" icon={FaPhoneAlt} onChange={hanleChange}
                         className={inputClass(adherente.Telefono)} value={adherente.Telefono}
-                        name='Telefono' placeholder="Digite el numero de telefono..." />
+                        name='Telefono' placeholder="Digite el numero de teléfono..." />
                     <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                 </div>
                 <div className="w-full">
@@ -112,9 +112,10 @@ function FormAdherentes({ socio, adherente, hanleChange, handleChangeSelect, tou
                     <div className="mb-2 block">
                         <Label htmlFor="sexo" value="Sexo" />
                     </div>
-                    <Select2 id="sexo" type="text" icon={FaMercury} onChange={hanleChange} name='Sexo'
-                        defaultValue={adherente.Sexo ? adherente.Sexo : "Escoja una opcion..."} >
-                        <option disabled>Escoja una opcion...</option>
+                    <Select2 id="sexo" type="text" icon={FaMercury} onChange={hanleChange}
+                        name='Sexo' className={inputClass(adherente.Sexo)}
+                        defaultValue={adherente.Sexo ? adherente.Sexo : "Escoja una opción..."} >
+                        <option disabled>Escoja una opción...</option>
                         <option>Masculino</option>
                         <option>Femenino</option>
                     </Select2>
@@ -151,11 +152,11 @@ function FormAdherentes({ socio, adherente, hanleChange, handleChangeSelect, tou
                         <Label htmlFor="civil" value="Estado Civil" />
                     </div>
                     <Select2 id="civil" icon={FaUserTag} onChange={hanleChange} name='EstadoCivil'
-                        defaultValue={adherente.EstadoCivil ? adherente.EstadoCivil : "Escoja una opcion..."} >
-                        <option disabled>Escoja una opcion...</option>
+                        defaultValue={adherente.EstadoCivil ? adherente.EstadoCivil : "Escoja una opción..."} >
+                        <option disabled>Escoja una opción...</option>
                         <option>Soltero (a)</option>
                         <option>Casado (a)</option>
-                        <option>Union Libre</option>
+                        <option>Unión Libre</option>
                         <option>Viudo (a)</option>
                         <option>Divorciado (a)</option>
                     </Select2>
@@ -164,7 +165,7 @@ function FormAdherentes({ socio, adherente, hanleChange, handleChangeSelect, tou
             <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4 sm:mt-3">
                 <div className="w-full">
                     <div className="mb-2 block">
-                        <Label htmlFor="Profesion" value="Profesion" />
+                        <Label htmlFor="Profesion" value="Profesión" />
                     </div>
                     <TextInput id="Profesion" type="tel" icon={FaUserGraduate} onChange={hanleChange}
                         value={adherente.Profesion ? adherente.Profesion : ""}
@@ -192,25 +193,25 @@ function FormAdherentes({ socio, adherente, hanleChange, handleChangeSelect, tou
                     </div>
                     <TextInput id="TiempoServicio" type="text" icon={FaSortNumericUp} onChange={hanleChange}
                         value={adherente.TiempoServicio ? adherente.TiempoServicio : ""}
-                        name='TiempoServicio' placeholder="Escriba el Tiempo de Servicio" />
+                        name='TiempoServicio' placeholder="Escriba el tiempo de Servicio" />
                 </div>
             </div>
             <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4 sm:mt-3">
                 <div className="w-full">
                     <div className="mb-2 block">
-                        <Label htmlFor="TelOficina" value="Telefono Oficina" />
+                        <Label htmlFor="TelOficina" value="Teléfono Oficina" />
                     </div>
                     <TextInput id="TelOficina" type="tel" icon={FaPhoneAlt} onChange={hanleChange}
                         value={adherente.TelOficina ? adherente.TelOficina : ""}
-                        name='TelOficina' placeholder="Escriba el Telefono Oficina..." />
+                        name='TelOficina' placeholder="Escriba el teléfono de la oficina..." />
                 </div>
                 <div className="w-full">
                     <div className="mb-2 block">
-                        <Label htmlFor="DireccionOficina" value="Direccion Oficina" />
+                        <Label htmlFor="DireccionOficina" value="Dirección Oficina" />
                     </div>
                     <TextInput id="DireccionOficina" type="text" icon={FaMapMarkerAlt} onChange={hanleChange}
                         value={adherente.DireccionOficina ? adherente.DireccionOficina : ""}
-                        name='DireccionOficina' placeholder="Escriba la Direccion de la Oficina..." />
+                        name='DireccionOficina' placeholder="Escriba la dirección de la oficina..." />
                 </div>
                 <div className="w-full">
                     <div className="mb-2 block">
@@ -218,7 +219,7 @@ function FormAdherentes({ socio, adherente, hanleChange, handleChangeSelect, tou
                     </div>
                     <TextInput id="CiudadOficina" type="text" icon={FaCity} onChange={hanleChange}
                         value={adherente.CiudadOficina ? adherente.CiudadOficina : ""}
-                        name='CiudadOficina' placeholder="Escriba la Ciudad de la Oficina" />
+                        name='CiudadOficina' placeholder="Escriba la ciudad de la oficina" />
                 </div>
             </div>
         </>

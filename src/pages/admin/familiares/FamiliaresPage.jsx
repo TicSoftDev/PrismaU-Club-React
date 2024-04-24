@@ -14,7 +14,7 @@ function FamiliaresPage() {
     const { id } = useParams();
     const { titulo, tituloModal, openModal, listadoFamiliares, loading, familiar, tituloModalImage, openModalImage,
         toggleModal, handleChange, handleSubmit, handleUpdate, cargarFamiliar, eliminarFamiliar, toggleModalImage,
-        handleChangeImagen, cargarImagen, handleUpdateImage,
+        handleChangeImagen, cargarImagen, handleUpdateImage, touched
     } = useFamiliares(id);
     const handler = familiar.id ? handleUpdate : handleSubmit;
 
@@ -24,7 +24,7 @@ function FamiliaresPage() {
             <Container>
                 <MenuEmpleados toggleModal={toggleModal} />
                 <VentanaModal size={'7xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal} hanleSubmit={handler}>
-                    <FormFamiliar familiar={familiar} hanleChange={handleChange} />
+                    <FormFamiliar familiar={familiar} hanleChange={handleChange} touched={touched} />
                 </VentanaModal>
                 <TablaFamiliares cargarEmpleado={cargarFamiliar} usuarios={listadoFamiliares} eliminar={eliminarFamiliar}
                     loading={loading} cargar={cargarImagen} />
