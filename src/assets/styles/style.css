@@ -11,3 +11,8 @@
     color: #28a745b3;
     background-color: #fff;
 }
+
+.react-select__control, .react-select__control--is-focused {
+    outline: none !important;
+    box-shadow: none !important;
+  }

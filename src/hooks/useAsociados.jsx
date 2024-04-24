@@ -14,6 +14,7 @@ function useAsociados() {
     let lista = [];
     let listaInactivo = [];
     const navigate = useNavigate();
+    const [touched, setTouched] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [openModalEstado, setOpenModalEstado] = useState(false);
     const [openModalImage, setOpenModalImage] = useState(false);
@@ -87,6 +88,7 @@ function useAsociados() {
             CiudadOficina: "",
             Rol: 2
         });
+        setTouched(false);
     };
 
     const handleBusqueda = ({ target }) => {
@@ -104,7 +106,8 @@ function useAsociados() {
 
     const handleSubmit = async (e) => {
         try {
-            if (asociado.Nombre === "" || asociado.Apellidos === "" || asociado.Documento === "" || asociado.TipoDocumento === "" || asociado.Correo === "" || asociado.Telefono === "" || asociado.FechaNacimiento === "" || asociado.LugarNacimiento === "" || asociado.Sexo === "" || asociado.DireccionResidencia === "" || asociado.CiudadResidencia === "" || asociado.TiempoResidencia === "" || asociado.EstadoCivil === "" || asociado.Profesion === "" || asociado.Trabajo === "" || asociado.Cargo === "" || asociado.TiempoServicio === "" || asociado.TelOficina === "" || asociado.DireccionOficina === "" || asociado.CiudadOficina === "") {
+            setTouched(true);
+            if (asociado.Nombre === "" || asociado.Apellidos === "" || asociado.Documento === "" || asociado.TipoDocumento === "" || asociado.Correo === "" || asociado.Telefono === "" || asociado.Sexo === "") {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
             }
@@ -164,7 +167,8 @@ function useAsociados() {
 
     const handleUpdate = async (e) => {
         try {
-            if (asociado.Nombre === "" || asociado.Apellidos === "" || asociado.Documento === "" || asociado.TipoDocumento === "" || asociado.Correo === "" || asociado.Telefono === "" || asociado.FechaNacimiento === "" || asociado.LugarNacimiento === "" || asociado.Sexo === "" || asociado.DireccionResidencia === "" || asociado.CiudadResidencia === "" || asociado.TiempoResidencia === "" || asociado.EstadoCivil === "" || asociado.Profesion === "" || asociado.Trabajo === "" || asociado.Cargo === "" || asociado.TiempoServicio === "" || asociado.TelOficina === "" || asociado.DireccionOficina === "" || asociado.CiudadOficina === "") {
+            setTouched(true);
+            if (asociado.Nombre === "" || asociado.Apellidos === "" || asociado.Documento === "" || asociado.TipoDocumento === "" || asociado.Correo === "" || asociado.Telefono === "" || asociado.Sexo === "") {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
             }
@@ -173,10 +177,10 @@ function useAsociados() {
             e.preventDefault();
             const resultado = await updatePersonal(asociado, asociado.user_id);
             if (resultado.message === 'hecho') {
+                toggleModal();
                 alertSucces("Actualizado correctamente");
                 await getListadoAsociados();
                 await getListadoAsociadosInactivos();
-                toggleModal();
             } else if (resultado.message === 'error') {
                 asociado.id = id;
                 alertWarning("No se pudo actualizar el Asociado");
@@ -260,10 +264,10 @@ function useAsociados() {
             e.preventDefault();
             const resultado = await changeStatusAsociado(asociado.id, motivo);
             if (resultado.message === "hecho") {
+                toggleModalEstado();
                 alertSucces("Se cambio correctamente");
                 await getListadoAsociados();
                 await getListadoAsociadosInactivos();
-                toggleModalEstado();
             } else {
                 alertWarning("No se pudo cambiar");
             }
@@ -293,8 +297,8 @@ function useAsociados() {
             formData.append('imagen', imagen);
             const resultado = await updateImagePersonal(formData, asociado.id);
             if (resultado.message === 'hecho') {
-                alertSucces("Imagen actualizada correctamente");
                 toggleModalImage();
+                alertSucces("Imagen actualizada correctamente");
                 await getListadoAsociados();
                 await getListadoAsociadosInactivos();
 
@@ -332,7 +336,7 @@ function useAsociados() {
 
     return {
         titulo, titulo2, tituloModal, openModal, asociado, lista, busqueda, loading, busquedaInactivo, listaInactivo,
-        openModalImage, tituloModalImage, imagen, openModalEstado, motivo, titulo3, handleUpdateEstado,
+        openModalImage, tituloModalImage, imagen, openModalEstado, motivo, titulo3, touched, handleUpdateEstado,
         goInactivos, toggleModal, handleChange, handleSubmit, handleBusqueda, cargarAsociado, handleUpdate, toggleModalImage,
         eliminarAsociado, handleBusquedaInactivo, goActivos, cambiarEstado, cargarImagen, handleUpdateImage, handleChangeImagen,
         handleChangeEstado, toggleModalEstado

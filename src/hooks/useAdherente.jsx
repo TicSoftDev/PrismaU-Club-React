@@ -14,6 +14,7 @@ function useAdherente() {
     let lista = [];
     let listaInactivo = [];
     const navigate = useNavigate();
+    const [touched, setTouched] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [openModalEstado, setOpenModalEstado] = useState(false);
     const [openModalImage, setOpenModalImage] = useState(false);
@@ -86,6 +87,7 @@ function useAdherente() {
             CiudadOficina: "",
             Rol: 3
         });
+        setTouched(false);
     };
 
     const handleBusqueda = ({ target }) => {
@@ -103,17 +105,17 @@ function useAdherente() {
 
     const handleSubmit = async (e) => {
         try {
-            e.preventDefault();
-            if (adherente.Nombre === "" || adherente.Apellidos === "" || adherente.Documento === "" || adherente.TipoDocumento === "" || adherente.Correo === "" || adherente.Telefono === "" || adherente.FechaNacimiento === "" || adherente.LugarNacimiento === "" || adherente.Sexo === "" || adherente.DireccionResidencia === "" || adherente.CiudadResidencia === "" || adherente.TiempoResidencia === "" || adherente.EstadoCivil === "" || adherente.Profesion === "" || adherente.Trabajo === "" || adherente.Cargo === "" || adherente.TiempoServicio === "" || adherente.TelOficina === "" || adherente.DireccionOficina === "" || adherente.CiudadOficina === "") {
+            setTouched(true);
+            if (adherente.asociado_id === null || adherente.Nombre === "" || adherente.Apellidos === "" || adherente.Documento === "" || adherente.TipoDocumento === "" || adherente.Correo === "" || adherente.Telefono === "" || adherente.Sexo === "") {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
             }
             const data = await createPersonal(adherente);
             if (data.message === 'hecho') {
+                toggleModal();
                 alertSucces("Creado correctamente");
                 await getListadoAdherentes();
                 await getListadoAdherentesInactivos();
-                toggleModal();
             } else if (data.message === 'error') {
                 alertWarning("No se pudo crear el Adherente");
             }
@@ -124,6 +126,13 @@ function useAdherente() {
                 alertError("Ocurrió un error al crear el adherente: " + error.message);
             }
         }
+    };
+
+    const handleSelectChange = (selectedOption) => {
+        setAdherente(prev => ({
+            ...prev,
+            asociado_id: selectedOption.value
+        }));
     };
 
     const handleChange = ({ target }) => {
@@ -164,7 +173,8 @@ function useAdherente() {
 
     const handleUpdate = async (e) => {
         try {
-            if (adherente.Nombre === "" || adherente.Apellidos === "" || adherente.Documento === "" || adherente.TipoDocumento === "" || adherente.Correo === "" || adherente.Telefono === "" || adherente.FechaNacimiento === "" || adherente.LugarNacimiento === "" || adherente.Sexo === "" || adherente.DireccionResidencia === "" || adherente.CiudadResidencia === "" || adherente.TiempoResidencia === "" || adherente.EstadoCivil === "" || adherente.Profesion === "" || adherente.Trabajo === "" || adherente.Cargo === "" || adherente.TiempoServicio === "" || adherente.TelOficina === "" || adherente.DireccionOficina === "" || adherente.CiudadOficina === "") {
+            setTouched(true);
+            if (adherente.asociado_id === null || adherente.Nombre === "" || adherente.Apellidos === "" || adherente.Documento === "" || adherente.TipoDocumento === "" || adherente.Correo === "" || adherente.Telefono === "" || adherente.Sexo === "") {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
             }
@@ -173,10 +183,10 @@ function useAdherente() {
             e.preventDefault();
             const resultado = await updatePersonal(adherente, adherente.user_id);
             if (resultado.message === 'hecho') {
+                toggleModal();
                 alertSucces("Actualizado correctamente");
                 await getListadoAdherentes();
                 await getListadoAdherentesInactivos();
-                toggleModal();
             } else if (resultado.message === 'error') {
                 adherente.id = id;
                 alertWarning("No se pudo crear el Adherente");
@@ -256,10 +266,10 @@ function useAdherente() {
             e.preventDefault();
             const resultado = await changeStatusAdherente(adherente.id, motivo);
             if (resultado.message === "hecho") {
+                toggleModalEstado();
                 alertSucces("Se cambio correctamente");
                 await getListadoAdherentes();
                 await getListadoAdherentesInactivos();
-                toggleModalEstado();
             } else {
                 alertWarning("No se pudo cambiar");
             }
@@ -320,8 +330,8 @@ function useAdherente() {
             formData.append('imagen', imagen);
             const resultado = await updateImagePersonal(formData, adherente.id);
             if (resultado.message === 'hecho') {
-                alertSucces("Imagen actualizada correctamente");
                 toggleModalImage();
+                alertSucces("Imagen actualizada correctamente");
                 await getListadoAdherentes();
                 await getListadoAdherentesInactivos();
 
@@ -359,10 +369,11 @@ function useAdherente() {
 
     return {
         titulo, tituloModal, openModal, adherente, lista, busqueda, loading, listaInactivo, busquedaInactivo, titulo2,
-        openModalImage, tituloModalImage, imagen, openModalEstado, motivo, titulo3,
+        openModalImage, tituloModalImage, imagen, openModalEstado, motivo, titulo3, touched,
         toggleModal, handleChange, handleBusqueda, handleSubmit, cargarAdherente, handleUpdate, eliminarAdherente,
         goActivos, goInactivos, handleBusquedaInactivos, cambiarEstado, cambiarAsociado, toggleModalImage,
         cargarImagen, handleUpdateImage, handleChangeImagen, toggleModalEstado, handleUpdateEstado, handleChangeEstado,
+        handleSelectChange
 
     };
 }
