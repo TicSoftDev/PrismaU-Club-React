@@ -344,22 +344,30 @@ function useAdherente() {
         }
     }
 
+    const normalizeText = (text) => {
+        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    };
+
     if (!busqueda) {
         lista = listadoAdherentes;
     } else {
-        lista = listadoAdherentes.filter((dato) =>
-            dato.personal.Nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-            dato.personal.Apellidos.toLowerCase().includes(busqueda.toLowerCase()) ||
-            dato.personal.Documento.toLowerCase().includes(busqueda.toLowerCase()))
+        const busquedaNormalizada = normalizeText(busqueda);
+        lista = listadoAdherentes.filter((dato) => {
+            const nombreCompleto = normalizeText(`${dato.personal.Nombre} ${dato.personal.Apellidos}`);
+            return nombreCompleto.includes(busquedaNormalizada) ||
+                normalizeText(dato.personal.Documento).includes(busquedaNormalizada);
+        });
     }
 
     if (!busquedaInactivo) {
         listaInactivo = listadoAdherentesInactivos;
     } else {
-        listaInactivo = listadoAdherentesInactivos.filter((dato) =>
-            dato.personal.Nombre.toLowerCase().includes(busquedaInactivo.toLowerCase()) ||
-            dato.personal.Apellidos.toLowerCase().includes(busquedaInactivo.toLowerCase()) ||
-            dato.personal.Documento.toLowerCase().includes(busquedaInactivo.toLowerCase()))
+        const busquedaInactivosNormalizada = normalizeText(busquedaInactivo);
+        listaInactivo = listadoAdherentesInactivos.filter((dato) => {
+            const nombreCompletoInactivo = normalizeText(`${dato.personal.Nombre} ${dato.personal.Apellidos}`);
+            return nombreCompletoInactivo.includes(busquedaInactivosNormalizada) ||
+                normalizeText(dato.personal.Documento).includes(busquedaInactivosNormalizada);
+        });
     }
 
     useEffect(() => {

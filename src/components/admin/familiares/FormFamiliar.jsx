@@ -158,7 +158,7 @@ function FormFamiliar({ familiar, hanleChange, touched }) {
                         <option value={'Madre'}>Madre</option>
                         <option value={'Hermano (a)'}>Hermano (a)</option>
                         <option value={'Sobrino (a)'}>Sobrino (a)</option>
-                        <option value={'Tió (a)'}>Tió (a)</option>
+                        <option value={'Tió (a)'}>Tio (a)</option>
                         <option value={'Suegro (a)'}>Suegro (a)</option>
                         <option value={'Escolta'}>Escolta</option>
                         <option value={'Niñera'}>Niñera</option>

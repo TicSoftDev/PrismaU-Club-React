@@ -213,13 +213,19 @@ function useEmpleado() {
         }
     }
 
+    const normalizeText = (text) => {
+        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    };
+
     if (!busqueda) {
         lista = listadoEmpleados;
     } else {
-        lista = listadoEmpleados.filter((dato) =>
-            dato.empleado.Nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-            dato.empleado.Apellidos.toLowerCase().includes(busqueda.toLowerCase()) ||
-            dato.empleado.Documento.toLowerCase().includes(busqueda.toLowerCase()))
+        const busquedaNormalizada = normalizeText(busqueda);
+        lista = listadoEmpleados.filter((dato) => {
+            const nombreCompleto = normalizeText(`${dato.empleado.Nombre} ${dato.empleado.Apellidos}`);
+            return nombreCompleto.includes(busquedaNormalizada) ||
+                normalizeText(dato.empleado.Documento).includes(busquedaNormalizada);
+        });
     }
 
     useEffect(() => {
