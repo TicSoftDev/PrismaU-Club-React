@@ -12,8 +12,8 @@ function UlAside() {
         { icono: "magic", texto: "Hobbies", color: "red", opacidad: '600', link: PrivateRoutes.HOBBIES },
     ];
     const admin = [
-        { icono: "user-tie", texto: "Asociados", color: "purple", opacidad: '600', link: PrivateRoutes.ASOCIADOS },
-        { icono: "user-tie", texto: "Adherentes", color: "pink", opacidad: '600', link: PrivateRoutes.ADHERENTES },
+        { icono: "user-tie", texto: "Asociados", color: "purple", opacidad: '600', link: PrivateRoutes.ASOCIADOS, activeSubroutes: [PrivateRoutes.ASOCIADOSINACTIVOS] },
+        { icono: "user-tie", texto: "Adherentes", color: "pink", opacidad: '600', link: PrivateRoutes.ADHERENTES, activeSubroutes: [PrivateRoutes.ADHERENTESINACTIVOS] },
         { icono: "users", texto: "Empleados", color: "red", opacidad: '600', link: PrivateRoutes.EMPLEADOS },
         { icono: "map-marked-alt", texto: "Espacios", color: "yellow", opacidad: '400', link: PrivateRoutes.ESPACIOS },
         { icono: "user-clock", texto: "Invitaciones", color: "green", opacidad: '500', link: PrivateRoutes.INVITACIONES },
@@ -31,7 +31,7 @@ function UlAside() {
             <LinkInicio />
             {
                 items.map((item) => (
-                    <Link menu={item} key={item.texto} />
+                    <Link menu={item} key={item.texto} activeSubroutes={item.activeSubroutes} />
                 ))
             }
 

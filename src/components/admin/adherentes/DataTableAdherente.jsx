@@ -16,8 +16,7 @@ function DataTableAdherente({ usuarios, cargarAdherente, eliminar, loading, chan
                 <div className="flex">
                     <Button onClick={() => cargarAdherente(row.personal)} className='rounded-full w-9 bg-blue-700 text-white' title='Editar'> <FaEdit /> </Button>
                     <Button onClick={() => eliminar(row.id)} className='rounded-full w-9 bg-red-600 text-white' title='Eliminar'> <FaTrash /> </Button>
-                    <Button onClick={() => navigate(`${PrivateRoutes.FAMILIARES}/${row.personal.id}`)} className='rounded-full w-9 bg-green-600 text-white' title='Agregar Familiar'> <FaUserPlus /> </Button>
-                    <Button onClick={() => change(row.personal.id)} className='rounded-full w-9 bg-yellow-400 text-white' title='Cambiar estado'> {row.personal.Estado == 1 ? <FaUserSlash /> : <FaUserCheck />}  </Button>
+                    <Button onClick={() => navigate(`${PrivateRoutes.FAMILIARES}/${row.personal.id}`, { state: { fromAdherente: row.personal.id } })} className='rounded-full w-9 bg-green-600 text-white' title='Agregar Familiar'> <FaUserPlus /> </Button>                    <Button onClick={() => change(row.personal.id)} className='rounded-full w-9 bg-yellow-400 text-white' title='Cambiar estado'> {row.personal.Estado == 1 ? <FaUserSlash /> : <FaUserCheck />}  </Button>
                     <Button onClick={() => cambiar(row.id)} className='rounded-full w-9 bg-purple-600 text-white' title='Hacer Asociado'> <FaUserCog /> </Button>
                     <Button onClick={() => cargar(row.personal.id)} className='rounded-full w-9 bg-fuchsia-600 text-white' title='Cambiar Imagen'> <FaRegImages />  </Button>
                 </div>

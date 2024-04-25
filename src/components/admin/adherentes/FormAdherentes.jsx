@@ -23,7 +23,7 @@ function FormAdherentes({ socio, adherente, hanleChange, handleChangeSelect, tou
                         <Label value="Asociado" />
                     </div>
                     <Select options={options} onChange={handleChangeSelect} name='asociado_id'
-                        value={options.find(option => option.value === adherente.asociado_id)}
+                        value={options.find(option => option.value == adherente.asociado_id)}
                         placeholder="Escoja un asociado..." />
                     <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                 </div>
