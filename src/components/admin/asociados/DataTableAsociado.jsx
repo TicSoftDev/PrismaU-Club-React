@@ -1,12 +1,12 @@
 import { Button } from 'flowbite-react';
 import React from 'react';
 import DataTable from 'react-data-table-component';
-import { FaEdit, FaRegImages, FaTrash, FaUserCheck, FaUserPlus, FaUserSlash } from 'react-icons/fa';
-import { PrivateRoutes, RouteBack } from '../../../models/RutasModel';
+import { FaEdit, FaRegImages, FaTrash, FaUserCheck, FaUserCog, FaUserPlus, FaUserSlash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { PrivateRoutes, RouteBack } from '../../../models/RutasModel';
 import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 
-function DataTableAsociado({ usuarios, cargarAsociado, eliminar, loading, change, cargar }) {
+function DataTableAsociado({ usuarios, cargarAsociado, eliminar, loading, change, cargar, cambiar }) {
 
     const navigate = useNavigate();
     const columns = [
@@ -18,10 +18,22 @@ function DataTableAsociado({ usuarios, cargarAsociado, eliminar, loading, change
                     <Button onClick={() => eliminar(row.id)} className='rounded-full w-9 bg-red-600 text-white' title='Eliminar'> <FaTrash /> </Button>
                     <Button onClick={() => navigate(`${PrivateRoutes.FAMILIARES}/${row.personal.id}`)} className='rounded-full w-9 bg-green-600 text-white' title='Familiares'> <FaUserPlus /> </Button>
                     <Button onClick={() => change(row.personal.id)} className='rounded-full w-9 bg-yellow-400 text-white' title='Cambiar Estado'> {row.personal.Estado == 1 ? <FaUserSlash /> : <FaUserCheck />}  </Button>
+                    <Button onClick={() => cambiar(row.id)} className='rounded-full w-9 bg-purple-600 text-white' title='Hacer Adherente'> <FaUserCog /> </Button>
                     <Button onClick={() => cargar(row.personal.id)} className='rounded-full w-9 bg-fuchsia-600 text-white' title='Cambiar Imagen'> <FaRegImages />  </Button>
                 </div>
             ),
             width: '230px'
+        },
+        {
+            name: "Familiares",
+            cell: row => (
+                <div className="flex justify-center items-center w-full">
+                    <span className="bg-purple-100 text-purple-800 text-md font-medium me-2 px-2.5 py-0.5 rounded dark:bg-purple-900 dark:text-purple-300">
+                        {row.personal.familiares_count}
+                    </span>
+                </div>
+            ),
+            width: '100px'
         },
         {
             name: "Estado",

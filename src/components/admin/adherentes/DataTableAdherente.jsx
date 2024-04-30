@@ -24,6 +24,17 @@ function DataTableAdherente({ usuarios, cargarAdherente, eliminar, loading, chan
             width: '250px'
         },
         {
+            name: "Familiares",
+            cell: row => (
+                <div className="flex justify-center items-center w-full">
+                    <span className="bg-purple-100 text-purple-800 text-md font-medium me-2 px-2.5 py-0.5 rounded dark:bg-purple-900 dark:text-purple-300">
+                        {row.personal.familiares_count}
+                    </span>
+                </div>
+            ),
+            width: '100px'
+        },
+        {
             name: "Estado",
             cell: row => (
                 <div className="flex items-center">

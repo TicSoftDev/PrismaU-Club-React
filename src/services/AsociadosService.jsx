@@ -21,3 +21,8 @@ export async function changeStatusAsociado(id, motivo) {
     const res = await axios.put(URL_ASOCIADOS + "/status/" + id, motivo);
     return res.data;
 };
+
+export async function changeToAdherente(id) {
+    const res = await axios.put(URL_ASOCIADOS + "/adherente/" + id);
+    return res.data;
+};

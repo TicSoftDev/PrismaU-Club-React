@@ -111,13 +111,14 @@ function useAdherente() {
                 return;
             }
             const data = await createPersonal(adherente);
+            if (data.status === false) {
+               return alertWarning("Este asociado ya ha sido asignado a otro adherente");
+            }
             if (data.message === 'hecho') {
                 toggleModal();
                 alertSucces("Creado correctamente");
                 await getListadoAdherentes();
                 await getListadoAdherentesInactivos();
-            } else if (data.message === 'error') {
-                alertWarning("No se pudo crear el Adherente");
             }
         } catch (error) {
             if (error.message === 'Duplicado') {
@@ -167,6 +168,7 @@ function useAdherente() {
     };
 
     const cargarAdherente = async (adherente) => {
+        adherente.Rol = 3;
         setAdherente(adherente);
         setOpenModal(true);
     };
@@ -182,13 +184,17 @@ function useAdherente() {
             delete adherente.id;
             e.preventDefault();
             const resultado = await updatePersonal(adherente, adherente.user_id);
+            if (resultado.status === false) {
+                setAdherente({ ...adherente, id: id });
+                return alertWarning("Este asociado ya ha sido asignado a otro adherente");
+             }
             if (resultado.message === 'hecho') {
                 toggleModal();
                 alertSucces("Actualizado correctamente");
                 await getListadoAdherentes();
                 await getListadoAdherentesInactivos();
-            } else if (resultado.message === 'error') {
-                adherente.id = id;
+            } else {
+                setAdherente({ ...adherente, id: id });
                 alertWarning("No se pudo crear el Adherente");
             }
         } catch (error) {
@@ -347,12 +353,12 @@ function useAdherente() {
     const normalizeText = (text) => {
         return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     };
-    
+
     const filterAsociados = (listado, busqueda) => {
         if (!busqueda) return listado;
         const busquedaNormalizada = normalizeText(busqueda);
         const palabrasBusqueda = busquedaNormalizada.split(/\s+/);
-    
+
         return listado.filter((dato) => {
             const nombreNormalizado = normalizeText(`${dato.personal.Nombre} ${dato.personal.Apellidos}`);
             return palabrasBusqueda.every(palabra => nombreNormalizado.includes(palabra));

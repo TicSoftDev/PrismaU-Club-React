@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { alertError, alertSucces, alertWarning } from '../utilities/alerts/Alertas';
-import { changeStatusAsociado, getAsociados, getAsociadosInactivos } from '../services/AsociadosService';
-import Swal from 'sweetalert2';
-import { createPersonal, deletePersonal, updateImagePersonal, updatePersonal } from '../services/PersonalService';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { PrivateRoutes } from '../models/RutasModel';
+import { changeStatusAsociado, changeToAdherente, getAsociados, getAsociadosInactivos } from '../services/AsociadosService';
+import { createPersonal, deletePersonal, updateImagePersonal, updatePersonal } from '../services/PersonalService';
+import { alertError, alertSucces, alertWarning } from '../utilities/alerts/Alertas';
 
 function useAsociados() {
 
@@ -221,6 +221,33 @@ function useAsociados() {
         }
     };
 
+    const cambiarAdherente = async (id) => {
+        try {
+            Swal.fire({
+                title: '¿Seguro que quiere cambiar este Asociado a Adherente?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, cambiar',
+                cancelButtonText: 'No, cancelar'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    const resultado = await changeToAdherente(id);
+                    if (resultado.message === "hecho") {
+                        alertSucces("Se cambio correctamente");
+                        await getListadoAsociados();
+                        await getListadoAsociadosInactivos();
+                    } else {
+                        alertWarning("No se pudo cambiar");
+                    }
+                }
+            });
+        } catch (error) {
+
+        }
+    };
+
     const handleChangeEstado = ({ target }) => {
         setMotivo({
             ...motivo,
@@ -313,12 +340,12 @@ function useAsociados() {
     const normalizeText = (text) => {
         return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     };
-    
+
     const filterAsociados = (listado, busqueda) => {
         if (!busqueda) return listado;
         const busquedaNormalizada = normalizeText(busqueda);
         const palabrasBusqueda = busquedaNormalizada.split(/\s+/);
-    
+
         return listado.filter((dato) => {
             const nombreNormalizado = normalizeText(`${dato.personal.Nombre} ${dato.personal.Apellidos}`);
             return palabrasBusqueda.every(palabra => nombreNormalizado.includes(palabra));
@@ -348,7 +375,7 @@ function useAsociados() {
         openModalImage, tituloModalImage, imagen, openModalEstado, motivo, titulo3, touched, handleUpdateEstado,
         goInactivos, toggleModal, handleChange, handleSubmit, handleBusqueda, cargarAsociado, handleUpdate, toggleModalImage,
         eliminarAsociado, handleBusquedaInactivo, goActivos, cambiarEstado, cargarImagen, handleUpdateImage, handleChangeImagen,
-        handleChangeEstado, toggleModalEstado
+        handleChangeEstado, toggleModalEstado, cambiarAdherente
     };
 }
 
