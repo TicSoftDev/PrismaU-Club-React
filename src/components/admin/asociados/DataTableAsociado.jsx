@@ -9,6 +9,7 @@ import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 function DataTableAsociado({ usuarios, cargarAsociado, eliminar, loading, change, cargar, cambiar }) {
 
     const navigate = useNavigate();
+
     const columns = [
         {
             name: "Actions",
@@ -22,7 +23,10 @@ function DataTableAsociado({ usuarios, cargarAsociado, eliminar, loading, change
                     <Button onClick={() => cargar(row.personal.id)} className='rounded-full w-9 bg-fuchsia-600 text-white' title='Cambiar Imagen'> <FaRegImages />  </Button>
                 </div>
             ),
-            width: '230px'
+            width: '230px',
+            style: {
+                backgroundColor: '#f8fafc',
+            }
         },
         {
             name: "Familiares",
@@ -33,7 +37,7 @@ function DataTableAsociado({ usuarios, cargarAsociado, eliminar, loading, change
                     </span>
                 </div>
             ),
-            width: '100px'
+            width: '120px'
         },
         {
             name: "Estado",
@@ -77,7 +81,7 @@ function DataTableAsociado({ usuarios, cargarAsociado, eliminar, loading, change
         {
             name: "Correo",
             selector: row => row.personal.Correo,
-            width: '250px'
+            width: '270px'
         },
         {
             name: "Teléfono",
@@ -85,9 +89,21 @@ function DataTableAsociado({ usuarios, cargarAsociado, eliminar, loading, change
             width: '120px'
         },
     ];
-
+    
+    const customStyles = {
+        headCells: {
+            style: {
+                backgroundColor: '#379861', 
+                color: '#FFF', 
+                fontSize: '12px', 
+                textTransform: 'uppercase',
+                fontWeight: 'bold',
+            },
+        }
+    };
+    
     return (
-        <>
+        <div className="border border-gray-200 rounded-lg shadow w-full dark:border-gray-700 dark:bg-gray-800">
             <DataTable
                 columns={columns}
                 data={usuarios}
@@ -95,8 +111,9 @@ function DataTableAsociado({ usuarios, cargarAsociado, eliminar, loading, change
                 progressPending={loading}
                 progressComponent={<TableSkeleton />}
                 pagination
+                customStyles={customStyles}
             />
-        </>
+        </div>
     );
 }
 

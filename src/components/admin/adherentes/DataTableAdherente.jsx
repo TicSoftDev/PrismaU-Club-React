@@ -32,7 +32,7 @@ function DataTableAdherente({ usuarios, cargarAdherente, eliminar, loading, chan
                     </span>
                 </div>
             ),
-            width: '100px'
+            width: '120px'
         },
         {
             name: "Estado",
@@ -76,7 +76,7 @@ function DataTableAdherente({ usuarios, cargarAdherente, eliminar, loading, chan
         {
             name: "Correo",
             selector: row => row.personal.Correo,
-            width: '250px'
+            width: '270px'
         },
         {
             name: "Teléfono",
@@ -85,8 +85,20 @@ function DataTableAdherente({ usuarios, cargarAdherente, eliminar, loading, chan
         },
     ];
 
+    const customStyles = {
+        headCells: {
+            style: {
+                backgroundColor: '#379861', 
+                color: '#FFF', 
+                fontSize: '12px', 
+                textTransform: 'uppercase',
+                fontWeight: 'bold',
+            },
+        }
+    };
+
     return (
-        <>
+        <div className="border border-gray-200 rounded-lg shadow w-full dark:border-gray-700 dark:bg-gray-800">
             <DataTable
                 columns={columns}
                 data={usuarios}
@@ -94,8 +106,9 @@ function DataTableAdherente({ usuarios, cargarAdherente, eliminar, loading, chan
                 progressPending={loading}
                 progressComponent={<TableSkeleton />}
                 pagination
+                customStyles={customStyles}
             />
-        </>
+        </div>
     );
 }
 

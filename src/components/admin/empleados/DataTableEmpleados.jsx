@@ -69,8 +69,20 @@ export default function DataTableEmpleados({ usuarios, cargarEmpleado, eliminar,
         },
     ];
 
+    const customStyles = {
+        headCells: {
+            style: {
+                backgroundColor: '#379861', 
+                color: '#FFF', 
+                fontSize: '12px', 
+                textTransform: 'uppercase',
+                fontWeight: 'bold',
+            },
+        }
+    };
+
     return (
-        <div className="overflow-x-auto">
+        <div className="border border-gray-200 rounded-lg shadow w-full dark:border-gray-700 dark:bg-gray-800">
             <DataTable
                 columns={columns}
                 data={usuarios}
@@ -79,6 +91,7 @@ export default function DataTableEmpleados({ usuarios, cargarEmpleado, eliminar,
                 progressPending={loading}
                 progressComponent={<TableSkeleton />}
                 noDataComponent={<div className='flex justify-center font-bold my-20 text-gray-500'>No hay ningun empleado registrado</div>}
+                customStyles={customStyles}
             />
         </div>
     )
