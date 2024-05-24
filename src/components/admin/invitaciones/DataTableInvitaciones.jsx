@@ -12,6 +12,11 @@ function DataTableInvitaciones({ data, loading }) {
             width: '120px',
         },
         {
+            name: "Nombre completo",
+            cell: row => row.Nombre + " " + row.Apellidos,
+            width: '280px',
+        },
+        {
             name: "Teléfono",
             selector: row => row.Telefono,
             width: '150px',

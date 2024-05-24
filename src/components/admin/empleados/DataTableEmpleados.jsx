@@ -47,34 +47,32 @@ export default function DataTableEmpleados({ usuarios, cargarEmpleado, eliminar,
                     </div>
                 </div>
             ),
-            width: '280px',
             style: {
                 padding: '10px'
             }
+        },
+        {
+            name: "Identificación",
+            selector: row => row.Documento,
+            width: '180px'
+        },
+        {
+            name: "Correo",
+            selector: row => row.Correo,
         },
         {
             name: "Teléfono",
             selector: row => row.Telefono,
             width: '120px'
         },
-        {
-            name: "Correo",
-            selector: row => row.Correo,
-            width: '250px'
-        },
-        {
-            name: "Identificación",
-            selector: row => row.Documento,
-
-        },
     ];
 
     const customStyles = {
         headCells: {
             style: {
-                backgroundColor: '#379861', 
-                color: '#FFF', 
-                fontSize: '12px', 
+                backgroundColor: '#379861',
+                color: '#FFF',
+                fontSize: '12px',
                 textTransform: 'uppercase',
                 fontWeight: 'bold',
             },

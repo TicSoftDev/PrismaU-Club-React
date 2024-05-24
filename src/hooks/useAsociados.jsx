@@ -338,12 +338,17 @@ function useAsociados() {
 
     const filterAsociados = (listado, busqueda) => {
         if (!busqueda) return listado;
+    
         const busquedaNormalizada = normalizeText(busqueda);
         const palabrasBusqueda = busquedaNormalizada.split(/\s+/);
-
+    
         return listado.filter((dato) => {
             const nombreNormalizado = normalizeText(`${dato.Nombre} ${dato.Apellidos}`);
-            return palabrasBusqueda.every(palabra => nombreNormalizado.includes(palabra));
+            const documentoNormalizado = normalizeText(dato.Documento);
+    
+            return palabrasBusqueda.every(palabra =>
+                nombreNormalizado.includes(palabra) || documentoNormalizado.includes(palabra)
+            );
         });
     };
 

@@ -3,16 +3,18 @@ import DataTableLogEstados from '../../../components/admin/estados/DataTableLogE
 import useEstados from '../../../hooks/useEstados';
 import Container from '../../../utilities/helpers/Container';
 import TituloPage from '../../../utilities/helpers/TituloPage';
+import FiltroEstados from '../../../components/admin/estados/FiltroEstados';
 
 function LogEstadosPage() {
 
-    const { titulo, estados, loading } = useEstados();
+    const { titulo, lista, loading, busqueda, handleBusqueda } = useEstados();
 
     return (
         <>
             <TituloPage titulo={titulo} />
             <Container>
-                <DataTableLogEstados data={estados} loading={loading} />
+                <FiltroEstados busqueda={busqueda} handleBusqueda={handleBusqueda} />
+                <DataTableLogEstados data={lista} loading={loading} />
             </Container>
         </>
     );

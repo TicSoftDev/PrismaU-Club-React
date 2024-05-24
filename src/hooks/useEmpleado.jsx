@@ -218,15 +218,26 @@ function useEmpleado() {
         return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     };
 
+    const filterEmpleados = (listado, busqueda) => {
+        if (!busqueda) return listado;
+
+        const busquedaNormalizada = normalizeText(busqueda);
+        const palabrasBusqueda = busquedaNormalizada.split(/\s+/);
+
+        return listado.filter((dato) => {
+            const nombreNormalizado = normalizeText(`${dato.Nombre} ${dato.Apellidos}`);
+            const documentoNormalizado = normalizeText(dato.Documento);
+
+            return palabrasBusqueda.every(palabra =>
+                nombreNormalizado.includes(palabra) || documentoNormalizado.includes(palabra)
+            );
+        });
+    };
+
     if (!busqueda) {
         lista = listadoEmpleados;
     } else {
-        const busquedaNormalizada = normalizeText(busqueda);
-        lista = listadoEmpleados.filter((dato) => {
-            const nombreCompleto = normalizeText(`${dato.Nombre} ${dato.Apellidos}`);
-            return nombreCompleto.includes(busquedaNormalizada) ||
-                normalizeText(dato.Documento).includes(busquedaNormalizada);
-        });
+        lista = filterEmpleados(listadoEmpleados, busqueda);
     }
 
     useEffect(() => {
