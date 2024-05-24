@@ -16,6 +16,7 @@ export const PrivateRoutes = {
     ESPACIOS: "/espacios",
     ROLES: "/roles",
     HOBBIES: "/hobbies",
+    FAMILIARES: "/familiares",
     FAMILIARESASOCIADO: "/familiares-asociado",
     FAMILIARESADHERENTE: "/familiares-adherente",
     PERFIL: "/perfil",
@@ -24,4 +25,5 @@ export const PrivateRoutes = {
     CARGOS : "/cargos",
     ACCESOS : "/accesos",
     ESTADOS : "/estados",
+    PAGE403: "/403",
 };

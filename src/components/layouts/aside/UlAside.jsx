@@ -5,6 +5,7 @@ import Link from './LinkAside';
 import LinkInicio from './LinkInicio';
 
 function UlAside() {
+
     const superAdmin = [
         { icono: "user-shield", texto: "Administradores", color: "purple", opacidad: '600', link: PrivateRoutes.ADMINISTRADORES },
         { icono: "user-cog", texto: "Roles", color: "pink", opacidad: '600', link: PrivateRoutes.ROLES },
@@ -23,6 +24,7 @@ function UlAside() {
 
     const socio = [
         { icono: "user-clock", texto: "Invitados", color: "purple", opacidad: '600', link: PrivateRoutes.INVITADOS },
+        { icono: "users", texto: "Familiares", color: "pink", opacidad: '600', link: PrivateRoutes.FAMILIARES },
     ];
 
     const usuario = useSelector((state) => state.credenciales);
