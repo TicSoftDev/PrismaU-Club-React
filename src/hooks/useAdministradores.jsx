@@ -61,7 +61,9 @@ function useAdministradores() {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
             }
+            setLoading(true);
             const data = await createAdmin(admin);
+            setLoading(false);
             if (data.status) {
                 alertSucces("Creado correctamente");
                 recargar();
@@ -97,7 +99,9 @@ function useAdministradores() {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
             }
+            setLoading(true);
             const data = await updateAdmin(admin, admin.user_id);
+            setLoading(false);
             if (data.status) {
                 alertSucces("Actualizado correctamente");
                 toggleModal();

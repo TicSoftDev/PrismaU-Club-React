@@ -22,6 +22,7 @@ function FormFamiliar({ familiar, hanleChange, touched }) {
                         name='Nombre' placeholder="Escribe los nombres..." />
                     <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                 </div>
+                <input type="hidden" value="Adherente" name='Type' />
                 <div className="w-full">
                     <div className="mb-2 block">
                         <Label htmlFor="apellidos" value="Apellidos" />

@@ -19,7 +19,8 @@ function AdministradoresPage() {
             <Container>
                 <MenuEmpleados toggleModal={toggleModal} busqueda={busqueda} handleBusqueda={handleBusqueda}
                     entidad={true} titulo={titulo} data={lista} />
-                <VentanaModal size={'7xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal} hanleSubmit={handler}>
+                <VentanaModal size={'7xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal}
+                    hanleSubmit={handler} loading={loading}>
                     <FormAdmin admin={admin} hanleChange={handleChange} />
                 </VentanaModal>
                 <DataTableAdmins loading={loading} cargarAdmin={cargar} data={lista} eliminar={handleDelete} />

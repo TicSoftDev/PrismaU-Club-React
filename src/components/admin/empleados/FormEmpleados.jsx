@@ -53,6 +53,7 @@ function FormEmpleados({ empleado, hanleChange, touched }) {
                     <TextInput id="documento" type="number" icon={FaIdCard} onChange={hanleChange}
                         className={inputClass(empleado.Documento)} value={empleado.Documento}
                         name='Documento' placeholder="Digite el número de documento..." />
+                    <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                 </div>
                 <div className="w-full">
                     <div className="mb-2 block">
@@ -61,6 +62,7 @@ function FormEmpleados({ empleado, hanleChange, touched }) {
                     <TextInput id="correo" type="email" icon={FaEnvelope} onChange={hanleChange}
                         className={inputClass(empleado.Correo)} value={empleado.Correo}
                         name='Correo' placeholder="Escribe el correo..." />
+                    <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                 </div>
             </div>
             <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4 sm:mt-3">
@@ -71,6 +73,7 @@ function FormEmpleados({ empleado, hanleChange, touched }) {
                     <TextInput id="telefono" type="tel" icon={FaPhoneAlt} onChange={hanleChange}
                         className={inputClass(empleado.Telefono)} value={empleado.Telefono}
                         name='Telefono' placeholder="Digite el numero de teléfono..." />
+                    <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                 </div>
                 <div className="w-full">
                     <div className="mb-2 block">
@@ -79,6 +82,7 @@ function FormEmpleados({ empleado, hanleChange, touched }) {
                     <TextInput id="fecha" type="date" icon={FaCalendarAlt} onChange={hanleChange}
                         className={inputClass(empleado.FechaNacimiento)} value={empleado.FechaNacimiento}
                         name='FechaNacimiento' />
+                    <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                 </div>
                 <div className="w-full">
                     <div className="mb-2 block">
@@ -87,6 +91,7 @@ function FormEmpleados({ empleado, hanleChange, touched }) {
                     <TextInput id="LugarNacimiento" type="text" icon={FaMapLocation} onChange={hanleChange}
                         className={inputClass(empleado.LugarNacimiento)} value={empleado.LugarNacimiento}
                         name='LugarNacimiento' placeholder="Escriba el lugar de nacimiento" />
+                    <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                 </div>
                 <div className="w-full">
                     <div className="mb-2 block">
@@ -100,6 +105,7 @@ function FormEmpleados({ empleado, hanleChange, touched }) {
                         <option>Femenino</option>
                         <option>Otro</option>
                     </Select>
+                    <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                 </div>
                 <div className="w-full">
                     <div className="mb-2 block">
@@ -115,6 +121,7 @@ function FormEmpleados({ empleado, hanleChange, touched }) {
                         <option>Viudo (a)</option>
                         <option>Divorciado (a)</option>
                     </Select>
+                    <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                 </div>
             </div>
             <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4 sm:mt-3">
@@ -125,6 +132,7 @@ function FormEmpleados({ empleado, hanleChange, touched }) {
                     <TextInput id="direccion" type="tel" icon={FaMapMarkerAlt} onChange={hanleChange}
                         className={inputClass(empleado.DireccionResidencia)} value={empleado.DireccionResidencia}
                         name='DireccionResidencia' placeholder="Escriba la dirección de residencia..." />
+                    <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                 </div>
                 <div className="w-full">
                     <div className="mb-2 block">
@@ -133,17 +141,19 @@ function FormEmpleados({ empleado, hanleChange, touched }) {
                     <TextInput id="ciudadResidencia" type="text" icon={FaCity} onChange={hanleChange}
                         className={inputClass(empleado.CiudadResidencia)} value={empleado.CiudadResidencia}
                         name='CiudadResidencia' placeholder="Escriba la ciudad de residencia..." />
+                    <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                 </div>
                 <div className="w-full">
                     <div className="mb-2 block">
                         <Label htmlFor="Portero" value="¿Es un portero?" />
                     </div>
                     <Select id="Portero" onChange={hanleChange} name='Rol' className={inputClass(empleado.Rol)}
-                        defaultValue={empleado.Rol ? empleado.Estado : "Escoja una opción..."} >
-                        <option disabled>Escoja una opción...</option>
+                        value={empleado.Rol } >
+                        <option value="" disabled>Escoja una opción...</option>
                         <option value={6}>Si</option>
                         <option value={4}>No </option>
                     </Select>
+                    <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                 </div>
                 {empleado.Rol === '4' &&
                     <div className="w-full">
@@ -153,6 +163,7 @@ function FormEmpleados({ empleado, hanleChange, touched }) {
                         <TextInput id="cargo" type="text" icon={FaBriefcase} onChange={hanleChange}
                             className={inputClass(empleado.Cargo)} value={empleado.Cargo}
                             name='Cargo' placeholder="Escriba el cargo que ocupa" />
+                        <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                         {empleado.Cargo == 'Portero'}
                     </div>
                 }
@@ -161,12 +172,12 @@ function FormEmpleados({ empleado, hanleChange, touched }) {
                         <Label htmlFor="Estado" value="Estado" />
                     </div>
                     <Select id="Estado" icon={FaEye} onChange={hanleChange} name='Estado'
-                        defaultValue={empleado.Estado ? empleado.Estado : "Escoja una opción..."}
-                        className={inputClass(empleado.Estado)}>
+                        defaultValue={empleado.Estado ? empleado.Estado : "Escoja una opción..."}>
                         <option disabled>Escoja una opción...</option>
                         <option value={1}>Activo (a)</option>
                         <option value={0}>Inactivo (a)</option>
                     </Select>
+                    <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                 </div>
             </div>
         </>

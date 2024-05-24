@@ -7,11 +7,6 @@ function DataTableInvitaciones({ data, loading }) {
 
     const columns = [
         {
-            name: "Nombre Completo",
-            cell: row => row.Nombre + " " + row.Apellidos,
-            sortable: true,
-        },
-        {
             name: "Fecha",
             cell: row => format(new Date(row.created_at), 'dd/MM/yyyy'),
             width: '120px',
@@ -19,20 +14,28 @@ function DataTableInvitaciones({ data, loading }) {
         {
             name: "Teléfono",
             selector: row => row.Telefono,
-            width: '120px',
+            width: '150px',
             sortable: true
         },
         {
             name: "Identificación",
             selector: row => row.Documento,
-            width: '150px',
+            width: '180px',
             sortable: true
         },
         {
             name: "Invitado por",
-            cell: row => row.personal.Nombre + " " + row.personal.Apellidos,
+            cell: row => row.user.asociado ?
+                row.user.asociado.Nombre + " " + row.user.asociado.Apellidos :
+                row.user.adherente.Nombre + " " + row.user.adherente.Apellidos,
             sortable: true,
-        }
+        },
+        {
+            name: "Rol",
+            cell: row => row.user.asociado ? "Asociado" : "Adherente",
+            sortable: true,
+            width: '120px'
+        },
     ];
 
     const customStyles = {

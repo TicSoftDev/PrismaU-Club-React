@@ -26,18 +26,19 @@ function AdherentesPage() {
             <Container>
                 <MenuAsociados toggleModal={toggleModal} busqueda={busqueda} handleBusqueda={handleBusqueda}
                     go={goInactivos} data={lista} titulo={titulo} />
-                <VentanaModal size={'7xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal} hanleSubmit={handler}>
+                <VentanaModal size={'7xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal}
+                    hanleSubmit={handler} loading={loading}>
                     <FormAdherentes socio={socio} adherente={adherente} hanleChange={handleChange}
                         handleChangeSelect={handleSelectChange} touched={touched} />
                 </VentanaModal>
                 <DataTableAdherente cargarAdherente={cargarAdherente} usuarios={lista} eliminar={eliminarAdherente} loading={loading}
                     change={cambiarEstado} cambiar={cambiarAsociado} cargar={cargarImagen} />
                 <VentanaModal size={'2xl'} titulo={tituloModalImage} openModal={openModalImage} cerrarModal={toggleModalImage}
-                    hanleSubmit={handleUpdateImage}>
+                    hanleSubmit={handleUpdateImage} loading={loading}>
                     <FormImagenAdherente handleChangeImage={handleChangeImagen} />
                 </VentanaModal>
                 <VentanaModal size={'4xl'} titulo={titulo3} openModal={openModalEstado} cerrarModal={toggleModalEstado}
-                    hanleSubmit={handleUpdateEstado}>
+                    hanleSubmit={handleUpdateEstado} loading={loading}>
                     <FormMotivo handleChangeEstado={handleChangeEstado} />
                 </VentanaModal>
             </Container>

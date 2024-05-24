@@ -3,6 +3,20 @@ import axios from "axios";
 const URL_ASOCIADOS = "https://www.apiclubsincelejo.prismau.co/api/asociados";
 // const URL_ASOCIADOS = "http://127.0.0.1:8000/api/asociados";
 
+export async function createAsociado(asociado) {
+    const options = {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    };
+    try {
+        const res = await axios.post(URL_ASOCIADOS, asociado, options);
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
 export async function getAsociados() {
     const res = await axios.get(URL_ASOCIADOS);
     return res.data;
@@ -25,4 +39,37 @@ export async function changeStatusAsociado(id, motivo) {
 export async function changeToAdherente(id) {
     const res = await axios.put(URL_ASOCIADOS + "/adherente/" + id);
     return res.data;
+};
+
+export async function updateAsociado(asociado, id) {
+    const options = {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    };
+    try {
+        const res = await axios.put(URL_ASOCIADOS + "/" + id, asociado, options);
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export async function updateImage(foto, id) {
+    const options = {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    };
+    const res = await axios.post(URL_ASOCIADOS + "/imagen/" + id, foto, options);
+    return res.data;
+};
+
+export async function deleteAsociado(id) {
+    try {
+        const res = await axios.delete(URL_ASOCIADOS + "/" + id);
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
 };

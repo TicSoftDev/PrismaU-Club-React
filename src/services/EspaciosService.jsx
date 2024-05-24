@@ -5,7 +5,7 @@ const URL_ESPACIOS = "https://www.apiclubsincelejo.prismau.co/api/espacios";
 
 export async function createEspacio(espacio) {
     const headers = {
-        "Content-type": "multipart/form-data",
+        "Content-type": "application/json",
     }
     const res = await axios.post(URL_ESPACIOS, espacio, { headers: headers });
     return res.data

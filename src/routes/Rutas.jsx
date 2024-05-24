@@ -10,17 +10,18 @@ import AsociadosPage from '../pages/admin/asociados/AsociadosPage';
 import EmpleadosPage from '../pages/admin/empleados/EmpleadosPage';
 import EspaciosPage from '../pages/admin/espacios/EspaciosPage';
 import LogEstadosPage from '../pages/admin/estados/LogEstadosPage';
-import FamiliaresPage from '../pages/admin/familiares/FamiliaresPage';
+import FamiliaresAdherentePage from '../pages/admin/familiares/FamiliaresAdherentePage';
+import FamiliaresAsociadoPage from '../pages/admin/familiares/FamiliaresAsociadoPage';
 import InvitacionesPage from '../pages/admin/invitaciones/InvitacionesPage';
 import DashboardPage from '../pages/dashboard/DashboardPage';
 import LoginPage from '../pages/login/LoginPage';
 import PerfilPage from '../pages/perfil/PerfilPage';
 import InvitadosPage from '../pages/socio/invitados/InvitadosPage';
+import AdministradoresPage from '../pages/superAdmin/administradores/AdministradoresPage';
 import HobbiesPage from '../pages/superAdmin/hobbies/HobbiesPage';
 import RolesPage from '../pages/superAdmin/roles/RolesPage';
 import AuthGuard from '../utilities/guards/AuthGuard';
 import { VerifyGuard } from '../utilities/guards/VerifyGuard';
-import AdministradoresPage from '../pages/superAdmin/administradores/AdministradoresPage';
 
 
 const Rutas = () => {
@@ -41,7 +42,8 @@ const Rutas = () => {
                         <Route element={<AdherentesPage />} path={PrivateRoutes.ADHERENTES} />
                         <Route element={<AdherentesInactivosPage />} path={PrivateRoutes.ADHERENTESINACTIVOS} />
                         <Route element={<EmpleadosPage />} path={PrivateRoutes.EMPLEADOS} />
-                        <Route element={<FamiliaresPage />} path={`${PrivateRoutes.FAMILIARES}/:id`} />
+                        <Route element={<FamiliaresAsociadoPage />} path={`${PrivateRoutes.FAMILIARESASOCIADO}/:id`} />
+                        <Route element={<FamiliaresAdherentePage />} path={`${PrivateRoutes.FAMILIARESADHERENTE}/:id`} />
                         <Route element={<EspaciosPage />} path={PrivateRoutes.ESPACIOS} />
                         <Route element={<HobbiesPage />} path={PrivateRoutes.HOBBIES} />
                         <Route element={<RolesPage />} path={PrivateRoutes.ROLES} />

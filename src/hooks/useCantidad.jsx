@@ -7,11 +7,11 @@ import { getCantidadEmpleados } from '../services/EmpleadosService';
 import { getCantidadEspacios } from '../services/EspaciosService';
 import { getCantidadFamiliares, getCantidadFamiliaresSocio } from '../services/FamiliaresService';
 import { getCantidadInvitados, getCantidadInvitadosSocio } from '../services/InvitadosService';
-import { alertWarning } from '../utilities/alerts/Alertas';
 
 function useCantidad() {
 
     const id = useSelector((state) => state.user.id);
+    const user = useSelector((state) => state.credenciales);
     const [contAsociados, setContAsociados] = useState(0);
     const [contAdherentes, setContAdherentes] = useState(0);
     const [contEmpleados, setContEmpleados] = useState(0);
@@ -27,7 +27,7 @@ function useCantidad() {
             const data = await getCantidadAsociados();
             setContAsociados(data);
         } catch (error) {
-            alertWarning("Count", error.message);
+            console.log("Count", error.message);
         }
     };
     const cantidadEmpleados = async () => {
@@ -35,7 +35,7 @@ function useCantidad() {
             const data = await getCantidadEmpleados();
             setContEmpleados(data);
         } catch (error) {
-            alertWarning("Count", error.message);
+            console.log("Count", error.message);
         }
     };
     const cantidadAdherentes = async () => {
@@ -43,15 +43,16 @@ function useCantidad() {
             const data = await getCantidadAdherentes();
             setContAdherentes(data);
         } catch (error) {
-            alertWarning("Count", error.message);
+            console.log("Count", error.message);
         }
     };
     const cantidadFamiliaresSocio = async () => {
         try {
-            const data = await getCantidadFamiliaresSocio(id);
+            const rol = user.Rol == 2 ? "Asociado" : "Adherente";
+            const data = await getCantidadFamiliaresSocio(id, rol);
             setContFamiliaresSocio(data);
         } catch (error) {
-            alertWarning("Count", error.message);
+            console.log("Count", error.message);
         }
     };
     const cantidadFamiliares = async () => {
@@ -59,15 +60,15 @@ function useCantidad() {
             const data = await getCantidadFamiliares();
             setContFamiliares(data);
         } catch (error) {
-            alertWarning("Count", error.message);
+            console.log("Count", error.message);
         }
     };
     const cantidadInvitadosSocio = async () => {
         try {
-            const data = await getCantidadInvitadosSocio(id);
+            const data = await getCantidadInvitadosSocio(user.id);
             setContInvitadosSocio(data);
         } catch (error) {
-            alertWarning("Count", error.message);
+            console.log("Count", error.message);
         }
     };
     const cantidadInvitados = async () => {
@@ -75,7 +76,7 @@ function useCantidad() {
             const data = await getCantidadInvitados();
             setContInvitados(data);
         } catch (error) {
-            alertWarning("Count", error.message);
+            console.log("Count", error.message);
         }
     };
     const cantidadEspacios = async () => {
@@ -83,7 +84,7 @@ function useCantidad() {
             const data = await getCantidadEspacios();
             setContEspacios(data);
         } catch (error) {
-            alertWarning("Count", error.message);
+            console.log("Count", error.message);
         }
     };
     const cantidadAdmins = async () => {
@@ -91,7 +92,7 @@ function useCantidad() {
             const data = await getCantidadAdmins();
             setContAdmins(data);
         } catch (error) {
-            alertWarning("Count", error.message);
+            console.log("Count", error.message);
         }
     };
 

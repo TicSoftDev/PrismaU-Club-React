@@ -1,20 +1,18 @@
 import { useEffect, useState } from 'react';
-import { alertError, alertSucces, alertWarning } from '../utilities/alerts/Alertas';
 import Swal from 'sweetalert2';
-import { createFamiliar, deleteFamiliar, getFamiliares, updateFamiliar, updateImageFamiliar } from '../services/FamiliaresService';
+import { createFamiliarAdherente, createFamiliarAsociado, deleteFamiliar, getFamiliares, updateFamiliar, updateImageFamiliar } from '../services/FamiliaresService';
+import { alertError, alertSucces, alertWarning } from '../utilities/alerts/Alertas';
 
-function useFamiliares(id) {
+function useFamiliares(id, type) {
 
     const titulo = 'Familiares';
-    let lista = [];
     const [openModal, setOpenModal] = useState(false);
     const [touched, setTouched] = useState(false);
     const [openModalImage, setOpenModalImage] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [busqueda, setBusqueda] = useState('');
-    const [listadoFamiliares, setListadoFamiliares] = useState([]);
+    const [familiares, setFamiliares] = useState([]);
     const [familiar, setFamiliar] = useState({
-        personal_id: id,
+        [type === 'Asociado' ? 'asociado_id' : 'adherente_id']: id,
         Nombre: "",
         Apellidos: "",
         Correo: "",
@@ -29,7 +27,8 @@ function useFamiliares(id) {
         EstadoCivil: "",
         Cargo: "",
         Parentesco: '',
-        Rol: "5"
+        Rol: "5",
+        type: type
     });
     const [imagen, setImagen] = useState(null);
     const tituloModal = familiar.id ? "Actualizar Familiar" : "Crear Familiar";
@@ -37,7 +36,7 @@ function useFamiliares(id) {
 
     const recargar = () => {
         setFamiliar({
-            personal_id: id,
+            [type === 'Asociado' ? 'asociado_id' : 'adherente_id']: id,
             Nombre: "",
             Apellidos: "",
             Correo: "",
@@ -52,13 +51,10 @@ function useFamiliares(id) {
             EstadoCivil: "",
             Cargo: "",
             Parentesco: '',
-            Rol: "5"
+            Rol: "5",
+            type: type
         });
         setTouched(false);
-    };
-
-    const handleBusqueda = ({ target }) => {
-        setBusqueda(target.value);
     };
 
     const toggleModal = () => {
@@ -74,17 +70,27 @@ function useFamiliares(id) {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
             }
-            const data = await createFamiliar(familiar);
-            if (data.message === 'hecho') {
+            setLoading(true);
+            let data;
+            if (familiar.type === "Asociado") {
+                setFamiliar({ ...familiar, asociado_id: id });
+                data = await createFamiliarAsociado(familiar);
+            } else if (familiar.type === "Adherente") {
+                setFamiliar({ ...familiar, adherente_id: id });
+                data = await createFamiliarAdherente(familiar);
+            }
+            setLoading(false);
+            if (data.status) {
                 toggleModal();
                 alertSucces("Creado correctamente");
                 await getListadoFamiliares();
-            } else if (data.message === 'error') {
-                alertWarning("Por favor, revisa el formulario hay campos con valores que ya existen. ");
+            } else if (data.status === false && data.message === 'Existe') {
+                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
             } else {
                 alertWarning("No se pudo crear el familiar");
             }
         } catch (error) {
+            setLoading(false);
             alertError(error.message);
         }
     };
@@ -99,9 +105,9 @@ function useFamiliares(id) {
     const getListadoFamiliares = async () => {
         try {
             setLoading(true);
-            const data = await getFamiliares(id);
+            const data = await getFamiliares(id, type);
             setLoading(false);
-            setListadoFamiliares(data);
+            setFamiliares(data);
         } catch (error) {
             setLoading(false);
             alertError(error.message);
@@ -120,22 +126,22 @@ function useFamiliares(id) {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
             }
-            let id = familiar.id;
-            delete familiar.id;
             e.preventDefault();
+            setLoading(true);
             const resultado = await updateFamiliar(familiar, familiar.user_id);
-            if (resultado.message === 'hecho') {
+            setLoading(false);
+            if (resultado.status) {
                 toggleModal();
                 alertSucces("Actualizado correctamente");
                 await getListadoFamiliares();
-            } else if (resultado.message === 'error') {
-                familiar.id = id;
-                alertWarning("Por favor, revisa el formulario hay campos valores que ya existen. ");
+            } else if (resultado.status === false && resultado.message === 'Existe') {
+                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
             } else {
                 alertWarning("No se pudo crear el familiar");
             }
         } catch (error) {
-            alertError(error.message);
+            setLoading(false);
+            console.log(error.message);
         }
     };
 
@@ -152,9 +158,9 @@ function useFamiliares(id) {
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     const resultado = await deleteFamiliar(id);
-                    console.log(resultado);
-                    if (resultado.message === "hecho") {
+                    if (resultado.status) {
                         alertSucces("Eliminado correctamente");
+
                         await getListadoFamiliares();
                     } else {
                         alertWarning("No se pudo eliminar");
@@ -189,8 +195,10 @@ function useFamiliares(id) {
             }
             const formData = new FormData();
             formData.append('imagen', imagen);
+            setLoading(true);
             const resultado = await updateImageFamiliar(formData, familiar.id);
-            if (resultado.message === 'hecho') {
+            setLoading(false);
+            if (resultado.status) {
                 toggleModalImage();
                 alertSucces("Imagen actualizada correctamente");
                 await getListadoFamiliares();
@@ -199,17 +207,9 @@ function useFamiliares(id) {
             }
         } catch (error) {
             console.log(error);
+            setLoading(false);
             alertError("No se pudo conectar al servidor");
         }
-    }
-
-    if (!busqueda) {
-        lista = listadoFamiliares;
-    } else {
-        lista = listadoFamiliares.filter((dato) =>
-            dato.familiar.Nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-            dato.familiar.Apellidos.toLowerCase().includes(busqueda.toLowerCase()) ||
-            dato.familiar.Documento.toLowerCase().includes(busqueda.toLowerCase()))
     }
 
     useEffect(() => {
@@ -217,10 +217,9 @@ function useFamiliares(id) {
     }, []);
 
     return {
-        titulo, tituloModal, openModal, familiar, listadoFamiliares, busqueda, loading, openModalImage, tituloModalImage,
-        touched, toggleModal, handleChange, handleBusqueda, handleSubmit, cargarFamiliar, handleUpdate, eliminarFamiliar,
-        toggleModalImage, cargarImagen, handleUpdateImage, handleChangeImagen
-
+        titulo, tituloModal, openModal, familiar, familiares, loading, openModalImage, tituloModalImage, touched,
+        toggleModal, handleChange, handleSubmit, cargarFamiliar, handleUpdate, eliminarFamiliar, toggleModalImage,
+        cargarImagen, handleUpdateImage, handleChangeImagen
     };
 }
 

@@ -15,6 +15,7 @@ function useEstados() {
             setEstados(res);
             setLoading(false);
         } catch (error) {
+            setLoading(false);
             alertError("useEstados", error.message);
         }
     }

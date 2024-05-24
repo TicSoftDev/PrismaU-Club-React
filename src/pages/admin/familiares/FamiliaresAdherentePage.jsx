@@ -9,13 +9,12 @@ import Container from '../../../utilities/helpers/Container';
 import TituloPage from '../../../utilities/helpers/TituloPage';
 import VentanaModal from '../../../utilities/modals/VentanaModal';
 
-function FamiliaresPage() {
+function FamiliaresAdherentePage() {
 
     const { id } = useParams();
-    const { titulo, tituloModal, openModal, listadoFamiliares, loading, familiar, tituloModalImage, openModalImage,
+    const { titulo, tituloModal, openModal, familiares, loading, familiar, touched, tituloModalImage, openModalImage,
         toggleModal, handleChange, handleSubmit, handleUpdate, cargarFamiliar, eliminarFamiliar, toggleModalImage,
-        handleChangeImagen, cargarImagen, handleUpdateImage, touched
-    } = useFamiliares(id);
+        handleChangeImagen, cargarImagen, handleUpdateImage } = useFamiliares(id, 'Adherente');
     const handler = familiar.id ? handleUpdate : handleSubmit;
 
     return (
@@ -23,13 +22,14 @@ function FamiliaresPage() {
             <TituloPage titulo={titulo} />
             <Container>
                 <MenuEmpleados toggleModal={toggleModal} />
-                <VentanaModal size={'7xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal} hanleSubmit={handler}>
+                <VentanaModal size={'7xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal}
+                    hanleSubmit={handler} loading={loading}>
                     <FormFamiliar familiar={familiar} hanleChange={handleChange} touched={touched} />
                 </VentanaModal>
-                <TablaFamiliares cargarEmpleado={cargarFamiliar} usuarios={listadoFamiliares} eliminar={eliminarFamiliar}
+                <TablaFamiliares cargarEmpleado={cargarFamiliar} usuarios={familiares} eliminar={eliminarFamiliar}
                     loading={loading} cargar={cargarImagen} />
                 <VentanaModal size={'2xl'} titulo={tituloModalImage} openModal={openModalImage} cerrarModal={toggleModalImage}
-                    hanleSubmit={handleUpdateImage}>
+                    hanleSubmit={handleUpdateImage} loading={loading}>
                     <FormImagenAdherente handleChangeImage={handleChangeImagen} />
                 </VentanaModal>
             </Container>
@@ -37,4 +37,4 @@ function FamiliaresPage() {
     );
 }
 
-export default FamiliaresPage;
+export default FamiliaresAdherentePage;

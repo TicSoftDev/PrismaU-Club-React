@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { PrivateRoutes } from '../models/RutasModel';
-import { changeStatusAsociado, changeToAdherente, getAsociados, getAsociadosInactivos } from '../services/AsociadosService';
-import { createPersonal, deletePersonal, updateImagePersonal, updatePersonal } from '../services/PersonalService';
+import { changeStatusAsociado, changeToAdherente, createAsociado, deleteAsociado, getAsociados, getAsociadosInactivos, updateAsociado, updateImage } from '../services/AsociadosService';
 import { alertError, alertSucces, alertWarning } from '../utilities/alerts/Alertas';
 
 function useAsociados() {
@@ -111,21 +110,19 @@ function useAsociados() {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
             }
-            const data = await createPersonal(asociado);
-            if (data.message === 'hecho') {
+            setLoading(true);
+            const data = await createAsociado(asociado);
+            setLoading(false);
+            if (data.status) {
                 alertSucces("Creado correctamente");
                 await getListadoAsociados();
                 await getListadoAsociadosInactivos();
                 toggleModal();
-            } else if (data.message === 'error') {
-                alertWarning("No se pudo crear el Asociado");
+            } else if (data.status === false && data.message === 'Existe') {
+                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
             }
         } catch (error) {
-            if (error.message === 'Duplicado') {
-                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
-            } else {
-                alertError("Ocurrió un error al crear el asociado: " + error.message);
-            }
+            alertError("Ocurrió un error al crear el asociado: " + error.message);
         }
     };
 
@@ -172,32 +169,28 @@ function useAsociados() {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
             }
-            let id = asociado.id;
-            delete asociado.id;
             e.preventDefault();
-            const resultado = await updatePersonal(asociado, asociado.user_id);
-            if (resultado.message === 'hecho') {
+            setLoading(true);
+            const resultado = await updateAsociado(asociado, asociado.user_id);
+            setLoading(false);
+            if (resultado.status) {
                 toggleModal();
                 alertSucces("Actualizado correctamente");
                 await getListadoAsociados();
                 await getListadoAsociadosInactivos();
-            } else if (resultado.message === 'error') {
-                asociado.id = id;
-                alertWarning("No se pudo actualizar el Asociado");
+            } else if (resultado.status === false && resultado.message === 'Existe') {
+                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
             }
         } catch (error) {
-            if (error.message === 'Duplicado') {
-                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
-            } else {
-                alertError("Ocurrió un error al crear el asociado: " + error.message);
-            }
+            setLoading(false);
+            alertError("Ocurrió un error al crear el asociado: " + error.message);
         }
     };
 
     const eliminarAsociado = async (id) => {
         try {
             Swal.fire({
-                title: '¿Seguro que quiere eliminar este usuario?',
+                title: '¿Seguro que quiere eliminar este Asociado?',
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -206,8 +199,8 @@ function useAsociados() {
                 cancelButtonText: 'No, cancelar'
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    const resultado = await deletePersonal(id);
-                    if (resultado.message === "hecho") {
+                    const resultado = await deleteAsociado(id);
+                    if (resultado.status) {
                         alertSucces("Eliminado correctamente");
                         await getListadoAsociados();
                         await getListadoAsociadosInactivos();
@@ -234,7 +227,7 @@ function useAsociados() {
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     const resultado = await changeToAdherente(id);
-                    if (resultado.message === "hecho") {
+                    if (resultado.status) {
                         alertSucces("Se cambio correctamente");
                         await getListadoAsociados();
                         await getListadoAsociadosInactivos();
@@ -290,7 +283,7 @@ function useAsociados() {
         try {
             e.preventDefault();
             const resultado = await changeStatusAsociado(asociado.id, motivo);
-            if (resultado.message === "hecho") {
+            if (resultado.status) {
                 toggleModalEstado();
                 alertSucces("Se cambio correctamente");
                 await getListadoAsociados();
@@ -322,17 +315,19 @@ function useAsociados() {
             }
             const formData = new FormData();
             formData.append('imagen', imagen);
-            const resultado = await updateImagePersonal(formData, asociado.id);
-            if (resultado.message === 'hecho') {
+            setLoading(true);
+            const resultado = await updateImage(formData, asociado.id);
+            setLoading(false);
+            if (resultado.status) {
                 toggleModalImage();
                 alertSucces("Imagen actualizada correctamente");
                 await getListadoAsociados();
                 await getListadoAsociadosInactivos();
-
             } else {
                 alertWarning("No se pudo actualizar la imagen");
             }
         } catch (error) {
+            setLoading(false);
             alertError("No se pudo conectar al servidor");
         }
     }
@@ -347,7 +342,7 @@ function useAsociados() {
         const palabrasBusqueda = busquedaNormalizada.split(/\s+/);
 
         return listado.filter((dato) => {
-            const nombreNormalizado = normalizeText(`${dato.personal.Nombre} ${dato.personal.Apellidos}`);
+            const nombreNormalizado = normalizeText(`${dato.Nombre} ${dato.Apellidos}`);
             return palabrasBusqueda.every(palabra => nombreNormalizado.includes(palabra));
         });
     };

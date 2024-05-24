@@ -3,13 +3,18 @@ import axios from "axios";
 const URL_FAMILIAR = "https://www.apiclubsincelejo.prismau.co/api/familiares";
 // const URL_FAMILIAR = "http://127.0.0.1:8000/api/familiares";
 
-export async function createFamiliar(familiar) {
-    const res = await axios.post(URL_FAMILIAR, familiar);
+export async function createFamiliarAsociado(familiar) {
+    const res = await axios.post(URL_FAMILIAR + "/asociado", familiar);
     return res.data;
 };
 
-export async function getFamiliares(id) {
-    const res = await axios.get(URL_FAMILIAR + "/" + id);
+export async function createFamiliarAdherente(familiar) {
+    const res = await axios.post(URL_FAMILIAR + "/adherente", familiar);
+    return res.data;
+};
+
+export async function getFamiliares(id, rol) {
+    const res = await axios.get(URL_FAMILIAR + "/" + id + "/" + rol);
     return res.data;
 };
 
@@ -18,8 +23,8 @@ export async function getCantidadFamiliares() {
     return res.data;
 };
 
-export async function getCantidadFamiliaresSocio(id) {
-    const res = await axios.get(URL_FAMILIAR + "/cantidad/" + id);
+export async function getCantidadFamiliaresSocio(id, rol) {
+    const res = await axios.get(URL_FAMILIAR + "/cantidad/" + id + "/" + rol);
     return res.data;
 };
 

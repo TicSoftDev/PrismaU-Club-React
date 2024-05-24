@@ -8,9 +8,6 @@ export async function createEmpleado(empleado) {
         const res = await axios.post(URL_EMPLEADOS, empleado);
         return res.data;
     } catch (error) {
-        if (error.response && error.response.status === 422) {
-            throw new Error('Duplicado');
-        }
         throw error;
     }
 };
@@ -30,9 +27,6 @@ export async function updateEmpleado(empleado, id) {
         const res = await axios.put(URL_EMPLEADOS + "/" + id, empleado);
         return res.data;
     } catch (error) {
-        if (error.response && error.response.status === 422) {
-            throw new Error('Duplicado');
-        }
         throw error;
     }
 };

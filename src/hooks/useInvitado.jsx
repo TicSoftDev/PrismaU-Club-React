@@ -7,13 +7,13 @@ function useInvitado() {
 
     const titulo = 'Formulario de invitación';
     const titulo2 = 'Listado de invitaciones';
-    const usuario = useSelector((state) => state.user);
+    const usuario = useSelector((state) => state.credenciales);
     const [loading, setLoading] = useState(false);
     const [generado, setGenerado] = useState(false);
     const [invitados, setInvitados] = useState([]);
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
     const [invitado, setInvitado] = useState({
-        personal_id: usuario.id,
+        user_id: usuario.id,
         Nombre: "",
         Apellidos: "",
         Telefono: "",

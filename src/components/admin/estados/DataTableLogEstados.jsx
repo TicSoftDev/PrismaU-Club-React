@@ -7,10 +7,18 @@ function DataTableLogEstados({ data, loading }) {
 
     const columns = [
         {
-            name: "Asociado",
-            cell: row => row.personal.Nombre + " " + row.personal.Apellidos,
+            name: "Nombre Completo",
+            cell: row => row.user.asociado ?
+                row.user.asociado.Nombre + " " + row.user.asociado.Apellidos :
+                row.user.adherente.Nombre + " " + row.user.adherente.Apellidos,
             sortable: true,
             width: '300px'
+        },
+        {
+            name: "Rol",
+            cell: row => row.user.asociado ? "Asociado" : "Adherente",
+            sortable: true,
+            width: '120px'
         },
         {
             name: "Fecha",
@@ -31,9 +39,9 @@ function DataTableLogEstados({ data, loading }) {
     const customStyles = {
         headCells: {
             style: {
-                backgroundColor: '#379861', 
-                color: '#FFF', 
-                fontSize: '12px', 
+                backgroundColor: '#379861',
+                color: '#FFF',
+                fontSize: '12px',
                 textTransform: 'uppercase',
                 fontWeight: 'bold',
             },
@@ -51,7 +59,7 @@ function DataTableLogEstados({ data, loading }) {
                 progressComponent={<TableSkeleton />}
                 noDataComponent={<div className='flex justify-center font-bold my-20 text-gray-500'>No hay nada en el historial</div>}
                 customStyles={customStyles}
-           />
+            />
         </div>
     );
 }

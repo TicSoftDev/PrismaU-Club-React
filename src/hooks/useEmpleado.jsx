@@ -72,22 +72,21 @@ function useEmpleado() {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
             }
+            setLoading(true);
             const data = await createEmpleado(empleado);
-            if (data.message === 'hecho') {
+            setLoading(false);
+            if (data.status) {
                 toggleModal();
                 alertSucces("Creado correctamente");
                 await getListadoEmpleados();
-            } else if (data.message === 'error') {
-                alertWarning("No se pudo crear el Empleado.");
+            } else if (data.status === false && data.message === 'Existe') {
+                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
             } else {
                 alertWarning("No se pudo crear el Empleado");
             }
         } catch (error) {
-            if (error.message === 'Duplicado') {
-                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
-            } else {
-                alertError("Ocurrió un error al crear el empleado: " + error.message);
-            }
+            setLoading(false);
+            alertError("Ocurrió un error al crear el empleado: " + error.message);
         }
     };
 
@@ -118,7 +117,10 @@ function useEmpleado() {
     };
 
     const cargarEmpleado = async (empleado) => {
-        setEmpleado(empleado);
+        setEmpleado({
+            ...empleado,
+            Rol: empleado.Cargo === 'Portero' ? '6' : '4'
+        });
         setOpenModal(true);
     };
 
@@ -129,23 +131,20 @@ function useEmpleado() {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
             }
-            let id = empleado.id;
-            delete empleado.id;
             e.preventDefault();
+            setLoading(true);
             const resultado = await updateEmpleado(empleado, empleado.user_id);
-            if (resultado.message === 'hecho') {
+            setLoading(false);
+            if (resultado.status) {
                 toggleModal();
                 alertSucces("Actualizado correctamente");
                 await getListadoEmpleados();
-            } else {
-                alertWarning("No se pudo crear el Empleado");
+            } else if (resultado.status === false && resultado.message === 'Existe') {
+                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
             }
         } catch (error) {
-            if (error.message === 'Duplicado') {
-                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
-            } else {
-                alertError("Ocurrió un error al crear el empleado: " + error.message);
-            }
+            setLoading(false);
+            alertError("Ocurrió un error al crear el empleado: " + error.message);
         }
     };
 
@@ -162,8 +161,7 @@ function useEmpleado() {
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     const resultado = await deleteEmpleado(id);
-                    console.log(resultado);
-                    if (resultado.message === "hecho") {
+                    if (resultado.status) {
                         alertSucces("Eliminado correctamente");
                         await getListadoEmpleados();
                     } else {
@@ -199,7 +197,9 @@ function useEmpleado() {
             }
             const formData = new FormData();
             formData.append('imagen', imagen);
+            setLoading(true);
             const resultado = await updateImageEmpleado(formData, empleado.id);
+            setLoading(false);
             if (resultado.message === 'hecho') {
                 toggleModalImage();
                 alertSucces("Imagen actualizada correctamente");
@@ -208,6 +208,7 @@ function useEmpleado() {
                 alertWarning("No se pudo actualizar la imagen");
             }
         } catch (error) {
+            setLoading(false);
             console.log(error);
             alertError("No se pudo conectar al servidor");
         }
@@ -222,9 +223,9 @@ function useEmpleado() {
     } else {
         const busquedaNormalizada = normalizeText(busqueda);
         lista = listadoEmpleados.filter((dato) => {
-            const nombreCompleto = normalizeText(`${dato.empleado.Nombre} ${dato.empleado.Apellidos}`);
+            const nombreCompleto = normalizeText(`${dato.Nombre} ${dato.Apellidos}`);
             return nombreCompleto.includes(busquedaNormalizada) ||
-                normalizeText(dato.empleado.Documento).includes(busquedaNormalizada);
+                normalizeText(dato.Documento).includes(busquedaNormalizada);
         });
     }
 

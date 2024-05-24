@@ -11,9 +11,9 @@ export default function DataTableEmpleados({ usuarios, cargarEmpleado, eliminar,
             name: "Actions",
             cell: row => (
                 <div className="flex">
-                    <button onClick={() => cargarEmpleado(row.empleado)} className="rounded-full w-9 h-9 bg-blue-700 text-white flex justify-center items-center" title="Editar"><FaEdit /></button>
-                    <button onClick={() => eliminar(row.id)} className="rounded-full w-9 h-9 bg-red-600 text-white flex justify-center items-center" title="Eliminar"><FaTrash /></button>
-                    <button onClick={() => cargar(row.empleado.id)} className="rounded-full w-9 h-9 bg-fuchsia-600 text-white flex justify-center items-center" title="Cambiar Imagen"><FaRegImages /></button>
+                    <button onClick={() => cargarEmpleado(row)} className="rounded-full w-9 h-9 bg-blue-700 text-white flex justify-center items-center" title="Editar"><FaEdit /></button>
+                    <button onClick={() => eliminar(row.user_id)} className="rounded-full w-9 h-9 bg-red-600 text-white flex justify-center items-center" title="Eliminar"><FaTrash /></button>
+                    <button onClick={() => cargar(row.id)} className="rounded-full w-9 h-9 bg-fuchsia-600 text-white flex justify-center items-center" title="Cambiar Imagen"><FaRegImages /></button>
                 </div>
             ),
             width: '150px'
@@ -22,8 +22,8 @@ export default function DataTableEmpleados({ usuarios, cargarEmpleado, eliminar,
             name: "Estado",
             cell: row => (
                 <div className="flex items-center">
-                    <div className={`h-2.5 w-2.5 rounded-full ${row.empleado.Estado == 1 ? 'bg-green-500' : 'bg-red-600'} mr-2`}></div>
-                    {row.empleado.Estado == 1 ? "Activo" : "Inactivo"}
+                    <div className={`h-2.5 w-2.5 rounded-full ${row.Estado == 1 ? 'bg-green-500' : 'bg-red-600'} mr-2`}></div>
+                    {row.Estado == 1 ? "Activo" : "Inactivo"}
                 </div>
             ),
             width: '100px'
@@ -34,16 +34,16 @@ export default function DataTableEmpleados({ usuarios, cargarEmpleado, eliminar,
                 <div className="flex items-center space-x-3 w-full">
                     <div className="shrink-0">
                         {
-                            row.empleado.imagen ?
-                                <img className="w-10 h-10 rounded-full object-cover" src={RouteBack + row.empleado.imagen} alt="Imagen del empleado" /> :
-                                row.empleado.Sexo == "Femenino" ?
+                            row.imagen ?
+                                <img className="w-10 h-10 rounded-full object-cover" src={RouteBack + row.imagen} alt="Imagen del" /> :
+                                row.Sexo == "Femenino" ?
                                     <img className="w-10 h-10 rounded-full object-cover" src="https://cdn-icons-png.flaticon.com/128/4140/4140047.png" alt="Imagen predeterminada de mujer" />
                                     : <img className="w-10 h-10 rounded-full object-cover" src="https://cdn-icons-png.flaticon.com/128/3135/3135715.png" alt="Imagen predeterminada de hombre" />
                         }
                     </div>
                     <div className="flex-grow">
-                        <div className="text-base font-semibold whitespace-normal">{row.empleado.Nombre}</div>
-                        <div className="font-normal text-gray-500 whitespace-normal">{row.empleado.Apellidos}</div>
+                        <div className="text-base font-semibold whitespace-normal">{row.Nombre}</div>
+                        <div className="font-normal text-gray-500 whitespace-normal">{row.Apellidos}</div>
                     </div>
                 </div>
             ),
@@ -54,17 +54,17 @@ export default function DataTableEmpleados({ usuarios, cargarEmpleado, eliminar,
         },
         {
             name: "Teléfono",
-            selector: row => row.empleado.Telefono,
+            selector: row => row.Telefono,
             width: '120px'
         },
         {
             name: "Correo",
-            selector: row => row.empleado.Correo,
+            selector: row => row.Correo,
             width: '250px'
         },
         {
             name: "Identificación",
-            selector: row => row.empleado.Documento,
+            selector: row => row.Documento,
 
         },
     ];

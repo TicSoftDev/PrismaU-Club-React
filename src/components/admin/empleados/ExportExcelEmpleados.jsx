@@ -9,18 +9,18 @@ const ExportExcelEmpleados = ({ data, fileName }) => {
 
     const exportToCSV = () => {
         const newData = data.map(item => ({
-            'Nombre Completo': item.empleado.Nombre + ' ' + item.empleado.Apellidos,
-            'Identificación': item.empleado.TipoDocumento + ' ' + item.empleado.Documento,
-            'Fecha Nacimiento': item.empleado.FechaNacimiento,
-            'Lugar Nacimiento': item.empleado.LugarNacimiento,
-            'Email': item.empleado.Correo,
-            'Telefono': item.empleado.Telefono,
-            'Sexo': item.empleado.Sexo,
-            'Dirección Residencia': item.empleado.DireccionResidencia,
-            'Ciudad Residencia': item.empleado.CiudadResidencia,
-            'Tiempo Residencia': item.empleado.TiempoResidencia,
-            'Estado Civil': item.empleado.EstadoCivil,
-            'Cargo': item.empleado.Cargo,
+            'Nombre Completo': item.Nombre + ' ' + item.Apellidos,
+            'Identificación': item.TipoDocumento + ' ' + item.Documento,
+            'Fecha Nacimiento': item.FechaNacimiento,
+            'Lugar Nacimiento': item.LugarNacimiento,
+            'Email': item.Correo,
+            'Telefono': item.Telefono,
+            'Sexo': item.Sexo,
+            'Dirección Residencia': item.DireccionResidencia,
+            'Ciudad Residencia': item.CiudadResidencia,
+            'Tiempo Residencia': item.TiempoResidencia,
+            'Estado Civil': item.EstadoCivil,
+            'Cargo': item.Cargo,
         }));
         const ws = XLSX.utils.json_to_sheet(newData);
         const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };

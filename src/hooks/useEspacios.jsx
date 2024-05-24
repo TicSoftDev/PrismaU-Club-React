@@ -28,6 +28,7 @@ function useEspacios() {
             Descripcion: "",
             Estado: "",
         });
+        setTouched(false);
     };
 
     const handleChangeImagen = (event) => {
@@ -56,21 +57,18 @@ function useEspacios() {
                 alertWarning("Por favor, ingrese todos los campos. ");
                 return;
             }
-            const formData = new FormData();
-            formData.append('Descripcion', espacio.Descripcion);
-            formData.append('Estado', espacio.Estado);
-            formData.append('imagen', espacio.imagen);
+            setLoading(true);
             const data = await createEspacio(espacio);
-            if (data.message === 'hecho') {
+            setLoading(false);
+            if (data.status) {
                 toggleModal();
                 alertSucces("Creado correctamente");
                 await getListadoEspacios();
-            } else if (data.message === 'error') {
-                alertWarning("Por favor, revisa el formulario hay campos con valores que ya existen. ");
             } else {
                 alertWarning("No se pudo crear el Espacio");
             }
         } catch (error) {
+            setLoading(false);
             alertError(error.message);
         }
     };
@@ -115,17 +113,18 @@ function useEspacios() {
                 alertWarning("Por favor, ingrese todos los campos. ");
                 return;
             }
+            setLoading(true);
             const resultado = await updateEspacio(espacio, espacio.id);
-            if (resultado.message === 'hecho') {
+            setLoading(false);
+            if (resultado.status) {
                 toggleModal();
                 alertSucces("Actualizado correctamente");
                 await getListadoEspacios();
-            } else if (resultado.message === 'error') {
-                alertWarning("Por favor, revisa el formulario hay campos con valores que ya existen. ");
             } else {
-                alertWarning("No se pudo crear el Espacio");
+                alertWarning("No se pudo actualizar el Espacio");
             }
         } catch (error) {
+            setLoading(false);
             alertError("No se pudo conectar al servidor");
         }
     };
@@ -143,8 +142,7 @@ function useEspacios() {
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     const resultado = await deleteEspacio(id);
-                    console.log(resultado);
-                    if (resultado.message === "hecho") {
+                    if (resultado.status) {
                         alertSucces("Eliminado correctamente");
                         await getListadoEspacios();
                     } else {
@@ -170,8 +168,10 @@ function useEspacios() {
             }
             const formData = new FormData();
             formData.append('imagen', imagen);
+            setLoading(true);
             const data = await updateImagenEspacio(formData, espacio.id);
-            if (data.message === 'hecho') {
+            setLoading(false);
+            if (data.status) {
                 toggleModalImage();
                 alertSucces("Imagen actualizada correctamente");
                 await getListadoEspacios();
@@ -179,6 +179,7 @@ function useEspacios() {
                 alertWarning("No se pudo actualizar la imagen");
             }
         } catch (error) {
+            setLoading(false);
             alertError('change Image ', error.message);
         }
     };

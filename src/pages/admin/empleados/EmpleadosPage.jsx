@@ -22,13 +22,14 @@ function EmpleadosPage() {
             <Container>
                 <MenuEmpleados toggleModal={toggleModal} busqueda={busqueda} handleBusqueda={handleBusqueda}
                     entidad={true} titulo={titulo} data={lista} />
-                <VentanaModal size={'7xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal} hanleSubmit={handler}>
+                <VentanaModal size={'7xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal} 
+                hanleSubmit={handler} loading={loading}>
                     <FormEmpleados touched={touched} empleado={empleado} hanleChange={handleChange} />
                 </VentanaModal>
                 <DataTableEmpleados cargarEmpleado={cargarEmpleado} usuarios={lista} eliminar={eliminarEmpleado}
                     cargar={cargarImagen} loading={loading} />
                 <VentanaModal size={'2xl'} titulo={tituloModalImage} openModal={openModalImage} cerrarModal={toggleModalImage}
-                    hanleSubmit={handleUpdateImage}>
+                    hanleSubmit={handleUpdateImage} loading={loading}>
                     <FormImagenAdherente handleChangeImage={handleChangeImagen} />
                 </VentanaModal>
             </Container>

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { alertError, alertSucces, alertWarning } from '../utilities/alerts/Alertas';
 import Swal from 'sweetalert2';
 import { createPersonal, deletePersonal, updateImagePersonal, updatePersonal } from '../services/PersonalService';
-import { changeStatusAdherente, changeToAsociado, getAdherentes, getAdherentesInactivos } from '../services/AdherentesService';
+import { changeStatusAdherente, changeToAsociado, createAdherente, deleteAdherente, getAdherentes, getAdherentesInactivos, updateAdherente, updateImage } from '../services/AdherentesService';
 import { PrivateRoutes } from '../models/RutasModel';
 import { useNavigate } from 'react-router-dom';
 
@@ -105,27 +105,30 @@ function useAdherente() {
 
     const handleSubmit = async (e) => {
         try {
-            setTouched(true);
+            setTouched(true); 
             if (adherente.asociado_id === null || adherente.Nombre === "" || adherente.Apellidos === "" || adherente.Documento === "" || adherente.TipoDocumento === "" || adherente.Correo === "" || adherente.Telefono === "" || adherente.Sexo === "") {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
             }
-            const data = await createPersonal(adherente);
-            if (data.status === false) {
-               return alertWarning("Este asociado ya ha sido asignado a otro adherente");
-            }
-            if (data.message === 'hecho') {
+            e.preventDefault();
+            setLoading(true);
+            const data = await createAdherente(adherente);
+            setLoading(false);
+            if (data.status) {
                 toggleModal();
                 alertSucces("Creado correctamente");
                 await getListadoAdherentes();
                 await getListadoAdherentesInactivos();
+            } else if (data.status === false && data.message === 'Asignado') {
+                return alertWarning("Este asociado ya ha sido asignado a otro adherente");
+            } else if (data.status === false && data.message === 'Existe') {
+                return alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
+            } else {
+                alertWarning("No se pudo crear el Adherente");
             }
         } catch (error) {
-            if (error.message === 'Duplicado') {
-                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
-            } else {
-                alertError("Ocurrió un error al crear el adherente: " + error.message);
-            }
+            setLoading(false);
+            alertError("Error de conexión al servidor: " + error.message);
         }
     };
 
@@ -180,29 +183,23 @@ function useAdherente() {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
             }
-            let id = adherente.id;
-            delete adherente.id;
             e.preventDefault();
-            const resultado = await updatePersonal(adherente, adherente.user_id);
-            if (resultado.status === false) {
-                setAdherente({ ...adherente, id: id });
-                return alertWarning("Este asociado ya ha sido asignado a otro adherente");
-             }
-            if (resultado.message === 'hecho') {
+            setLoading(true);
+            const resultado = await updateAdherente(adherente, adherente.user_id);
+            setLoading(false);
+            if (resultado.status) {
                 toggleModal();
                 alertSucces("Actualizado correctamente");
                 await getListadoAdherentes();
                 await getListadoAdherentesInactivos();
-            } else {
-                setAdherente({ ...adherente, id: id });
-                alertWarning("No se pudo crear el Adherente");
+            } else if (resultado.status === false && resultado.message === 'Asignado') {
+                return alertWarning("Este asociado ya ha sido asignado a otro adherente");
+            } else if (resultado.status === false && resultado.message === 'Existe') {
+                return alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
             }
         } catch (error) {
-            if (error.message === 'Duplicado') {
-                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
-            } else {
-                alertError("Ocurrió un error al crear el adherente: " + error.message);
-            }
+            setLoading(false);
+            alertError("Error de conexión al servidor: " + error.message);
         }
     };
 
@@ -218,8 +215,8 @@ function useAdherente() {
                 cancelButtonText: 'No, cancelar'
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    const resultado = await deletePersonal(id);
-                    if (resultado.message === "hecho") {
+                    const resultado = await deleteAdherente(id);
+                    if (resultado.status) {
                         alertSucces("Eliminado correctamente");
                         await getListadoAdherentes();
                         await getListadoAdherentesInactivos();
@@ -270,8 +267,10 @@ function useAdherente() {
     const handleUpdateEstado = async (e) => {
         try {
             e.preventDefault();
+            setLoading(true);
             const resultado = await changeStatusAdherente(adherente.id, motivo);
-            if (resultado.message === "hecho") {
+            setLoading(false);
+            if (resultado.status) {
                 toggleModalEstado();
                 alertSucces("Se cambio correctamente");
                 await getListadoAdherentes();
@@ -280,6 +279,7 @@ function useAdherente() {
                 alertWarning("No se pudo cambiar");
             }
         } catch (error) {
+            setLoading(false);
             alertError("No se pudo conectar al servidor");
         }
     }
@@ -334,8 +334,10 @@ function useAdherente() {
             }
             const formData = new FormData();
             formData.append('imagen', imagen);
-            const resultado = await updateImagePersonal(formData, adherente.id);
-            if (resultado.message === 'hecho') {
+            setLoading(true);
+            const resultado = await updateImage(formData, adherente.id);
+            setLoading(false);
+            if (resultado.status) {
                 toggleModalImage();
                 alertSucces("Imagen actualizada correctamente");
                 await getListadoAdherentes();
@@ -346,6 +348,7 @@ function useAdherente() {
             }
         } catch (error) {
             console.log(error);
+            setLoading(false);
             alertError("No se pudo conectar al servidor");
         }
     }
@@ -360,7 +363,7 @@ function useAdherente() {
         const palabrasBusqueda = busquedaNormalizada.split(/\s+/);
 
         return listado.filter((dato) => {
-            const nombreNormalizado = normalizeText(`${dato.personal.Nombre} ${dato.personal.Apellidos}`);
+            const nombreNormalizado = normalizeText(`${dato.Nombre} ${dato.Apellidos}`);
             return palabrasBusqueda.every(palabra => nombreNormalizado.includes(palabra));
         });
     };

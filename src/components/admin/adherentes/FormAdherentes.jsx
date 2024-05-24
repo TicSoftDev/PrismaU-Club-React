@@ -7,8 +7,8 @@ import Select from 'react-select';
 function FormAdherentes({ socio, adherente, hanleChange, handleChangeSelect, touched }) {
 
     const options = socio.map(item => ({
-        value: item.personal.id,
-        label: `${item.personal.Nombre} ${item.personal.Apellidos}`
+        value: item.id,
+        label: `${item.Nombre} ${item.Apellidos}`
     }));
 
     const inputClass = (value) => (
