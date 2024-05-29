@@ -14,17 +14,17 @@ import FamiliaresAdherentePage from '../pages/admin/familiares/FamiliaresAdheren
 import FamiliaresAsociadoPage from '../pages/admin/familiares/FamiliaresAsociadoPage';
 import InvitacionesPage from '../pages/admin/invitaciones/InvitacionesPage';
 import DashboardPage from '../pages/dashboard/DashboardPage';
+import Page403 from '../pages/errors/Page403';
 import LoginPage from '../pages/login/LoginPage';
 import PerfilPage from '../pages/perfil/PerfilPage';
+import FamiliaresPage from '../pages/socio/familiares/FamiliaresPage';
 import InvitadosPage from '../pages/socio/invitados/InvitadosPage';
 import AdministradoresPage from '../pages/superAdmin/administradores/AdministradoresPage';
 import HobbiesPage from '../pages/superAdmin/hobbies/HobbiesPage';
 import RolesPage from '../pages/superAdmin/roles/RolesPage';
 import AuthGuard from '../utilities/guards/AuthGuard';
-import { VerifyGuard } from '../utilities/guards/VerifyGuard';
-import FamiliaresPage from '../pages/socio/familiares/FamiliaresPage';
-import Page403 from '../pages/errors/Page403';
 import { AdminGuard, SocioGuard, SuperadminGuard } from '../utilities/guards/RolGuard';
+import { VerifyGuard } from '../utilities/guards/VerifyGuard';
 
 
 const Rutas = () => {
