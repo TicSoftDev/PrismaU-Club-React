@@ -1,7 +1,7 @@
 import axios from "axios";
+import { EndPoints } from "../models/RutasModel";
 
-const URL_EMPLEADOS = "https://www.apiclubsincelejo.prismau.co/api/empleados";
-// const URL_EMPLEADOS = "http://127.0.0.1:8000/api/empleados";
+const URL_EMPLEADOS = EndPoints.EMPLEADOS;
 
 export async function createEmpleado(empleado) {
     try {

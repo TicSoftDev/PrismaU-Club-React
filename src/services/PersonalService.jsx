@@ -1,7 +1,7 @@
 import axios from "axios";
+import { EndPoints } from "../models/RutasModel";
 
-const URL_PERSONAL = "https://www.apiclubsincelejo.prismau.co/api/personal";
-// const URL_PERSONAL = "http://127.0.0.1:8000/api/personal";
+const URL_PERSONAL = EndPoints.PERSONAL;
 
 export async function createPersonal(personal) {
     const options = {

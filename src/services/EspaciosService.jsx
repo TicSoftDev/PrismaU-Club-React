@@ -1,7 +1,7 @@
 import axios from "axios";
+import { EndPoints } from "../models/RutasModel";
 
-const URL_ESPACIOS = "https://www.apiclubsincelejo.prismau.co/api/espacios";
-// const URL_ESPACIOS = "http://127.0.0.1:8000/api/espacios";
+const URL_ESPACIOS = EndPoints.ESPACIOS;
 
 export async function createEspacio(espacio) {
     const headers = {

@@ -1,7 +1,7 @@
 import axios from "axios";
+import { EndPoints } from "../models/RutasModel";
 
-const URL_FAMILIAR = "https://www.apiclubsincelejo.prismau.co/api/familiares";
-// const URL_FAMILIAR = "http://127.0.0.1:8000/api/familiares";
+const URL_FAMILIAR = EndPoints.FAMILIARES;
 
 export async function createFamiliarAsociado(familiar) {
     const res = await axios.post(URL_FAMILIAR + "/asociado", familiar);

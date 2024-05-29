@@ -1,7 +1,7 @@
 import axios from "axios";
+import { EndPoints } from "../models/RutasModel";
 
-const URL_ASOCIADOS = "https://www.apiclubsincelejo.prismau.co/api/asociados";
-// const URL_ASOCIADOS = "http://127.0.0.1:8000/api/asociados";
+const URL_ASOCIADOS = EndPoints.ASOCIADOS;
 
 export async function createAsociado(asociado) {
     const options = {

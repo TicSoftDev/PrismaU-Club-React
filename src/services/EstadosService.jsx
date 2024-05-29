@@ -1,7 +1,7 @@
 import axios from "axios";
+import { EndPoints } from "../models/RutasModel";
 
-const URL_ESTADOS = "https://www.apiclubsincelejo.prismau.co/api/estados";
-// const URL_ESTADOS = "http://127.0.0.1:8000/api/estados";
+const URL_ESTADOS = EndPoints.ESTADOS;
 
 export async function getEstados() {
     const res = await axios.get(URL_ESTADOS);

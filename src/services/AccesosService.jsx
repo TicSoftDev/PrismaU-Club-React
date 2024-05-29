@@ -1,7 +1,7 @@
 import axios from "axios";
+import { EndPoints } from "../models/RutasModel";
 
-const URL_ENTRADAS = "https://www.apiclubsincelejo.prismau.co/api/entradas";
-// const URL_ENTRADAS = "http://127.0.0.1:8000/api/entradas";
+const URL_ENTRADAS = EndPoints.ACCESOS;
 
 export async function getEntradas() {
     const res = await axios.get(URL_ENTRADAS);

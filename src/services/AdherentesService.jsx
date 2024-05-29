@@ -1,7 +1,7 @@
 import axios from "axios";
+import { EndPoints } from "../models/RutasModel";
 
-const URL_ADHERENTES = "https://www.apiclubsincelejo.prismau.co/api/adherentes";
-// const URL_ADHERENTES = "http://127.0.0.1:8000/api/adherentes";
+const URL_ADHERENTES = EndPoints.ADHERENTES;
 
 export async function createAdherente(adherente) {
     const options = {
