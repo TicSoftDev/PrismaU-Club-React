@@ -1,12 +1,12 @@
 import { Button } from 'flowbite-react';
 import React from 'react';
 import DataTable from 'react-data-table-component';
-import { FaEdit, FaRegImages, FaTrash, FaUserCheck, FaUserCog, FaUserPlus, FaUserSlash } from 'react-icons/fa';
+import { FaEdit, FaRegImages, FaTrash, FaUserCheck, FaUserPlus, FaUserSlash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { PrivateRoutes, RouteBack } from '../../../models/RutasModel';
 import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 
-function DataTableAsociado({ usuarios, cargarAsociado, eliminar, loading, change, cargar, cambiar }) {
+function DataTableAsociado({ usuarios, cargarAsociado, eliminar, loading, change, cargar }) {
 
     const navigate = useNavigate();
 
@@ -17,16 +17,11 @@ function DataTableAsociado({ usuarios, cargarAsociado, eliminar, loading, change
                 <div className="flex">
                     <Button onClick={() => cargarAsociado(row)} className='rounded-full w-9 bg-blue-700 text-white' title='Editar' > <FaEdit /> </Button>
                     <Button onClick={() => eliminar(row.user_id)} className='rounded-full w-9 bg-red-600 text-white' title='Eliminar'> <FaTrash /> </Button>
-                    <Button onClick={() => navigate(`${PrivateRoutes.FAMILIARESASOCIADO}/${row.id}`)} className='rounded-full w-9 bg-green-600 text-white' title='Familiares'> <FaUserPlus /> </Button>
-                    <Button onClick={() => change(row.id)} className='rounded-full w-9 bg-yellow-400 text-white' title='Cambiar Estado'> {row.Estado == 1 ? <FaUserSlash /> : <FaUserCheck />}  </Button>
-                    <Button onClick={() => cambiar(row.user_id)} className='rounded-full w-9 bg-purple-600 text-white' title='Hacer Adherente'> <FaUserCog /> </Button>
+                    <Button onClick={() => navigate(PrivateRoutes.FAMILIARESASOCIADO, { state: { id: row.id, codigo: row.Codigo } })} className='rounded-full w-9 bg-green-600 text-white' title='Familiares'> <FaUserPlus /> </Button>                    <Button onClick={() => change(row.id)} className='rounded-full w-9 bg-yellow-400 text-white' title='Cambiar Estado'> {row.Estado == 1 ? <FaUserSlash /> : <FaUserCheck />}  </Button>
                     <Button onClick={() => cargar(row.id)} className='rounded-full w-9 bg-fuchsia-600 text-white' title='Cambiar Imagen'> <FaRegImages />  </Button>
                 </div>
             ),
-            width: '270px',
-            style: {
-                backgroundColor: '#f8fafc',
-            }
+            width: '270px'
         },
         {
             name: "Familiares",

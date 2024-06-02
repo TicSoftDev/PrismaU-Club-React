@@ -48,8 +48,8 @@ const Rutas = () => {
                             <Route element={<AdherentesPage />} path={PrivateRoutes.ADHERENTES} />
                             <Route element={<AdherentesInactivosPage />} path={PrivateRoutes.ADHERENTESINACTIVOS} />
                             <Route element={<EmpleadosPage />} path={PrivateRoutes.EMPLEADOS} />
-                            <Route element={<FamiliaresAsociadoPage />} path={`${PrivateRoutes.FAMILIARESASOCIADO}/:id`} />
-                            <Route element={<FamiliaresAdherentePage />} path={`${PrivateRoutes.FAMILIARESADHERENTE}/:id`} />
+                            <Route element={<FamiliaresAsociadoPage />} path={PrivateRoutes.FAMILIARESASOCIADO} />
+                            <Route element={<FamiliaresAdherentePage />} path={PrivateRoutes.FAMILIARESADHERENTE} />
                             <Route element={<EspaciosPage />} path={PrivateRoutes.ESPACIOS} />
                             <Route element={<HobbiesPage />} path={PrivateRoutes.HOBBIES} />
                             <Route element={<RolesPage />} path={PrivateRoutes.ROLES} />
