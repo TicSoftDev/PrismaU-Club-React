@@ -23,7 +23,7 @@ function DataTableAsociado({ usuarios, cargarAsociado, eliminar, loading, change
                     <Button onClick={() => cargar(row.id)} className='rounded-full w-9 bg-fuchsia-600 text-white' title='Cambiar Imagen'> <FaRegImages />  </Button>
                 </div>
             ),
-            width: '230px',
+            width: '270px',
             style: {
                 backgroundColor: '#f8fafc',
             }
@@ -72,6 +72,15 @@ function DataTableAsociado({ usuarios, cargarAsociado, eliminar, loading, change
             style: {
                 padding: '10px'
             }
+        },
+        {
+            name: "Código",
+            selector: row => row.Codigo ? row.Codigo : (
+                <span className="bg-red-300 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-purple-900 dark:text-purple-300">
+                    Sin asignar
+                </span>
+            ),
+            width: '150px'
         },
         {
             name: "Identificación",

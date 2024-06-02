@@ -12,9 +12,10 @@ import VentanaModal from '../../../utilities/modals/VentanaModal';
 function AsociadosInactivosPage() {
 
     const { titulo2, tituloModal, openModal, loading, listaInactivo, busquedaInactivo, asociado, tituloModalImage, openModalImage,
-        titulo3, openModalEstado, touched, toggleModalEstado, handleChangeEstado, handleUpdateEstado,
-        cambiarEstado, toggleModalImage, cargarImagen, handleUpdateImage, handleChangeImagen,
-        handleBusquedaInactivo, cargarAsociado, eliminarAsociado, goActivos, handleUpdate, toggleModal, handleChange
+        titulo3, openModalEstado, touched,
+        toggleModalEstado, handleChangeEstado, handleUpdateEstado, cambiarEstado, toggleModalImage, cargarImagen, goActivos,
+        handleUpdateImage, handleChangeImagen, handleBusquedaInactivo, cargarAsociado, eliminarAsociado, handleUpdate,
+        toggleModal, handleChange
     } = useAsociados();
 
     return (
@@ -23,8 +24,8 @@ function AsociadosInactivosPage() {
             <Container>
                 <MenuAsociadosInactivos busqueda={busquedaInactivo} handleBusqueda={handleBusquedaInactivo}
                     go={goActivos} data={listaInactivo} titulo={titulo2} />
-                <VentanaModal size={'7xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal} 
-                hanleSubmit={handleUpdate} loading={loading}>
+                <VentanaModal size={'7xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal}
+                    hanleSubmit={handleUpdate} loading={loading}>
                     <FormAsociados asociado={asociado} hanleChange={handleChange} touched={touched} />
                 </VentanaModal>
                 <DataTableAsociado cargarAsociado={cargarAsociado} usuarios={listaInactivo} cargar={cargarImagen}

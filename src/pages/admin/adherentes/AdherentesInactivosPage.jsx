@@ -1,23 +1,22 @@
 import React from 'react';
 import DataTableAdherente from '../../../components/admin/adherentes/DataTableAdherente';
+import FormAdherentes from '../../../components/admin/adherentes/FormAdherentes';
 import FormImagenAdherente from '../../../components/admin/adherentes/FormImagenAdherente';
-import FormAsociados from '../../../components/admin/asociados/FormAsociados';
 import FormMotivo from '../../../components/admin/asociados/FormMotivo';
 import MenuAsociadosInactivos from '../../../components/admin/asociados/MenuAsociadosInactivos';
 import useAdherente from '../../../hooks/useAdherente';
+import useAsociados from '../../../hooks/useAsociados';
 import Container from '../../../utilities/helpers/Container';
 import TituloPage from '../../../utilities/helpers/TituloPage';
 import VentanaModal from '../../../utilities/modals/VentanaModal';
-import useAsociados from '../../../hooks/useAsociados';
-import FormAdherentes from '../../../components/admin/adherentes/FormAdherentes';
 
 function AdherentesInactivosPage() {
 
     const { titulo2, tituloModal, openModal, listaInactivo, adherente, loading, busquedaInactivo, tituloModalImage,
-        openModalImage, titulo3, openModalEstado, touched, toggleModalEstado, handleChangeEstado, handleUpdateEstado,
-        goActivos, cambiarEstado, handleUpdateImage, handleChangeImagen, toggleModalImage, handleBusquedaInactivos,
-        toggleModal, handleChange, handleSubmit, cargarAdherente, handleUpdate, eliminarAdherente, cargarImagen,
-        handleSelectChange, cambiarAsociado
+        openModalImage, titulo3, openModalEstado, touched,
+        toggleModalEstado, handleChangeEstado, handleUpdateEstado, goActivos, cambiarEstado, handleUpdateImage,
+        handleChangeImagen, toggleModalImage, handleBusquedaInactivos, toggleModal, handleChange, handleSubmit,
+        cargarAdherente, handleUpdate, eliminarAdherente, cargarImagen, handleSelectChange, cambiarAsociado
     } = useAdherente();
     const handler = adherente.id ? handleUpdate : handleSubmit;
     const { lista: socio } = useAsociados();

@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { alertError, alertSucces, alertWarning } from '../utilities/alerts/Alertas';
-import Swal from 'sweetalert2';
-import { createPersonal, deletePersonal, updateImagePersonal, updatePersonal } from '../services/PersonalService';
-import { changeStatusAdherente, changeToAsociado, createAdherente, deleteAdherente, getAdherentes, getAdherentesInactivos, updateAdherente, updateImage } from '../services/AdherentesService';
-import { PrivateRoutes } from '../models/RutasModel';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { PrivateRoutes } from '../models/RutasModel';
+import { changeStatusAdherente, changeToAsociado, createAdherente, deleteAdherente, getAdherentes, getAdherentesInactivos, updateAdherente, updateImage } from '../services/AdherentesService';
+import { alertError, alertSucces, alertWarning } from '../utilities/alerts/Alertas';
 
 function useAdherente() {
 
@@ -34,6 +33,7 @@ function useAdherente() {
         TipoDocumento: "",
         Documento: "",
         Sexo: "",
+        Codigo: "",
         DireccionResidencia: "",
         CiudadResidencia: "",
         TiempoResidencia: "",
@@ -74,6 +74,7 @@ function useAdherente() {
             TipoDocumento: "",
             Documento: "",
             Sexo: "",
+            Codigo: "",
             DireccionResidencia: "",
             CiudadResidencia: "",
             TiempoResidencia: "",
@@ -105,7 +106,7 @@ function useAdherente() {
 
     const handleSubmit = async (e) => {
         try {
-            setTouched(true); 
+            setTouched(true);
             if (adherente.asociado_id === null || adherente.Nombre === "" || adherente.Apellidos === "" || adherente.Documento === "" || adherente.TipoDocumento === "" || adherente.Correo === "" || adherente.Telefono === "" || adherente.Sexo === "") {
                 alertWarning("Por favor, ingrese todos los campos");
                 return;
@@ -359,14 +360,14 @@ function useAdherente() {
 
     const filterAsociados = (listado, busqueda) => {
         if (!busqueda) return listado;
-    
+
         const busquedaNormalizada = normalizeText(busqueda);
         const palabrasBusqueda = busquedaNormalizada.split(/\s+/);
-    
+
         return listado.filter((dato) => {
             const nombreNormalizado = normalizeText(`${dato.Nombre} ${dato.Apellidos}`);
             const documentoNormalizado = normalizeText(dato.Documento);
-    
+
             return palabrasBusqueda.every(palabra =>
                 nombreNormalizado.includes(palabra) || documentoNormalizado.includes(palabra)
             );

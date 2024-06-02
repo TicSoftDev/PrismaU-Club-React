@@ -1,6 +1,6 @@
 import { Label, Select as Select2, TextInput } from 'flowbite-react';
 import React from 'react';
-import { FaCalendarAlt, FaCity, FaEnvelope, FaIdCard, FaKeyboard, FaMapMarkerAlt, FaMercury, FaPhoneAlt, FaSortNumericUp, FaSuitcase, FaUserGraduate, FaUserTag } from 'react-icons/fa';
+import { FaCalendarAlt, FaCity, FaCode, FaEnvelope, FaIdCard, FaKeyboard, FaMapMarkerAlt, FaMercury, FaPhoneAlt, FaSortNumericUp, FaSuitcase, FaUserGraduate, FaUserTag } from 'react-icons/fa';
 import { FaMapLocation } from 'react-icons/fa6';
 import Select from 'react-select';
 
@@ -45,6 +45,15 @@ function FormAdherentes({ socio, adherente, hanleChange, handleChangeSelect, tou
                     <TextInput id="apellidos" type="text" icon={FaKeyboard} onChange={hanleChange}
                         className={inputClass(adherente.Apellidos)} value={adherente.Apellidos}
                         name='Apellidos' placeholder="Escribe los apellidos..." />
+                    <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
+                </div>
+                <div className="w-full">
+                    <div className="mb-2 block">
+                        <Label htmlFor="codigo" value="Código" />
+                    </div>
+                    <TextInput id="codigo" type="text" icon={FaCode} onChange={hanleChange}
+                        className={inputClass(adherente.Codigo)} value={adherente.Codigo ? adherente.Codigo : ""}
+                        name='Codigo' placeholder="Escribe el código..." />
                     <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                 </div>
             </div>

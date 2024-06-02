@@ -15,7 +15,7 @@ function TablaFamiliares({ usuarios, cargarEmpleado, eliminar, loading, cargar }
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table id="myTable" className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-white uppercase dark:bg-gray-700 dark:text-gray-400" style={{ backgroundColor: "#379861" }}>
+                <thead className="text-xs text-white uppercase dark:bg-gray-700 dark:text-gray-400" style={{ backgroundColor: "#379861" }}>
                     <tr>
                         <th scope="col" className="px-6 py-3"></th>
                         <th scope="col" className="px-6 py-3">
@@ -23,6 +23,9 @@ function TablaFamiliares({ usuarios, cargarEmpleado, eliminar, loading, cargar }
                         </th>
                         <th scope="col" className="px-6 py-3">
                             Nombre Completo
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Código
                         </th>
                         <th scope="col" className="px-6 py-3">
                             Identificación
@@ -62,6 +65,9 @@ function TablaFamiliares({ usuarios, cargarEmpleado, eliminar, loading, cargar }
                                             <div className="font-normal text-gray-500">{user.Apellidos}</div>
                                         </div>
                                     </th>
+                                    <td className="px-6 py-4">
+                                        {user.Codigo ? user.Codigo : "Sin Asignar"}
+                                    </td>
                                     <td className="px-6 py-4">
                                         {user.TipoDocumento + ' ' + user.Documento}
                                     </td>

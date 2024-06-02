@@ -1,6 +1,6 @@
 import { Label, Select, TextInput } from 'flowbite-react';
 import React from 'react';
-import { FaCalendarAlt, FaCity, FaEnvelope, FaIdCard, FaKeyboard, FaMapMarkerAlt, FaMercury, FaPhoneAlt, FaSortNumericUp, FaSuitcase, FaUserGraduate, FaUserTag } from 'react-icons/fa';
+import { FaCalendarAlt, FaCity, FaCode, FaEnvelope, FaIdCard, FaKeyboard, FaMapMarkerAlt, FaMercury, FaPhoneAlt, FaSortNumericUp, FaSuitcase, FaUserGraduate, FaUserTag } from 'react-icons/fa';
 import { FaMapLocation } from 'react-icons/fa6';
 
 function FormAsociados({ asociado, hanleChange, touched }) {
@@ -28,6 +28,15 @@ function FormAsociados({ asociado, hanleChange, touched }) {
                     <TextInput id="apellidos" type="text" icon={FaKeyboard} onChange={hanleChange}
                         className={inputClass(asociado.Apellidos)} value={asociado.Apellidos}
                         name='Apellidos' placeholder="Escribe los apellidos..." />
+                    <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
+                </div>
+                <div className="w-full">
+                    <div className="mb-2 block">
+                        <Label htmlFor="codigo" value="Código" />
+                    </div>
+                    <TextInput id="codigo" type="text" icon={FaCode} onChange={hanleChange}
+                        className={inputClass(asociado.Codigo)} value={asociado.Codigo ? asociado.Codigo : ""}
+                        name='Codigo' placeholder="Escribe el codigo..." />
                     <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                 </div>
             </div>

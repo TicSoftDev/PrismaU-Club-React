@@ -13,9 +13,10 @@ import VentanaModal from '../../../utilities/modals/VentanaModal';
 function AdherentesPage() {
 
     const { titulo, tituloModal, openModal, lista, busqueda, adherente, loading, tituloModalImage, openModalImage,
-        titulo3, openModalEstado, touched, toggleModalEstado, handleChangeEstado, handleUpdateEstado, handleSelectChange,
-        goInactivos, cambiarEstado, cambiarAsociado, toggleModal, handleChange, handleSubmit, handleBusqueda, handleUpdate,
-        cargarAdherente, eliminarAdherente, toggleModalImage, cargarImagen, handleUpdateImage, handleChangeImagen
+        titulo3, openModalEstado, touched,
+        toggleModalEstado, handleChangeEstado, handleUpdateEstado, handleSelectChange, goInactivos, cambiarEstado,
+        cambiarAsociado, toggleModal, handleChange, handleSubmit, handleBusqueda, handleUpdate, handleChangeImagen,
+        cargarAdherente, eliminarAdherente, toggleModalImage, cargarImagen, handleUpdateImage,
     } = useAdherente();
     const handler = adherente.id ? handleUpdate : handleSubmit;
     const { lista: socio } = useAsociados();

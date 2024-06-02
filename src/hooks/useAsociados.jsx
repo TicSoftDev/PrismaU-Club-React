@@ -33,6 +33,7 @@ function useAsociados() {
         TipoDocumento: "",
         Documento: "",
         Sexo: "",
+        Codigo: "",
         DireccionResidencia: "",
         CiudadResidencia: "",
         TiempoResidencia: "",
@@ -74,6 +75,7 @@ function useAsociados() {
             TipoDocumento: "",
             Documento: "",
             Sexo: "",
+            Codigo: "",
             DireccionResidencia: "",
             CiudadResidencia: "",
             TiempoResidencia: "",
@@ -338,14 +340,14 @@ function useAsociados() {
 
     const filterAsociados = (listado, busqueda) => {
         if (!busqueda) return listado;
-    
+
         const busquedaNormalizada = normalizeText(busqueda);
         const palabrasBusqueda = busquedaNormalizada.split(/\s+/);
-    
+
         return listado.filter((dato) => {
             const nombreNormalizado = normalizeText(`${dato.Nombre} ${dato.Apellidos}`);
             const documentoNormalizado = normalizeText(dato.Documento);
-    
+
             return palabrasBusqueda.every(palabra =>
                 nombreNormalizado.includes(palabra) || documentoNormalizado.includes(palabra)
             );
@@ -372,10 +374,10 @@ function useAsociados() {
 
     return {
         titulo, titulo2, tituloModal, openModal, asociado, lista, busqueda, loading, busquedaInactivo, listaInactivo,
-        openModalImage, tituloModalImage, imagen, openModalEstado, motivo, titulo3, touched, handleUpdateEstado,
+        openModalImage, tituloModalImage, imagen, openModalEstado, motivo, titulo3, touched,
         goInactivos, toggleModal, handleChange, handleSubmit, handleBusqueda, cargarAsociado, handleUpdate, toggleModalImage,
         eliminarAsociado, handleBusquedaInactivo, goActivos, cambiarEstado, cargarImagen, handleUpdateImage, handleChangeImagen,
-        handleChangeEstado, toggleModalEstado, cambiarAdherente
+        handleChangeEstado, toggleModalEstado, cambiarAdherente, handleUpdateEstado
     };
 }
 
