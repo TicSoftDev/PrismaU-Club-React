@@ -10,7 +10,7 @@ function FormLogin({ loading, usuario, handleChange, handleSubmit, visible, togg
         <div className='bg-gray-100 min-h-screen'>
             <div className="flex flex-col min-h-screen justify-center items-center px-4 md:px-0">
                 <div className="bg-white dark:bg-gray-950 w-full max-w-[1000px] rounded-xl overflow-hidden shadow-lg flex flex-col md:flex-row min-h-[550px]">
-                    <div className="md:w-1/2 bg-white dark:bg-gray-800 flex items-center justify-center p-8 hidden md:flex">
+                    <div className="md:w-1/2 bg-white dark:bg-gray-800 items-center justify-center p-8 hidden md:flex">
                         <img src={imagen.logoPrisma} alt='Logo' className='w-48' />
                     </div>
                     <div className="md:w-1/2 p-8 flex flex-col items-start justify-center w-full">
