@@ -51,9 +51,8 @@ function FormAdherentes({ socio, adherente, hanleChange, handleChangeSelect, tou
                     <div className="mb-2 block">
                         <Label htmlFor="codigo" value="Código" />
                     </div>
-                    <TextInput id="codigo" type="text" icon={FaCode} onChange={hanleChange}
-                        className={inputClass(adherente.Codigo)} value={adherente.Codigo ? adherente.Codigo : ""}
-                        name='Codigo' placeholder="Escribe el código..." />
+                    <TextInput id="codigo" type="text" icon={FaCode} onChange={hanleChange} name='Codigo'
+                        value={adherente.Codigo ? adherente.Codigo : ""} placeholder="Escribe el código..." />
                     <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                 </div>
             </div>
