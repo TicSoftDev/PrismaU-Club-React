@@ -284,7 +284,9 @@ function useAsociados() {
     const handleUpdateEstado = async (e) => {
         try {
             e.preventDefault();
+            setLoading(true);
             const resultado = await changeStatusAsociado(asociado.id, motivo);
+            setLoading(false);
             if (resultado.status) {
                 toggleModalEstado();
                 alertSucces("Se cambio correctamente");
@@ -294,6 +296,7 @@ function useAsociados() {
                 alertWarning("No se pudo cambiar");
             }
         } catch (error) {
+            setLoading(false);
             alertError("No se pudo conectar al servidor");
         }
     }
