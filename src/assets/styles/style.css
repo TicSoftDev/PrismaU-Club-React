@@ -12,7 +12,26 @@
     background-color: #fff;
 }
 
-.react-select__control, .react-select__control--is-focused {
+.react-select__control,
+.react-select__control--is-focused {
     outline: none !important;
     box-shadow: none !important;
-  }
+}
+
+.animated-element {
+    animation: fadeIn;
+    position: relative;
+    animation-duration: 1s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
