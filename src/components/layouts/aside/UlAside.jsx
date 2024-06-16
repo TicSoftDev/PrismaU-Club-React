@@ -13,14 +13,15 @@ function UlAside() {
     ];
 
     const admin = [
-        { icono: "user-tie", texto: "Asociados", color: "purple", opacidad: '600', link: PrivateRoutes.ASOCIADOS, activeSubroutes: [PrivateRoutes.ASOCIADOSINACTIVOS, PrivateRoutes.FAMILIARESASOCIADO] },
-        { icono: "user-tie", texto: "Adherentes", color: "pink", opacidad: '600', link: PrivateRoutes.ADHERENTES, activeSubroutes: [PrivateRoutes.ADHERENTESINACTIVOS, PrivateRoutes.FAMILIARESADHERENTE] },
-        { icono: "users", texto: "Empleados", color: "red", opacidad: '600', link: PrivateRoutes.EMPLEADOS },
-        { icono: "map-marked-alt", texto: "Espacios", color: "yellow", opacidad: '400', link: PrivateRoutes.ESPACIOS },
-        { icono: "newspaper", texto: "Noticias", color: "green", opacidad: '500', link: PrivateRoutes.NOTICIAS },
-        { icono: "user-clock", texto: "Invitaciones", color: "purple", opacidad: '600', link: PrivateRoutes.INVITACIONES },
-        { icono: "id-badge", texto: "Control Accesos", color: "pink", opacidad: '600', link: PrivateRoutes.ACCESOS },
-        { icono: "history", texto: "Log Estados", color: "red", opacidad: '600', link: PrivateRoutes.ESTADOS },
+        { icono: "search", texto: "Buscar Usuario", color: "purple", opacidad: '600', link: PrivateRoutes.BUSCAR_USER },
+        { icono: "user-tie", texto: "Asociados", color: "red", opacidad: '600', link: PrivateRoutes.ASOCIADOS, activeSubroutes: [PrivateRoutes.ASOCIADOSINACTIVOS, PrivateRoutes.FAMILIARESASOCIADO] },
+        { icono: "user-tie", texto: "Adherentes", color: "yellow", opacidad: '400', link: PrivateRoutes.ADHERENTES, activeSubroutes: [PrivateRoutes.ADHERENTESINACTIVOS, PrivateRoutes.FAMILIARESADHERENTE] },
+        { icono: "users", texto: "Empleados", color: "green", opacidad: '600', link: PrivateRoutes.EMPLEADOS },
+        { icono: "map-marked-alt", texto: "Espacios", color: "purple", opacidad: '600', link: PrivateRoutes.ESPACIOS },
+        { icono: "newspaper", texto: "Noticias", color: "red", opacidad: '600', link: PrivateRoutes.NOTICIAS },
+        { icono: "user-clock", texto: "Invitaciones", color: "yellow", opacidad: '400', link: PrivateRoutes.INVITACIONES },
+        { icono: "id-badge", texto: "Control Accesos", color: "green", opacidad: '600', link: PrivateRoutes.ACCESOS },
+        { icono: "history", texto: "Log Estados", color: "purple", opacidad: '600', link: PrivateRoutes.ESTADOS },
     ];
 
     const socio = [

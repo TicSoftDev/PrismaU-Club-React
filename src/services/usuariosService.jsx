@@ -7,3 +7,12 @@ export async function changePassword(id, usuario) {
     const res = await axios.put(URL_USUARIO + "/" + id, usuario);
     return res.data;
 };
+
+export async function getByDocumento(documento) {
+    try {
+        const res = await axios.get(URL_USUARIO + "/" + documento);
+        return res.data;
+    } catch (e) {
+        throw e;
+    }
+};

@@ -26,6 +26,7 @@ import AuthGuard from '../utilities/guards/AuthGuard';
 import { AdminGuard, SocioGuard, SuperadminGuard } from '../utilities/guards/RolGuard';
 import { VerifyGuard } from '../utilities/guards/VerifyGuard';
 import NoticiasPage from '../pages/admin/noticias/NoticiasPage';
+import BusquedaUserPage from '../pages/admin/busquedaUser/BusquedaUserPage';
 
 
 const Rutas = () => {
@@ -57,6 +58,7 @@ const Rutas = () => {
                             <Route element={<InvitacionesPage />} path={PrivateRoutes.INVITACIONES} />
                             <Route element={<LogEstadosPage />} path={PrivateRoutes.ESTADOS} />
                             <Route element={<NoticiasPage />} path={PrivateRoutes.NOTICIAS} />
+                            <Route element={<BusquedaUserPage />} path={PrivateRoutes.BUSCAR_USER} />
                         </Route>
                         <Route element={<SocioGuard />}>
                             <Route element={<InvitadosPage />} path={PrivateRoutes.INVITADOS} />

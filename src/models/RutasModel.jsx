@@ -7,6 +7,7 @@ export const PublicRoutes = {
 
 export const PrivateRoutes = {
     DASHBOARD: "/dashboard",
+    BUSCAR_USER: "/busqueda-usuarios",
     ADMINISTRADORES: "/administradores",
     ASOCIADOS: "/asociados",
     ASOCIADOSINACTIVOS: "/asociados-inactivos",
