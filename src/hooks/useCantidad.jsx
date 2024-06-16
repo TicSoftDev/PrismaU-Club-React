@@ -7,6 +7,7 @@ import { getCantidadEmpleados } from '../services/EmpleadosService';
 import { getCantidadEspacios } from '../services/EspaciosService';
 import { getCantidadFamiliares, getCantidadFamiliaresSocio } from '../services/FamiliaresService';
 import { getCantidadInvitados, getCantidadInvitadosSocio } from '../services/InvitadosService';
+import { getCantidadNoticias } from '../services/NoticiasService';
 
 function useCantidad() {
 
@@ -21,6 +22,7 @@ function useCantidad() {
     const [contInvitados, setContInvitados] = useState(0);
     const [contInvitadosSocio, setContInvitadosSocio] = useState(0);
     const [contAdmins, setContAdmins] = useState(0);
+    const [contNoticias, setContNoticias] = useState(0);
 
     const cantidadAsociados = async () => {
         try {
@@ -95,6 +97,14 @@ function useCantidad() {
             console.log("Count", error.message);
         }
     };
+    const cantidadNoticias = async () => {
+        try {
+            const data = await getCantidadNoticias();
+            setContNoticias(data);
+        } catch (error) {
+            console.log("Count", error.message);
+        } 0
+    };
 
     useEffect(() => {
         cantidadAsociados();
@@ -106,11 +116,12 @@ function useCantidad() {
         cantidadInvitados();
         cantidadInvitadosSocio();
         cantidadAdmins();
+        cantidadNoticias();
     }, []);
 
     return {
         contAdherentes, contAsociados, contEmpleados, contFamiliares, contEspacios, contInvitados,
-        contAdmins, contFamiliaresSocio, contInvitadosSocio
+        contAdmins, contFamiliaresSocio, contInvitadosSocio, contNoticias
     };
 }
 

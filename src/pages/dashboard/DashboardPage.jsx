@@ -11,7 +11,7 @@ function DashboardPage() {
     const titulo = 'Dashboard';
     const credenciales = useSelector((state) => state.credenciales);
     const { contAsociados, contAdherentes, contEmpleados, contFamiliares, contEspacios, contInvitados,
-        contAdmins, contFamiliaresSocio, contInvitadosSocio } = useCantidad();
+        contAdmins, contFamiliaresSocio, contInvitadosSocio, contNoticias } = useCantidad();
 
     const superAdminCards = [
         { color: "purple", cantidad: contAdmins, titulo: "Admistradores", icono: "user-shield", opacidad: "500" },
@@ -26,6 +26,7 @@ function DashboardPage() {
         { color: "pink", cantidad: contEmpleados, titulo: "Empleados", icono: "users", opacidad: "500" },
         { color: "red", cantidad: contInvitados, titulo: "Invitados", icono: "user-clock", opacidad: "600" },
         { color: "yellow", cantidad: contEspacios, titulo: "Espacios", icono: "map-marked-alt", opacidad: "400" },
+        { color: "green", cantidad: contNoticias, titulo: "Noticias", icono: "newspaper", opacidad: "500" },
     ];
 
     const asociadoCards = [
