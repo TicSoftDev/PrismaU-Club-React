@@ -26,8 +26,8 @@ function ResultadoBusqueda({ user, loading }) {
         <div className="w-full grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1">
             <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-col lg:flex-row max-w-full dark:border-gray-700 dark:bg-gray-800 mt-2">
                 <div className="flex flex-col items-center p-4">
-                    <img className="object-fit w-full h-full rounded-lg mb-2" alt="Perfil"
-                        src={user.imagen ? `${RouteBack + user.imagen}` : user.Sexo === "Femenino" ?
+                    <img className="object-cover w-28 h-28 sm:w-40 sm:h-40 rounded-full mb-2 border-2" alt="Perfil"
+                        src={user.user.imagen ? `${RouteBack + user.user.imagen}` : user.Sexo === "Femenino" ?
                             "https://cdn-icons-png.flaticon.com/128/4140/4140047.png" :
                             "https://cdn-icons-png.flaticon.com/128/3135/3135715.png"} />
                     <div className="mt-5 w-full">

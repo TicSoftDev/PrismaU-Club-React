@@ -43,7 +43,11 @@ function useUsuario() {
             setLoading(true);
             const data = await getByDocumento(busqueda);
             setLoading(false);
-            setUserData(data);
+            if (data.status) {
+                setUserData(data);
+            } else {
+                alertWarning("No se encontro ningun usuario");
+            }
         } catch (error) {
             setLoading(false);
             alertError("Busqueda: ", error.message);
