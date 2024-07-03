@@ -1,20 +1,20 @@
 import React from 'react';
-import { FaBan, FaSearch, FaUser } from "react-icons/fa";
+import { FaSearch, FaUser, FaUserSlash } from "react-icons/fa";
 import ExportExcelAsociados from './ExportExcelAsociados';
 
-function MenuAsociadosInactivos({ busqueda, handleBusqueda, go, data, titulo, retirados }) {
+function MenuAsociadosRetirados({ busqueda, handleBusqueda, activos, data, titulo, inactivos }) {
 
     return (
         <div className="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
             <div className="inline-flex rounded-md shadow-sm" role="group">
-                <button onClick={go} className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-yellow-400 border border-yellow-400 rounded-s-lg hover:bg-white hover:text-yellow-400 focus:z-10 focus:ring-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
+                <button onClick={activos} className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-yellow-400 border border-yellow-400 rounded-s-lg hover:bg-white hover:text-yellow-400 focus:z-10 focus:ring-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
                     <FaUser className='me-2' />
                     Activos
                 </button>
                 <ExportExcelAsociados data={data} fileName={titulo} />
-                <button onClick={retirados} className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-orange-500 border border-orange-500 rounded-e-lg hover:bg-white hover:text-orange-500 focus:z-10 focus:ring-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
-                    <FaBan className='me-2' />
-                    Retirados
+                <button onClick={inactivos} className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-red-600 rounded-e-lg hover:bg-white hover:text-red-600 focus:z-10 focus:ring-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
+                    <FaUserSlash className='me-2' />
+                    Inactivos
                 </button>
             </div>
             <div className="relative">
@@ -27,4 +27,4 @@ function MenuAsociadosInactivos({ busqueda, handleBusqueda, go, data, titulo, re
     );
 }
 
-export default MenuAsociadosInactivos; 
+export default MenuAsociadosRetirados; 

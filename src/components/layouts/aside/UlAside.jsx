@@ -14,8 +14,8 @@ function UlAside() {
 
     const admin = [
         { icono: "search", texto: "Buscar Usuario", color: "purple", opacidad: '600', link: PrivateRoutes.BUSCAR_USER },
-        { icono: "user-tie", texto: "Asociados", color: "red", opacidad: '600', link: PrivateRoutes.ASOCIADOS, activeSubroutes: [PrivateRoutes.ASOCIADOSINACTIVOS, PrivateRoutes.FAMILIARESASOCIADO] },
-        { icono: "user-tie", texto: "Adherentes", color: "yellow", opacidad: '400', link: PrivateRoutes.ADHERENTES, activeSubroutes: [PrivateRoutes.ADHERENTESINACTIVOS, PrivateRoutes.FAMILIARESADHERENTE] },
+        { icono: "user-tie", texto: "Asociados", color: "red", opacidad: '600', link: PrivateRoutes.ASOCIADOS, activeSubroutes: [PrivateRoutes.ASOCIADOSINACTIVOS, PrivateRoutes.ASOCIADOSRETIRADOS, PrivateRoutes.FAMILIARESASOCIADO] },
+        { icono: "user-tie", texto: "Adherentes", color: "yellow", opacidad: '400', link: PrivateRoutes.ADHERENTES, activeSubroutes: [PrivateRoutes.ADHERENTESINACTIVOS, PrivateRoutes.ADHERENTESRETIRADOS, PrivateRoutes.FAMILIARESADHERENTE] },
         { icono: "users", texto: "Empleados", color: "green", opacidad: '600', link: PrivateRoutes.EMPLEADOS },
         { icono: "map-marked-alt", texto: "Espacios", color: "purple", opacidad: '600', link: PrivateRoutes.ESPACIOS },
         { icono: "newspaper", texto: "Noticias", color: "red", opacidad: '600', link: PrivateRoutes.NOTICIAS },

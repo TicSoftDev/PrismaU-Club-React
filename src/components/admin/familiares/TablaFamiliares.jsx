@@ -49,8 +49,8 @@ function TablaFamiliares({ usuarios, cargarEmpleado, eliminar, loading, cargar }
                                     </td>
                                     <td className="px-6 py-4">
                                         <div className="flex items-center">
-                                            <div className={`h-2.5 w-2.5 rounded-full bg-${user.Estado == 1 ? 'green-500' : 'red-600'} me-2`}></div>
-                                            {user.Estado == 1 ? "Activo" : "Inactivo"}
+                                            <div className={`h-2.5 w-2.5 rounded-full bg-${user.Estado == 1 ? 'green-500' : user.Estado == 2 ? 'orange-500' : 'red-600'} me-2`}></div>
+                                            {user.Estado == 1 ? "Activo" : user.Estado == 2 ? "Retirado" : "Inactivo"}
                                         </div>
                                     </td>
                                     <th scope="row" className="flex items-center px-10 py-4 text-gray-900 whitespace-nowrap dark:text-white">

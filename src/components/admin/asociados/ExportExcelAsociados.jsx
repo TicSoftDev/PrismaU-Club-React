@@ -41,7 +41,7 @@ const ExportExcelAsociados = ({ data, fileName }) => {
     };
 
     return (
-        <button className='inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-orange-500 border border-orange-500 hover:bg-white hover:text-orange-500 focus:z-10 focus:ring-2' onClick={exportToCSV}>
+        <button className='inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-500 border border-green-500 hover:bg-white hover:text-green-500 focus:z-10 focus:ring-2' onClick={exportToCSV}>
             <SiMicrosoftexcel className='me-2' /> Excel
         </button>
     );

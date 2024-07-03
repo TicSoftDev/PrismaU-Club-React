@@ -27,6 +27,8 @@ import { AdminGuard, SocioGuard, SuperadminGuard } from '../utilities/guards/Rol
 import { VerifyGuard } from '../utilities/guards/VerifyGuard';
 import NoticiasPage from '../pages/admin/noticias/NoticiasPage';
 import BusquedaUserPage from '../pages/admin/busquedaUser/BusquedaUserPage';
+import AsociadosRetiradosPage from '../pages/admin/asociados/AsociadosRetiradosPage';
+import AdherentesRetiradosPage from '../pages/admin/adherentes/AdherentesRetiradosPage';
 
 
 const Rutas = () => {
@@ -47,8 +49,10 @@ const Rutas = () => {
                             <Route element={<AccesosPage />} path={PrivateRoutes.ACCESOS} />
                             <Route element={<AsociadosPage />} path={PrivateRoutes.ASOCIADOS} />
                             <Route element={<AsociadosInactivosPage />} path={PrivateRoutes.ASOCIADOSINACTIVOS} />
+                            <Route element={<AsociadosRetiradosPage />} path={PrivateRoutes.ASOCIADOSRETIRADOS} />
                             <Route element={<AdherentesPage />} path={PrivateRoutes.ADHERENTES} />
                             <Route element={<AdherentesInactivosPage />} path={PrivateRoutes.ADHERENTESINACTIVOS} />
+                            <Route element={<AdherentesRetiradosPage />} path={PrivateRoutes.ADHERENTESRETIRADOS} />
                             <Route element={<EmpleadosPage />} path={PrivateRoutes.EMPLEADOS} />
                             <Route element={<FamiliaresAsociadoPage />} path={PrivateRoutes.FAMILIARESASOCIADO} />
                             <Route element={<FamiliaresAdherentePage />} path={PrivateRoutes.FAMILIARESADHERENTE} />

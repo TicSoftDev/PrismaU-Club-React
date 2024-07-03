@@ -2,26 +2,32 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { PrivateRoutes } from '../models/RutasModel';
-import { changeStatusAdherente, changeToAsociado, createAdherente, deleteAdherente, getAdherentes, getAdherentesInactivos, updateAdherente, updateImage } from '../services/AdherentesService';
+import { changeRetiredAdherente, changeStatusAdherente, changeToAsociado, createAdherente, deleteAdherente, getAdherentes, getAdherentesInactivos, getAdherentesRetirados, updateAdherente, updateImage } from '../services/AdherentesService';
 import { alertError, alertSucces, alertWarning } from '../utilities/alerts/Alertas';
 
 function useAdherente() {
 
     const titulo = 'Adherentes';
     const titulo2 = 'Adherentes Inactivos';
-    const titulo3 = 'Cambio de estado';
+    const titulo3 = 'Activar - Inactivar Adherentes';
+    const titulo4 = 'Adherentes Retirados';
+    const titulo5 = 'Retirar - Activar Adherentes';
     let lista = [];
     let listaInactivo = [];
+    let listaRetirados = [];
     const navigate = useNavigate();
     const [touched, setTouched] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [openModalEstado, setOpenModalEstado] = useState(false);
+    const [openModalRetirar, setOpenModalRetirar] = useState(false);
     const [openModalImage, setOpenModalImage] = useState(false);
     const [loading, setLoading] = useState(false);
     const [busqueda, setBusqueda] = useState('');
     const [busquedaInactivo, setBusquedaInactivo] = useState('');
+    const [busquedaRetirados, setBusquedaRetirados] = useState('');
     const [listadoAdherentes, setListadoAdherentes] = useState([]);
     const [listadoAdherentesInactivos, setListadoAdherentesInactivos] = useState([]);
+    const [listadoAdherentesRetirados, setListadoAdherentesRetirados] = useState([]);
     const [adherente, setAdherente] = useState({
         asociado_id: null,
         Nombre: "",
@@ -62,6 +68,10 @@ function useAdherente() {
         navigate(PrivateRoutes.ADHERENTES);
     };
 
+    const goRetirados = async () => {
+        navigate(PrivateRoutes.ADHERENTESRETIRADOS);
+    };
+
     const recargar = () => {
         setAdherente({
             asociado_id: null,
@@ -99,6 +109,10 @@ function useAdherente() {
         setBusquedaInactivo(target.value);
     };
 
+    const handleBusquedaRetirados = ({ target }) => {
+        setBusquedaRetirados(target.value);
+    };
+
     const toggleModal = () => {
         setOpenModal(!openModal);
         recargar();
@@ -120,6 +134,7 @@ function useAdherente() {
                 alertSucces("Creado correctamente");
                 await getListadoAdherentes();
                 await getListadoAdherentesInactivos();
+                await getListadoAdherentesRetirados();
             } else if (data.status === false && data.message === 'Asignado') {
                 return alertWarning("Este asociado ya ha sido asignado a otro adherente");
             } else if (data.status === false && data.message === 'Existe') {
@@ -171,6 +186,18 @@ function useAdherente() {
         }
     };
 
+    const getListadoAdherentesRetirados = async () => {
+        try {
+            setLoading(true);
+            const data = await getAdherentesRetirados();
+            setLoading(false);
+            setListadoAdherentesRetirados(data);
+        } catch (error) {
+            setLoading(false);
+            alertError(error.message);
+        }
+    };
+
     const cargarAdherente = async (adherente) => {
         adherente.Rol = 3;
         setAdherente(adherente);
@@ -193,6 +220,7 @@ function useAdherente() {
                 alertSucces("Actualizado correctamente");
                 await getListadoAdherentes();
                 await getListadoAdherentesInactivos();
+                await getListadoAdherentesRetirados();
             } else if (resultado.status === false && resultado.message === 'Asignado') {
                 return alertWarning("Este asociado ya ha sido asignado a otro adherente");
             } else if (resultado.status === false && resultado.message === 'Existe') {
@@ -221,6 +249,7 @@ function useAdherente() {
                         alertSucces("Eliminado correctamente");
                         await getListadoAdherentes();
                         await getListadoAdherentesInactivos();
+                        await getListadoAdherentesRetirados();
                     } else {
                         alertWarning("No se pudo eliminar");
                     }
@@ -240,6 +269,10 @@ function useAdherente() {
 
     const toggleModalEstado = () => {
         setOpenModalEstado(!openModalEstado);
+    }
+
+    const toggleModalRetirar = () => {
+        setOpenModalRetirar(!openModalRetirar);
     }
 
     const cambiarEstado = async (id) => {
@@ -265,6 +298,29 @@ function useAdherente() {
         }
     }
 
+    const retirar = async (id) => {
+        try {
+            Swal.fire({
+                title: '¿Seguro que quiere realizar esta acción?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, cambiar',
+                cancelButtonText: 'No, cancelar'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    toggleModalRetirar();
+                    adherente.id = id;
+                    setMotivo("");
+                }
+            });
+
+        } catch (error) {
+            alertWarning("Error al cambiar ", error.message)
+        }
+    }
+
     const handleUpdateEstado = async (e) => {
         try {
             e.preventDefault();
@@ -276,6 +332,28 @@ function useAdherente() {
                 alertSucces("Se cambio correctamente");
                 await getListadoAdherentes();
                 await getListadoAdherentesInactivos();
+                await getListadoAdherentesRetirados();
+            } else {
+                alertWarning("No se pudo cambiar");
+            }
+        } catch (error) {
+            setLoading(false);
+            alertError("No se pudo conectar al servidor");
+        }
+    }
+
+    const handleUpdateRetirar = async (e) => {
+        try {
+            e.preventDefault();
+            setLoading(true);
+            const resultado = await changeRetiredAdherente(adherente.id, motivo);
+            setLoading(false);
+            if (resultado.status) {
+                toggleModalRetirar();
+                alertSucces("Se cambio correctamente");
+                await getListadoAdherentes();
+                await getListadoAdherentesInactivos();
+                await getListadoAdherentesRetirados();
             } else {
                 alertWarning("No se pudo cambiar");
             }
@@ -302,6 +380,7 @@ function useAdherente() {
                         alertSucces("Se cambio correctamente");
                         await getListadoAdherentes();
                         await getListadoAdherentesInactivos();
+                        await getListadoAdherentesRetirados();
                     } else {
                         alertWarning("No se pudo cambiar");
                     }
@@ -343,6 +422,7 @@ function useAdherente() {
                 alertSucces("Imagen actualizada correctamente");
                 await getListadoAdherentes();
                 await getListadoAdherentesInactivos();
+                await getListadoAdherentesRetirados();
 
             } else {
                 alertWarning("No se pudo actualizar la imagen");
@@ -386,18 +466,26 @@ function useAdherente() {
         listaInactivo = filterAsociados(listadoAdherentesInactivos, busquedaInactivo);
     }
 
+    if (!busquedaRetirados) {
+        listaRetirados = listadoAdherentesRetirados;
+    } else {
+        listaRetirados = filterAsociados(listadoAdherentesRetirados, busquedaRetirados);
+    }
+
     useEffect(() => {
         getListadoAdherentes();
         getListadoAdherentesInactivos();
+        getListadoAdherentesRetirados();
     }, []);
 
     return {
         titulo, tituloModal, openModal, adherente, lista, busqueda, loading, listaInactivo, busquedaInactivo, titulo2,
-        openModalImage, tituloModalImage, imagen, openModalEstado, motivo, titulo3, touched,
+        openModalImage, tituloModalImage, imagen, openModalEstado, motivo, titulo3, touched, titulo4, titulo5,
+        openModalRetirar, busquedaRetirados, listaRetirados,
         toggleModal, handleChange, handleBusqueda, handleSubmit, cargarAdherente, handleUpdate, eliminarAdherente,
         goActivos, goInactivos, handleBusquedaInactivos, cambiarEstado, cambiarAsociado, toggleModalImage,
         cargarImagen, handleUpdateImage, handleChangeImagen, toggleModalEstado, handleUpdateEstado, handleChangeEstado,
-        handleSelectChange
+        handleSelectChange, toggleModalRetirar, handleUpdateRetirar, retirar, goRetirados, handleBusquedaRetirados
 
     };
 }

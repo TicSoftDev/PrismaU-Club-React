@@ -27,6 +27,11 @@ export async function getAdherentesInactivos() {
     return res.data;
 };
 
+export async function getAdherentesRetirados() {
+    const res = await axios.get(URL_ADHERENTES + "/retirados");
+    return res.data;
+};
+
 export async function getCantidadAdherentes() {
     const res = await axios.get(URL_ADHERENTES + "/cantidad");
     return res.data;
@@ -39,6 +44,11 @@ export async function changeStatusAdherente(id, motivo) {
 
 export async function changeToAsociado(id) {
     const res = await axios.put(URL_ADHERENTES + "/asociado/" + id);
+    return res.data;
+};
+
+export async function changeRetiredAdherente(id, motivo) {
+    const res = await axios.put(URL_ADHERENTES + "/retirar/" + id, motivo);
     return res.data;
 };
 

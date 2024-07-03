@@ -12,10 +12,10 @@ import VentanaModal from '../../../utilities/modals/VentanaModal';
 function AsociadosInactivosPage() {
 
     const { titulo2, tituloModal, openModal, loading, listaInactivo, busquedaInactivo, asociado, tituloModalImage, openModalImage,
-        titulo3, openModalEstado, touched,
+        titulo3, openModalEstado, touched, titulo5, openModalRetirar,
         toggleModalEstado, handleChangeEstado, handleUpdateEstado, cambiarEstado, toggleModalImage, cargarImagen, goActivos,
         handleUpdateImage, handleChangeImagen, handleBusquedaInactivo, cargarAsociado, eliminarAsociado, handleUpdate,
-        toggleModal, handleChange
+        toggleModal, handleChange, goRetirados, handleUpdateRetirar, toggleModalRetirar, retirar
     } = useAsociados();
 
     return (
@@ -23,19 +23,23 @@ function AsociadosInactivosPage() {
             <TituloPage titulo={titulo2} />
             <Container>
                 <MenuAsociadosInactivos busqueda={busquedaInactivo} handleBusqueda={handleBusquedaInactivo}
-                    go={goActivos} data={listaInactivo} titulo={titulo2} />
+                    go={goActivos} data={listaInactivo} titulo={titulo2} retirados={goRetirados} />
                 <VentanaModal size={'7xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal}
                     hanleSubmit={handleUpdate} loading={loading}>
                     <FormAsociados asociado={asociado} hanleChange={handleChange} touched={touched} />
                 </VentanaModal>
                 <DataTableAsociado cargarAsociado={cargarAsociado} usuarios={listaInactivo} cargar={cargarImagen}
-                    change={cambiarEstado} eliminar={eliminarAsociado} loading={loading} />
+                    change={cambiarEstado} eliminar={eliminarAsociado} loading={loading} retirar={retirar} />
                 <VentanaModal size={'2xl'} titulo={tituloModalImage} openModal={openModalImage} cerrarModal={toggleModalImage}
                     hanleSubmit={handleUpdateImage} loading={loading}>
                     <FormImagenAdherente handleChangeImage={handleChangeImagen} />
                 </VentanaModal>
                 <VentanaModal size={'4xl'} titulo={titulo3} openModal={openModalEstado} cerrarModal={toggleModalEstado}
                     hanleSubmit={handleUpdateEstado} loading={loading}>
+                    <FormMotivo handleChangeEstado={handleChangeEstado} />
+                </VentanaModal>
+                <VentanaModal size={'4xl'} titulo={titulo5} openModal={openModalRetirar} cerrarModal={toggleModalRetirar}
+                    hanleSubmit={handleUpdateRetirar} loading={loading}>
                     <FormMotivo handleChangeEstado={handleChangeEstado} />
                 </VentanaModal>
             </Container>

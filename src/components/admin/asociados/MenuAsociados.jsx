@@ -1,21 +1,25 @@
 import React from 'react';
-import { FaSearch, FaUserPlus, FaUserSlash } from "react-icons/fa";
+import { FaBan, FaSearch, FaUserPlus, FaUserSlash } from "react-icons/fa";
 import ExportExcelAsociados from './ExportExcelAsociados';
 
-function MenuAsociados({ toggleModal, busqueda, handleBusqueda, go, data ,titulo }) {
+function MenuAsociados({ toggleModal, busqueda, handleBusqueda, go, data, titulo, retirados }) {
 
     return (
         <div className="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
 
             <div className="inline-flex rounded-md shadow-sm" role="group">
-                <button onClick={toggleModal} type="button" className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-500 border border-green-500 rounded-s-lg hover:bg-white hover:text-green-500 hover:border-green-500 focus:z-10 focus:ring-2  dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
+                <button onClick={toggleModal} type="button" className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-blue-600 rounded-s-lg hover:bg-white hover:text-blue-600 hover:border-blue-600 focus:z-10 focus:ring-2  dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
                     <FaUserPlus className='me-2' />
                     Crear
                 </button>
                 <ExportExcelAsociados data={data} fileName={titulo} />
-                <button onClick={go} className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-red-600 rounded-e-lg hover:bg-white hover:text-red-700 focus:z-10 focus:ring-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
+                <button onClick={go} className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-red-600 hover:bg-white hover:text-red-700 focus:z-10 focus:ring-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
                     <FaUserSlash className='me-2' />
                     Inactivos
+                </button>
+                <button onClick={retirados} className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-orange-500 border border-orange-500 rounded-e-lg hover:bg-white hover:text-orange-500 focus:z-10 focus:ring-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
+                    <FaBan className='me-2' />
+                    Retirados
                 </button>
             </div>
             <div className="relative">

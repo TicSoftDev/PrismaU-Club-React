@@ -2,26 +2,32 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { PrivateRoutes } from '../models/RutasModel';
-import { changeStatusAsociado, changeToAdherente, createAsociado, deleteAsociado, getAsociados, getAsociadosInactivos, updateAsociado, updateImage } from '../services/AsociadosService';
+import { changeRetiredAsociado, changeStatusAsociado, changeToAdherente, createAsociado, deleteAsociado, getAsociados, getAsociadosInactivos, getAsociadosRetirados, updateAsociado, updateImage } from '../services/AsociadosService';
 import { alertError, alertSucces, alertWarning } from '../utilities/alerts/Alertas';
 
 function useAsociados() {
 
     const titulo = 'Asociados';
     const titulo2 = 'Asociados Inactivos';
-    const titulo3 = 'Cambio de estado';
+    const titulo3 = 'Activar - Inactivar Asociado';
+    const titulo4 = 'Asociados Retirados';
+    const titulo5 = 'Retirar - Activar Asociados';
     let lista = [];
     let listaInactivo = [];
+    let listaRetirados = [];
     const navigate = useNavigate();
     const [touched, setTouched] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [openModalEstado, setOpenModalEstado] = useState(false);
+    const [openModalRetirar, setOpenModalRetirar] = useState(false);
     const [openModalImage, setOpenModalImage] = useState(false);
     const [loading, setLoading] = useState(false);
     const [busqueda, setBusqueda] = useState('');
     const [busquedaInactivo, setBusquedaInactivo] = useState('');
+    const [busquedaRetirados, setBusquedaRetirados] = useState('');
     const [listadoAsociados, setListadoAsociados] = useState([]);
     const [listadoAsociadosInactivos, setListadoAsociadosInactivos] = useState([]);
+    const [listadoAsociadosRetirados, setListadoAsociadosRetirados] = useState([]);
     const [asociado, setAsociado] = useState({
         imagen: null,
         Nombre: "",
@@ -63,6 +69,10 @@ function useAsociados() {
         navigate(PrivateRoutes.ASOCIADOS);
     };
 
+    const goRetirados = async () => {
+        navigate(PrivateRoutes.ASOCIADOSRETIRADOS);
+    };
+
     const recargar = () => {
         setAsociado({
             imagen: null,
@@ -100,6 +110,10 @@ function useAsociados() {
         setBusquedaInactivo(target.value);
     };
 
+    const handleBusquedaRetirados = ({ target }) => {
+        setBusquedaRetirados(target.value);
+    };
+
     const toggleModal = () => {
         setOpenModal(!openModal);
         recargar();
@@ -119,6 +133,7 @@ function useAsociados() {
                 alertSucces("Creado correctamente");
                 await getListadoAsociados();
                 await getListadoAsociadosInactivos();
+                await getListadoAsociadosRetirados();
                 toggleModal();
             } else if (data.status === false && data.message === 'Existe') {
                 alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
@@ -141,6 +156,18 @@ function useAsociados() {
             const data = await getAsociadosInactivos();
             setLoading(false);
             setListadoAsociadosInactivos(data);
+        } catch (error) {
+            setLoading(false);
+            alertError(error.message);
+        }
+    };
+
+    const getListadoAsociadosRetirados = async () => {
+        try {
+            setLoading(true);
+            const data = await getAsociadosRetirados();
+            setLoading(false);
+            setListadoAsociadosRetirados(data);
         } catch (error) {
             setLoading(false);
             alertError(error.message);
@@ -180,6 +207,7 @@ function useAsociados() {
                 alertSucces("Actualizado correctamente");
                 await getListadoAsociados();
                 await getListadoAsociadosInactivos();
+                await getListadoAsociadosRetirados();
             } else if (resultado.status === false && resultado.message === 'Existe') {
                 alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
             }
@@ -254,6 +282,10 @@ function useAsociados() {
         setOpenModalEstado(!openModalEstado);
     }
 
+    const toggleModalRetirar = () => {
+        setOpenModalRetirar(!openModalRetirar);
+    }
+
     const cambiarEstado = async (id) => {
         try {
             Swal.fire({
@@ -267,6 +299,29 @@ function useAsociados() {
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     toggleModalEstado();
+                    asociado.id = id;
+                    setMotivo("");
+                }
+            });
+
+        } catch (error) {
+            alertWarning("Error al cambiar ", error.message)
+        }
+    }
+
+    const retirar = async (id) => {
+        try {
+            Swal.fire({
+                title: '¿Seguro que quiere realizar esta acción?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, cambiar',
+                cancelButtonText: 'No, cancelar'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    toggleModalRetirar();
                     asociado.id = id;
                     setMotivo("");
                 }
@@ -292,6 +347,28 @@ function useAsociados() {
                 alertSucces("Se cambio correctamente");
                 await getListadoAsociados();
                 await getListadoAsociadosInactivos();
+                await getListadoAsociadosRetirados();
+            } else {
+                alertWarning("No se pudo cambiar");
+            }
+        } catch (error) {
+            setLoading(false);
+            alertError("No se pudo conectar al servidor");
+        }
+    }
+
+    const handleUpdateRetirar = async (e) => {
+        try {
+            e.preventDefault();
+            setLoading(true);
+            const resultado = await changeRetiredAsociado(asociado.id, motivo);
+            setLoading(false);
+            if (resultado.status) {
+                toggleModalRetirar();
+                alertSucces("Se cambio correctamente");
+                await getListadoAsociados();
+                await getListadoAsociadosInactivos();
+                await getListadoAsociadosRetirados();
             } else {
                 alertWarning("No se pudo cambiar");
             }
@@ -328,6 +405,7 @@ function useAsociados() {
                 alertSucces("Imagen actualizada correctamente");
                 await getListadoAsociados();
                 await getListadoAsociadosInactivos();
+                await getListadoAsociadosRetirados();
             } else {
                 alertWarning("No se pudo actualizar la imagen");
             }
@@ -369,18 +447,26 @@ function useAsociados() {
         listaInactivo = filterAsociados(listadoAsociadosInactivos, busquedaInactivo);
     }
 
+    if (!busquedaRetirados) {
+        listaRetirados = listadoAsociadosRetirados;
+    } else {
+        listaRetirados = filterAsociados(listadoAsociadosRetirados, busquedaRetirados);
+    }
+
     useEffect(() => {
         getListadoAsociados();
         getListadoAsociadosInactivos();
-
+        getListadoAsociadosRetirados();
     }, []);
 
     return {
         titulo, titulo2, tituloModal, openModal, asociado, lista, busqueda, loading, busquedaInactivo, listaInactivo,
-        openModalImage, tituloModalImage, imagen, openModalEstado, motivo, titulo3, touched,
+        openModalImage, tituloModalImage, imagen, openModalEstado, motivo, titulo3, touched, titulo4, listaRetirados,
+        busquedaRetirados, openModalRetirar, titulo5,
         goInactivos, toggleModal, handleChange, handleSubmit, handleBusqueda, cargarAsociado, handleUpdate, toggleModalImage,
         eliminarAsociado, handleBusquedaInactivo, goActivos, cambiarEstado, cargarImagen, handleUpdateImage, handleChangeImagen,
-        handleChangeEstado, toggleModalEstado, cambiarAdherente, handleUpdateEstado
+        handleChangeEstado, toggleModalEstado, cambiarAdherente, handleUpdateEstado, goRetirados, handleBusquedaRetirados,
+        retirar, handleUpdateRetirar, toggleModalRetirar
     };
 }
 
