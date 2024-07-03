@@ -20,13 +20,13 @@ function DashboardPage() {
     ];
 
     const adminCards = [
-        { color: "yellow", cantidad: contAsociados, titulo: "Asociados", icono: "user-tie", opacidad: "400" },
-        { color: "green", cantidad: contAdherentes, titulo: "Adherentes", icono: "user-tie", opacidad: "500" },
-        { color: "purple", cantidad: contFamiliares, titulo: "Familiares", icono: "user-friends", opacidad: "500" },
-        { color: "pink", cantidad: contEmpleados, titulo: "Empleados", icono: "users", opacidad: "500" },
-        { color: "red", cantidad: contInvitados, titulo: "Invitados", icono: "user-clock", opacidad: "600" },
-        { color: "yellow", cantidad: contEspacios, titulo: "Espacios", icono: "map-marked-alt", opacidad: "400" },
-        { color: "green", cantidad: contNoticias, titulo: "Noticias", icono: "newspaper", opacidad: "500" },
+        { color: "red", cantidad: contAsociados, titulo: "Asociados", icono: "user-tie", opacidad: "600" },
+        { color: "yellow", cantidad: contAdherentes, titulo: "Adherentes", icono: "user-tie", opacidad: "400" },
+        { color: "pink", cantidad: contFamiliares, titulo: "Familiares", icono: "user-friends", opacidad: "500" },
+        { color: "green", cantidad: contEmpleados, titulo: "Empleados", icono: "users", opacidad: "500" },
+        { color: "purple", cantidad: contEspacios, titulo: "Espacios", icono: "map-marked-alt", opacidad: "500" },
+        { color: "red", cantidad: contNoticias, titulo: "Noticias", icono: "newspaper", opacidad: "600" },
+        { color: "yellow", cantidad: contInvitados, titulo: "Invitados", icono: "user-clock", opacidad: "400" },
     ];
 
     const asociadoCards = [
