@@ -22,33 +22,8 @@ export async function getAsociados() {
     return res.data;
 };
 
-export async function getAsociadosInactivos() {
-    const res = await axios.get(URL_ASOCIADOS + "/inactivos");
-    return res.data;
-};
-
-export async function getAsociadosRetirados() {
-    const res = await axios.get(URL_ASOCIADOS + "/retirados");
-    return res.data;
-};
-
 export async function getCantidadAsociados() {
     const res = await axios.get(URL_ASOCIADOS + "/cantidad");
-    return res.data;
-};
-
-export async function changeStatusAsociado(id, motivo) {
-    const res = await axios.put(URL_ASOCIADOS + "/status/" + id, motivo);
-    return res.data;
-};
-
-export async function changeRetiredAsociado(id, motivo) {
-    const res = await axios.put(URL_ASOCIADOS + "/retirar/" + id, motivo);
-    return res.data;
-};
-
-export async function changeToAdherente(id) {
-    const res = await axios.put(URL_ASOCIADOS + "/adherente/" + id);
     return res.data;
 };
 
@@ -64,6 +39,11 @@ export async function updateAsociado(asociado, id) {
     } catch (error) {
         throw error;
     }
+};
+
+export async function changeStatusAsociado(id, motivo) {
+    const res = await axios.put(URL_ASOCIADOS + "/status/" + id, motivo);
+    return res.data;
 };
 
 export async function updateImage(foto, id) {

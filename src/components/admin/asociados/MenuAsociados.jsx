@@ -1,9 +1,8 @@
 import React from 'react';
-import { FaBan, FaSearch, FaUserPlus, FaUserSlash } from "react-icons/fa";
-import ExportExcelAsociados from './ExportExcelAsociados';
+import { FaFilter, FaSearch, FaUserPlus } from 'react-icons/fa';
+import ExportExcelAsociados from '../../admin/asociados/ExportExcelAsociados';
 
-function MenuAsociados({ toggleModal, busqueda, handleBusqueda, go, data, titulo, retirados }) {
-
+function MenuAsociados({ data, titulo, busqueda, handleBusqueda, toggleModal, filtro }) {
     return (
         <div className="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
 
@@ -13,23 +12,30 @@ function MenuAsociados({ toggleModal, busqueda, handleBusqueda, go, data, titulo
                     Crear
                 </button>
                 <ExportExcelAsociados data={data} fileName={titulo} />
-                <button onClick={go} className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-red-600 hover:bg-white hover:text-red-700 focus:z-10 focus:ring-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
-                    <FaUserSlash className='me-2' />
-                    Inactivos
-                </button>
-                <button onClick={retirados} className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-orange-500 border border-orange-500 rounded-e-lg hover:bg-white hover:text-orange-500 focus:z-10 focus:ring-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
-                    <FaBan className='me-2' />
-                    Retirados
-                </button>
             </div>
-            <div className="relative">
-                <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <FaSearch className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+            <div className="flex">
+                <div className="relative">
+                    <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <FaFilter className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                    </div>
+                    <select className="p-2 ps-10 text-sm text-gray-900 border border-r-0 border-gray-300 rounded-s-lg w-30 bg-gray-50 focus:ring-gray-300 focus:border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        onChange={(e) => filtro(e.target.value)}>
+                        <option value="Todos">Todas</option>
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                        <option value="3">En Mora</option>
+                        <option value="2">Retirado</option>
+                    </select>
                 </div>
-                <input type="text" id="table-search-users" onChange={handleBusqueda} value={busqueda} className="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-30 sm:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar..."></input>
+                <div className="relative">
+                    <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <FaSearch className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                    </div>
+                    <input type="text" id="table-search-users" onChange={handleBusqueda} value={busqueda} className="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-e-lg w-30 sm:w-80 bg-gray-50 focus:ring-gray-300 focus:border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar..."></input>
+                </div>
             </div>
         </div>
     );
 }
 
-export default MenuAsociados;
+export default MenuAsociados

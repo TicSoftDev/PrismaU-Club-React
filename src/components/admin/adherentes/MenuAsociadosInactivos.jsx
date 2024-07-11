@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaBan, FaSearch, FaUser } from "react-icons/fa";
-import ExportExcelAsociados from './ExportExcelAsociados';
+import ExportExcelAsociados from '../asociados/ExportExcelAsociados';
 
 function MenuAsociadosInactivos({ busqueda, handleBusqueda, go, data, titulo, retirados }) {
 

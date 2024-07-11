@@ -5,14 +5,16 @@ import { PrivateRoutes, PublicRoutes } from '../models/RutasModel';
 import AccesosPage from '../pages/admin/accesos/AccesosPage';
 import AdherentesInactivosPage from '../pages/admin/adherentes/AdherentesInactivosPage';
 import AdherentesPage from '../pages/admin/adherentes/AdherentesPage';
-import AsociadosInactivosPage from '../pages/admin/asociados/AsociadosInactivosPage';
+import AdherentesRetiradosPage from '../pages/admin/adherentes/AdherentesRetiradosPage';
 import AsociadosPage from '../pages/admin/asociados/AsociadosPage';
+import BusquedaUserPage from '../pages/admin/busquedaUser/BusquedaUserPage';
 import EmpleadosPage from '../pages/admin/empleados/EmpleadosPage';
 import EspaciosPage from '../pages/admin/espacios/EspaciosPage';
 import LogEstadosPage from '../pages/admin/estados/LogEstadosPage';
 import FamiliaresAdherentePage from '../pages/admin/familiares/FamiliaresAdherentePage';
 import FamiliaresAsociadoPage from '../pages/admin/familiares/FamiliaresAsociadoPage';
 import InvitacionesPage from '../pages/admin/invitaciones/InvitacionesPage';
+import NoticiasPage from '../pages/admin/noticias/NoticiasPage';
 import DashboardPage from '../pages/dashboard/DashboardPage';
 import Page403 from '../pages/errors/Page403';
 import LoginPage from '../pages/login/LoginPage';
@@ -25,10 +27,6 @@ import RolesPage from '../pages/superAdmin/roles/RolesPage';
 import AuthGuard from '../utilities/guards/AuthGuard';
 import { AdminGuard, SocioGuard, SuperadminGuard } from '../utilities/guards/RolGuard';
 import { VerifyGuard } from '../utilities/guards/VerifyGuard';
-import NoticiasPage from '../pages/admin/noticias/NoticiasPage';
-import BusquedaUserPage from '../pages/admin/busquedaUser/BusquedaUserPage';
-import AsociadosRetiradosPage from '../pages/admin/asociados/AsociadosRetiradosPage';
-import AdherentesRetiradosPage from '../pages/admin/adherentes/AdherentesRetiradosPage';
 
 
 const Rutas = () => {
@@ -48,8 +46,6 @@ const Rutas = () => {
                         <Route element={<AdminGuard />}>
                             <Route element={<AccesosPage />} path={PrivateRoutes.ACCESOS} />
                             <Route element={<AsociadosPage />} path={PrivateRoutes.ASOCIADOS} />
-                            <Route element={<AsociadosInactivosPage />} path={PrivateRoutes.ASOCIADOSINACTIVOS} />
-                            <Route element={<AsociadosRetiradosPage />} path={PrivateRoutes.ASOCIADOSRETIRADOS} />
                             <Route element={<AdherentesPage />} path={PrivateRoutes.ADHERENTES} />
                             <Route element={<AdherentesInactivosPage />} path={PrivateRoutes.ADHERENTESINACTIVOS} />
                             <Route element={<AdherentesRetiradosPage />} path={PrivateRoutes.ADHERENTESRETIRADOS} />

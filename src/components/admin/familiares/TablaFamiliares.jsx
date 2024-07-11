@@ -1,8 +1,8 @@
 import { Button } from 'flowbite-react';
 import React from 'react';
 import { FaEdit, FaRegImages, FaTrash } from 'react-icons/fa';
-import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 import { RouteBack } from '../../../models/RutasModel';
+import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 
 function TablaFamiliares({ usuarios, cargarEmpleado, eliminar, loading, cargar }) {
 
@@ -49,11 +49,11 @@ function TablaFamiliares({ usuarios, cargarEmpleado, eliminar, loading, cargar }
                                     </td>
                                     <td className="px-6 py-4">
                                         <div className="flex items-center">
-                                            <div className={`h-2.5 w-2.5 rounded-full bg-${user.Estado == 1 ? 'green-500' : user.Estado == 2 ? 'orange-500' : 'red-600'} me-2`}></div>
-                                            {user.Estado == 1 ? "Activo" : user.Estado == 2 ? "Retirado" : "Inactivo"}
+                                            <div className={`h-2.5 w-2.5 rounded-full ${user.Estado == 1 ? 'bg-green-500' : user.Estado == 2 ? 'bg-orange-500' : user.Estado == 3 ? 'bg-purple-500' : 'bg-red-600'} mr-2`}></div>
+                                            {user.Estado == 0 ? "Inactivo" : user.Estado == 1 ? "Activo" : user.Estado == 2 ? "Retirado" : "En Mora"}
                                         </div>
                                     </td>
-                                    <th scope="row" className="flex items-center px-10 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                                    <th scope="user" className="flex items-center px-10 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                                         {
                                             user.imagen ? <img className="w-10 h-10 rounded-full" src={RouteBack + user.imagen} alt="Jese image" /> :
                                                 user.Sexo == "Femenino" ?

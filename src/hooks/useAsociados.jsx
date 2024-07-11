@@ -1,33 +1,21 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { PrivateRoutes } from '../models/RutasModel';
-import { changeRetiredAsociado, changeStatusAsociado, changeToAdherente, createAsociado, deleteAsociado, getAsociados, getAsociadosInactivos, getAsociadosRetirados, updateAsociado, updateImage } from '../services/AsociadosService';
+import { changeStatusAsociado, createAsociado, deleteAsociado, getAsociados, updateAsociado, updateImage } from '../services/AsociadosService';
 import { alertError, alertSucces, alertWarning } from '../utilities/alerts/Alertas';
 
 function useAsociados() {
 
     const titulo = 'Asociados';
-    const titulo2 = 'Asociados Inactivos';
-    const titulo3 = 'Activar - Inactivar Asociado';
-    const titulo4 = 'Asociados Retirados';
-    const titulo5 = 'Retirar - Activar Asociados';
+    const titulo2 = 'Cambiar Estado';
     let lista = [];
-    let listaInactivo = [];
-    let listaRetirados = [];
-    const navigate = useNavigate();
     const [touched, setTouched] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [openModalEstado, setOpenModalEstado] = useState(false);
-    const [openModalRetirar, setOpenModalRetirar] = useState(false);
     const [openModalImage, setOpenModalImage] = useState(false);
     const [loading, setLoading] = useState(false);
     const [busqueda, setBusqueda] = useState('');
-    const [busquedaInactivo, setBusquedaInactivo] = useState('');
-    const [busquedaRetirados, setBusquedaRetirados] = useState('');
+    const [estadoFiltro, setEstadoFiltro] = useState('Todos');
     const [listadoAsociados, setListadoAsociados] = useState([]);
-    const [listadoAsociadosInactivos, setListadoAsociadosInactivos] = useState([]);
-    const [listadoAsociadosRetirados, setListadoAsociadosRetirados] = useState([]);
     const [asociado, setAsociado] = useState({
         imagen: null,
         Nombre: "",
@@ -54,24 +42,15 @@ function useAsociados() {
         Estado: "",
         Rol: 2
     });
-    const [motivo, setMotivo] = useState({
+    const [estado, setEstado] = useState({
+        Estado: "",
         Motivo: ""
     });
     const [imagen, setImagen] = useState(null);
     const tituloModal = asociado.id ? "Actualizar asociado" : "Crear asociado";
     const tituloModalImage = "Actualizar Imagen";
 
-    const goInactivos = async () => {
-        navigate(PrivateRoutes.ASOCIADOSINACTIVOS);
-    };
-
-    const goActivos = async () => {
-        navigate(PrivateRoutes.ASOCIADOS);
-    };
-
-    const goRetirados = async () => {
-        navigate(PrivateRoutes.ASOCIADOSRETIRADOS);
-    };
+    /*=========== Recargar ==============================*/
 
     const recargar = () => {
         setAsociado({
@@ -99,25 +78,26 @@ function useAsociados() {
             CiudadOficina: "",
             Rol: 2
         });
+        setEstado({
+            Estado: "",
+            Motivo: ""
+        });
         setTouched(false);
     };
 
-    const handleBusqueda = ({ target }) => {
-        setBusqueda(target.value);
-    };
-
-    const handleBusquedaInactivo = ({ target }) => {
-        setBusquedaInactivo(target.value);
-    };
-
-    const handleBusquedaRetirados = ({ target }) => {
-        setBusquedaRetirados(target.value);
-    };
+    /*=========== Agregar ==============================*/
 
     const toggleModal = () => {
         setOpenModal(!openModal);
         recargar();
     }
+
+    const handleChange = ({ target }) => {
+        setAsociado({
+            ...asociado,
+            [target.name]: target.value
+        });
+    };
 
     const handleSubmit = async (e) => {
         try {
@@ -132,8 +112,6 @@ function useAsociados() {
             if (data.status) {
                 alertSucces("Creado correctamente");
                 await getListadoAsociados();
-                await getListadoAsociadosInactivos();
-                await getListadoAsociadosRetirados();
                 toggleModal();
             } else if (data.status === false && data.message === 'Existe') {
                 alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
@@ -143,36 +121,7 @@ function useAsociados() {
         }
     };
 
-    const handleChange = ({ target }) => {
-        setAsociado({
-            ...asociado,
-            [target.name]: target.value
-        });
-    };
-
-    const getListadoAsociadosInactivos = async () => {
-        try {
-            setLoading(true);
-            const data = await getAsociadosInactivos();
-            setLoading(false);
-            setListadoAsociadosInactivos(data);
-        } catch (error) {
-            setLoading(false);
-            alertError(error.message);
-        }
-    };
-
-    const getListadoAsociadosRetirados = async () => {
-        try {
-            setLoading(true);
-            const data = await getAsociadosRetirados();
-            setLoading(false);
-            setListadoAsociadosRetirados(data);
-        } catch (error) {
-            setLoading(false);
-            alertError(error.message);
-        }
-    };
+    /*=========== Consultar ==============================*/
 
     const getListadoAsociados = async () => {
         try {
@@ -182,9 +131,49 @@ function useAsociados() {
             setListadoAsociados(data);
         } catch (error) {
             setLoading(false);
-            alertError(error.message);
+            alertError("Ocurrio un error al cargar el listado de asociados " + error.message);
         }
     };
+
+    useEffect(() => {
+        getListadoAsociados();
+    }, []);
+
+    /*=========== Busqueda ==============================*/
+
+    const handleBusqueda = ({ target }) => {
+        setBusqueda(target.value);
+    };
+
+    const normalizeText = (text) => {
+        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    };
+
+    const filterAsociados = (listado, busqueda, estadoFiltro) => {
+        if (!busqueda && estadoFiltro === 'Todos') return listado;
+
+        const busquedaNormalizada = normalizeText(busqueda);
+        const palabrasBusqueda = busquedaNormalizada.split(/\s+/);
+
+        return listado.filter((dato) => {
+            const nombreNormalizado = normalizeText(`${dato.Nombre} ${dato.Apellidos}`);
+            const documentoNormalizado = normalizeText(dato.Documento);
+            const cumpleBusqueda = palabrasBusqueda.every(palabra =>
+                nombreNormalizado.includes(palabra) || documentoNormalizado.includes(palabra)
+            );
+            const cumpleEstado = estadoFiltro === 'Todos' || dato.Estado.toString() === estadoFiltro;
+
+            return cumpleBusqueda && cumpleEstado;
+        });
+    };
+
+    if (!busqueda && estadoFiltro === 'Todos') {
+        lista = listadoAsociados;
+    } else {
+        lista = filterAsociados(listadoAsociados, busqueda, estadoFiltro);
+    }
+
+    /*=========== Actualizar ==============================*/
 
     const cargarAsociado = async (asociado) => {
         setAsociado(asociado);
@@ -206,85 +195,27 @@ function useAsociados() {
                 toggleModal();
                 alertSucces("Actualizado correctamente");
                 await getListadoAsociados();
-                await getListadoAsociadosInactivos();
-                await getListadoAsociadosRetirados();
             } else if (resultado.status === false && resultado.message === 'Existe') {
                 alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
             }
         } catch (error) {
             setLoading(false);
-            alertError("Ocurrió un error al crear el asociado: " + error.message);
+            alertError("Ocurrió un error al actualizar el asociado: " + error.message);
         }
     };
 
-    const eliminarAsociado = async (id) => {
-        try {
-            Swal.fire({
-                title: '¿Seguro que quiere eliminar este Asociado?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Si, eliminar',
-                cancelButtonText: 'No, cancelar'
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    const resultado = await deleteAsociado(id);
-                    if (resultado.status) {
-                        alertSucces("Eliminado correctamente");
-                        await getListadoAsociados();
-                        await getListadoAsociadosInactivos();
-                    } else {
-                        alertWarning("No se pudo eliminar");
-                    }
-                }
-            });
-        } catch (error) {
-            alertError(error.message);
-        }
-    };
-
-    const cambiarAdherente = async (id) => {
-        try {
-            Swal.fire({
-                title: '¿Seguro que quiere cambiar este Asociado a Adherente?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Si, cambiar',
-                cancelButtonText: 'No, cancelar'
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    const resultado = await changeToAdherente(id);
-                    if (resultado.status) {
-                        alertSucces("Se cambio correctamente");
-                        await getListadoAsociados();
-                        await getListadoAsociadosInactivos();
-                    } else {
-                        alertWarning("No se pudo cambiar");
-                    }
-                }
-            });
-        } catch (error) {
-
-        }
-    };
-
-    const handleChangeEstado = ({ target }) => {
-        setMotivo({
-            ...motivo,
-            [target.name]: target.value
-        });
-    };
+    /*=========== Cambiar estado ==============================*/
 
     const toggleModalEstado = () => {
         setOpenModalEstado(!openModalEstado);
     }
 
-    const toggleModalRetirar = () => {
-        setOpenModalRetirar(!openModalRetirar);
-    }
+    const handleChangeEstado = ({ target }) => {
+        setEstado({
+            ...estado,
+            [target.name]: target.value
+        });
+    };
 
     const cambiarEstado = async (id) => {
         try {
@@ -300,82 +231,38 @@ function useAsociados() {
                 if (result.isConfirmed) {
                     toggleModalEstado();
                     asociado.id = id;
-                    setMotivo("");
+                    setEstado({ Estado: "", Motivo: "" });
                 }
             });
 
         } catch (error) {
             alertWarning("Error al cambiar ", error.message)
         }
-    }
-
-    const retirar = async (id) => {
-        try {
-            Swal.fire({
-                title: '¿Seguro que quiere realizar esta acción?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Si, cambiar',
-                cancelButtonText: 'No, cancelar'
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    toggleModalRetirar();
-                    asociado.id = id;
-                    setMotivo("");
-                }
-            });
-
-        } catch (error) {
-            alertWarning("Error al cambiar ", error.message)
-        }
-    }
-
-    const toggleModalImage = () => {
-        setOpenModalImage(!openModalImage);
     }
 
     const handleUpdateEstado = async (e) => {
         try {
             e.preventDefault();
             setLoading(true);
-            const resultado = await changeStatusAsociado(asociado.id, motivo);
+            const resultado = await changeStatusAsociado(asociado.id, estado);
             setLoading(false);
             if (resultado.status) {
                 toggleModalEstado();
                 alertSucces("Se cambio correctamente");
                 await getListadoAsociados();
-                await getListadoAsociadosInactivos();
-                await getListadoAsociadosRetirados();
             } else {
                 alertWarning("No se pudo cambiar");
             }
         } catch (error) {
             setLoading(false);
-            alertError("No se pudo conectar al servidor");
+            alertError("Update estado: " + error.message);
         }
     }
 
-    const handleUpdateRetirar = async (e) => {
-        try {
-            e.preventDefault();
-            setLoading(true);
-            const resultado = await changeRetiredAsociado(asociado.id, motivo);
-            setLoading(false);
-            if (resultado.status) {
-                toggleModalRetirar();
-                alertSucces("Se cambio correctamente");
-                await getListadoAsociados();
-                await getListadoAsociadosInactivos();
-                await getListadoAsociadosRetirados();
-            } else {
-                alertWarning("No se pudo cambiar");
-            }
-        } catch (error) {
-            setLoading(false);
-            alertError("No se pudo conectar al servidor");
-        }
+    /*=========== Cambiar Imagen ==============================*/
+
+    const toggleModalImage = () => {
+        setOpenModalImage(!openModalImage);
     }
 
     const cargarImagen = async (id) => {
@@ -404,69 +291,50 @@ function useAsociados() {
                 toggleModalImage();
                 alertSucces("Imagen actualizada correctamente");
                 await getListadoAsociados();
-                await getListadoAsociadosInactivos();
-                await getListadoAsociadosRetirados();
             } else {
                 alertWarning("No se pudo actualizar la imagen");
             }
         } catch (error) {
             setLoading(false);
-            alertError("No se pudo conectar al servidor");
+            alertError("update image: " + error.message);
         }
     }
 
-    const normalizeText = (text) => {
-        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    /*=========== Eliminar ==============================*/
+
+    const eliminarAsociado = async (id) => {
+        try {
+            Swal.fire({
+                title: '¿Seguro que quiere eliminar este Asociado?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, eliminar',
+                cancelButtonText: 'No, cancelar'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    const resultado = await deleteAsociado(id);
+                    if (resultado.status) {
+                        alertSucces("Eliminado correctamente");
+                        await getListadoAsociados();
+                        await getListadoAsociadosInactivos();
+                    } else {
+                        alertWarning("No se pudo eliminar");
+                    }
+                }
+            });
+        } catch (error) {
+            alertError("Error al eliminar ", error.message);
+        }
     };
-
-    const filterAsociados = (listado, busqueda) => {
-        if (!busqueda) return listado;
-
-        const busquedaNormalizada = normalizeText(busqueda);
-        const palabrasBusqueda = busquedaNormalizada.split(/\s+/);
-
-        return listado.filter((dato) => {
-            const nombreNormalizado = normalizeText(`${dato.Nombre} ${dato.Apellidos}`);
-            const documentoNormalizado = normalizeText(dato.Documento);
-
-            return palabrasBusqueda.every(palabra =>
-                nombreNormalizado.includes(palabra) || documentoNormalizado.includes(palabra)
-            );
-        });
-    };
-
-    if (!busqueda) {
-        lista = listadoAsociados;
-    } else {
-        lista = filterAsociados(listadoAsociados, busqueda);
-    }
-
-    if (!busquedaInactivo) {
-        listaInactivo = listadoAsociadosInactivos;
-    } else {
-        listaInactivo = filterAsociados(listadoAsociadosInactivos, busquedaInactivo);
-    }
-
-    if (!busquedaRetirados) {
-        listaRetirados = listadoAsociadosRetirados;
-    } else {
-        listaRetirados = filterAsociados(listadoAsociadosRetirados, busquedaRetirados);
-    }
-
-    useEffect(() => {
-        getListadoAsociados();
-        getListadoAsociadosInactivos();
-        getListadoAsociadosRetirados();
-    }, []);
 
     return {
-        titulo, titulo2, tituloModal, openModal, asociado, lista, busqueda, loading, busquedaInactivo, listaInactivo,
-        openModalImage, tituloModalImage, imagen, openModalEstado, motivo, titulo3, touched, titulo4, listaRetirados,
-        busquedaRetirados, openModalRetirar, titulo5,
-        goInactivos, toggleModal, handleChange, handleSubmit, handleBusqueda, cargarAsociado, handleUpdate, toggleModalImage,
-        eliminarAsociado, handleBusquedaInactivo, goActivos, cambiarEstado, cargarImagen, handleUpdateImage, handleChangeImagen,
-        handleChangeEstado, toggleModalEstado, cambiarAdherente, handleUpdateEstado, goRetirados, handleBusquedaRetirados,
-        retirar, handleUpdateRetirar, toggleModalRetirar
+        titulo, titulo2, tituloModal, openModal, asociado, lista, busqueda, loading, imagen, openModalImage, tituloModalImage,
+        openModalEstado, estado, touched,
+        toggleModal, handleChange, handleSubmit, handleBusqueda, cargarAsociado, handleUpdate, toggleModalImage, cargarImagen,
+        eliminarAsociado, cambiarEstado, handleUpdateImage, handleChangeImagen, handleChangeEstado, toggleModalEstado,
+        handleUpdateEstado, setEstadoFiltro
     };
 }
 

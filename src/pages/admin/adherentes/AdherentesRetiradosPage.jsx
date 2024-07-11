@@ -2,11 +2,11 @@ import React from 'react'
 import useAdherente from '../../../hooks/useAdherente'
 import TituloPage from '../../../utilities/helpers/TituloPage';
 import Container from '../../../utilities/helpers/Container';
-import MenuAsociadosRetirados from '../../../components/admin/asociados/MenuAsociadosRetirados';
 import DataTableAdherente from '../../../components/admin/adherentes/DataTableAdherente';
 import VentanaModal from '../../../utilities/modals/VentanaModal';
 import FormImagenAdherente from '../../../components/admin/adherentes/FormImagenAdherente';
 import FormMotivo from '../../../components/admin/asociados/FormMotivo';
+import MenuAsociadosRetirados from '../../../components/admin/adherentes/MenuAsociadosRetirados';
 
 function AdherentesRetiradosPage() {
 

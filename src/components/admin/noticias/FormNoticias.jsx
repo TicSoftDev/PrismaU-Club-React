@@ -26,7 +26,7 @@ function FormNoticias({ noticia, hanleChange, touched }) {
                         <Label htmlFor="descripcion" value="Descripción" />
                     </div>
                     <textarea id="descripcion" rows="4" className={`block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${inputClass(noticia.Descripcion)}`}
-                        name='Descripcion' onChange={hanleChange} placeholder="Escriba la descripcion de la noticia..." value={noticia.Descripcion}></textarea>
+                        name='Descripcion' onChange={hanleChange} placeholder="Escriba la descripcion de la noticia..." value={noticia.Descripcion} maxLength={150}></textarea>
                 </div>
             </div>
             {/* <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4 sm:mt-3">
