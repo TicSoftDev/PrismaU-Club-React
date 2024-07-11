@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import FormImagenAdherente from '../../../components/admin/adherentes/FormImagenAdherente';
 import DataTableAsociado from '../../../components/admin/asociados/DataTableAsociado';
 import FormAsociados from '../../../components/admin/asociados/FormAsociados';
@@ -8,13 +9,12 @@ import useAsociados from '../../../hooks/useAsociados';
 import Container from '../../../utilities/helpers/Container';
 import TituloPage from '../../../utilities/helpers/TituloPage';
 import VentanaModal from '../../../utilities/modals/VentanaModal';
-import { useSelector } from 'react-redux';
 
 function AsociadosPage() {
 
     const rol = useSelector((state) => state.credenciales.Rol);
     const { titulo, titulo2, tituloModal, openModal, lista, busqueda, asociado, loading, tituloModalImage, openModalImage,
-        openModalEstado, touched, estado,
+        openModalEstado, touched,
         handleChangeEstado, toggleModalEstado, handleUpdateEstado, cargarAsociado, handleUpdate, handleSubmit, handleBusqueda,
         cambiarEstado, toggleModalImage, cargarImagen, handleUpdateImage, handleChangeImagen, toggleModal, handleChange,
         eliminarAsociado, setEstadoFiltro
@@ -42,7 +42,7 @@ function AsociadosPage() {
                 {/* Ventana para cambiar estado */}
                 <VentanaModal size={'4xl'} titulo={titulo2} openModal={openModalEstado} cerrarModal={toggleModalEstado}
                     hanleSubmit={handleUpdateEstado} loading={loading}>
-                    <FormMotivo estado={estado} handleChangeEstado={handleChangeEstado} />
+                    <FormMotivo handleChangeEstado={handleChangeEstado} />
                 </VentanaModal>
             </Container>
         </>

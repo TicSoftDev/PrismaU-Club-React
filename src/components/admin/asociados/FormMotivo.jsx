@@ -1,13 +1,13 @@
 import React from 'react';
 
-function FormMotivo({ estado, handleChangeEstado }) {
+function FormMotivo({ handleChangeEstado }) {
 
     return (
         <div className="max-w-full flex flex-col">
             <div className="w-full mb-5">
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="estado">Estado</label>
                 <select id="estado" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    name='Estado' onChange={handleChangeEstado} value={"Escoja una Opción"}>
+                    name='Estado' onChange={handleChangeEstado} defaultValue={"Escoja una Opción"}>
                     <option disabled>Escoja una Opción</option>
                     <option value="1">Activo</option>
                     <option value="3">En Mora</option>

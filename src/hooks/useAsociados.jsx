@@ -243,12 +243,15 @@ function useAsociados() {
     const handleUpdateEstado = async (e) => {
         try {
             e.preventDefault();
+            if (estado.Estado === "" || estado.Motivo === "") {
+               return alertWarning("Por favor, ingrese todos los campos");
+            }
             setLoading(true);
             const resultado = await changeStatusAsociado(asociado.id, estado);
             setLoading(false);
             if (resultado.status) {
-                toggleModalEstado();
                 alertSucces("Se cambio correctamente");
+                toggleModalEstado();
                 await getListadoAsociados();
             } else {
                 alertWarning("No se pudo cambiar");
@@ -331,7 +334,7 @@ function useAsociados() {
 
     return {
         titulo, titulo2, tituloModal, openModal, asociado, lista, busqueda, loading, imagen, openModalImage, tituloModalImage,
-        openModalEstado, estado, touched,
+        openModalEstado, estado, touched, estadoFiltro,
         toggleModal, handleChange, handleSubmit, handleBusqueda, cargarAsociado, handleUpdate, toggleModalImage, cargarImagen,
         eliminarAsociado, cambiarEstado, handleUpdateImage, handleChangeImagen, handleChangeEstado, toggleModalEstado,
         handleUpdateEstado, setEstadoFiltro
