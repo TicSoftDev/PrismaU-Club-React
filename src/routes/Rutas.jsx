@@ -42,6 +42,8 @@ const Rutas = () => {
                         <Route element={<PerfilPage />} path={PrivateRoutes.PERFIL} />
                         <Route element={<SuperadminGuard />}>
                             <Route element={<AdministradoresPage />} path={PrivateRoutes.ADMINISTRADORES} />
+                            <Route element={<HobbiesPage />} path={PrivateRoutes.HOBBIES} />
+                            <Route element={<RolesPage />} path={PrivateRoutes.ROLES} />
                         </Route>
                         <Route element={<AdminGuard />}>
                             <Route element={<AccesosPage />} path={PrivateRoutes.ACCESOS} />
@@ -53,8 +55,6 @@ const Rutas = () => {
                             <Route element={<FamiliaresAsociadoPage />} path={PrivateRoutes.FAMILIARESASOCIADO} />
                             <Route element={<FamiliaresAdherentePage />} path={PrivateRoutes.FAMILIARESADHERENTE} />
                             <Route element={<EspaciosPage />} path={PrivateRoutes.ESPACIOS} />
-                            <Route element={<HobbiesPage />} path={PrivateRoutes.HOBBIES} />
-                            <Route element={<RolesPage />} path={PrivateRoutes.ROLES} />
                             <Route element={<InvitacionesPage />} path={PrivateRoutes.INVITACIONES} />
                             <Route element={<LogEstadosPage />} path={PrivateRoutes.ESTADOS} />
                             <Route element={<NoticiasPage />} path={PrivateRoutes.NOTICIAS} />

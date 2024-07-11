@@ -1,9 +1,9 @@
 import React from 'react';
 import DataTable from 'react-data-table-component';
 import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaUser, FaUserSlash } from 'react-icons/fa';
 
-function DataTableAdmins({ data, cargarAdmin, eliminar, loading }) {
+function DataTableAdmins({ data, cargarAdmin, eliminar, loading, change }) {
     const columns = [
         {
             name: "Actions",
@@ -11,9 +11,10 @@ function DataTableAdmins({ data, cargarAdmin, eliminar, loading }) {
                 <div className="flex">
                     <button onClick={() => cargarAdmin(row.admin)} className="rounded-full w-9 h-9 bg-blue-700 text-white flex justify-center items-center" title="Editar"><FaEdit /></button>
                     <button onClick={() => eliminar(row.id)} className="rounded-full w-9 h-9 bg-red-600 text-white flex justify-center items-center" title="Eliminar"><FaTrash /></button>
+                    <button onClick={() => change(row.admin.id)} className='rounded-full w-9 h-9 bg-yellow-400 text-white flex justify-center items-center' title={row.admin.Estado == 1 ? 'Inactivar' : 'Activar'}> {row.admin.Estado == 1 ? <FaUserSlash /> : <FaUser />}   </button>
                 </div>
             ),
-            width: '150px'
+            width: '180px'
         },
         {
             name: "Estado",

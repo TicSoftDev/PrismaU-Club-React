@@ -42,6 +42,15 @@ export async function updateAdmin(admin, id) {
     }
 };
 
+export async function changeStatus(id) {
+    try {
+        const res = await axios.put(URL_ADMIN + "/status/" + id, {});
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
 export async function deleteAdmin(id) {
     const res = await axios.delete(URL_ADMIN + "/" + id);
     return res.data;

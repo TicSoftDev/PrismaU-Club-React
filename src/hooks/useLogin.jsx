@@ -54,9 +54,12 @@ function useLogin() {
             setLoading(true);
             const resultado = await iniciarSesion(usuario);
             setLoading(false);
-            if (resultado.status === false) {
+            if (resultado.status === false && resultado.message === "Credenciales Invalidas") {
                 setUsuario({ Documento: "", password: "" })
                 alertWarning("Credenciales Invalidas");
+            } else if (resultado.status === false && resultado.message === "Inactivo") {
+                setUsuario({ Documento: "", password: "" })
+                alertError("Usuario inactivo");
             } else {
                 dispatch(createUser(resultado.user));
                 crearStorage("@token", resultado.token);
@@ -65,7 +68,7 @@ function useLogin() {
             }
         } catch (error) {
             setLoading(false);
-            alertError(error.message);
+            alertError("login"+ error.message);
         }
     };
 
