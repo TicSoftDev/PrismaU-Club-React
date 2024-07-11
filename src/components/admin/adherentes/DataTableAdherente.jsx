@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { PrivateRoutes, RouteBack } from '../../../models/RutasModel';
 import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 
-function DataTableAdherente({ usuarios, cargarAdherente, eliminar, loading, change, cambiar, cargar, retirar }) {
+function DataTableAdherente({ usuarios, rol, cargarAdherente, eliminar, loading, change, cambiar, cargar, retirar }) {
 
     const navigate = useNavigate();
     const columns = [
@@ -15,7 +15,7 @@ function DataTableAdherente({ usuarios, cargarAdherente, eliminar, loading, chan
             cell: row => (
                 <div className="flex">
                     <Button onClick={() => cargarAdherente(row)} className='rounded-full w-9 bg-blue-700 text-white' title='Editar'> <FaEdit /> </Button>
-                    <Button onClick={() => eliminar(row.user_id)} className='rounded-full w-9 bg-red-600 text-white' title='Eliminar'> <FaTrash /> </Button>
+                    {rol == 0 && <Button onClick={() => eliminar(row.user_id)} className='rounded-full w-9 bg-red-600 text-white' title='Eliminar'> <FaTrash /> </Button>}
                     <Button onClick={() => navigate(PrivateRoutes.FAMILIARESADHERENTE, { state: { id: row.id, codigo: row.Codigo } })} className='rounded-full w-9 bg-pink-600 text-white' title='Agregar Familiar'> <FaUserPlus /> </Button>
                     <Button onClick={() => change(row.id)} className='rounded-full w-9 bg-yellow-400 text-white' title='Cambiar estado'> {row.Estado == 1 ? <FaUserSlash /> : <FaUserCheck />}  </Button>
                     <Button onClick={() => retirar(row.id)} className='rounded-full w-9 bg-orange-500 text-white' title={(row.Estado == 1 || row.Estado == 0) ? 'Retirar' : 'Activar'}> {(row.Estado == 1 || row.Estado == 0) ? <FaBan /> : <FaCheck />}  </Button>
@@ -41,7 +41,7 @@ function DataTableAdherente({ usuarios, cargarAdherente, eliminar, loading, chan
             cell: row => (
                 <div className="flex items-center">
                     <div className={`h-2.5 w-2.5 rounded-full ${row.Estado == 1 ? 'bg-green-500' : row.Estado == 2 ? 'bg-orange-500' : 'bg-red-600'} mr-2`}></div>
-                    {row.Estado == 1 ?  "Activo" : row.Estado == 2 ? "Retirado" : "Inactivo"}
+                    {row.Estado == 1 ? "Activo" : row.Estado == 2 ? "Retirado" : "Inactivo"}
                 </div>
             ),
             width: '100px'

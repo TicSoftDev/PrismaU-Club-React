@@ -4,7 +4,7 @@ import imagen from '../../../assets/img/imagen';
 import { RouteBack } from '../../../models/RutasModel';
 import CardSkeleton from '../../../utilities/skeletons/CardSkeleton';
 
-function CardEspacio({ espacios, cargar, eliminar, loading, change }) {
+function CardEspacio({ espacios, rol, cargar, eliminar, loading, change }) {
 
     if (loading) {
         return <CardSkeleton />;
@@ -29,9 +29,11 @@ function CardEspacio({ espacios, cargar, eliminar, loading, change }) {
                                 <button onClick={() => cargar(espacio)} type="button" className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-blue-600 rounded-l-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10" title='Editar'>
                                     <FaEdit />
                                 </button>
-                                <button onClick={() => eliminar(espacio.id)} type="button" className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-red-600 hover:bg-gray-100 hover:text-red-600 focus:z-10" title='Eliminar'>
-                                    <FaTrashAlt />
-                                </button>
+                                {rol == 0 &&
+                                    <button onClick={() => eliminar(espacio.id)} type="button" className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-red-600 hover:bg-gray-100 hover:text-red-600 focus:z-10" title='Eliminar'>
+                                        <FaTrashAlt />
+                                    </button>
+                                }
                                 <button onClick={() => change(espacio.id)} type="button" className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-yellow-500 border border-yellow-500 rounded-r-lg hover:bg-gray-100 hover:text-yellow-500 focus:z-10" title='Cambiar imagen'>
                                     <FaRegImages />
                                 </button>

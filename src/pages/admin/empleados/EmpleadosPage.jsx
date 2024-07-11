@@ -7,9 +7,11 @@ import useEmpleado from '../../../hooks/useEmpleado';
 import Container from '../../../utilities/helpers/Container';
 import TituloPage from '../../../utilities/helpers/TituloPage';
 import VentanaModal from '../../../utilities/modals/VentanaModal';
+import { useSelector } from 'react-redux';
 
 function EmpleadosPage() {
 
+    const rol = useSelector((state) => state.credenciales.Rol);
     const { titulo, tituloModal, openModal, lista, busqueda, empleado, loading, openModalImage, tituloModalImage, touched,
         toggleModal, handleChange, handleSubmit, handleBusqueda, cargarEmpleado, handleUpdate, eliminarEmpleado,
         handleChangeImagen, handleUpdateImage, toggleModalImage, cargarImagen
@@ -27,7 +29,7 @@ function EmpleadosPage() {
                     <FormEmpleados touched={touched} empleado={empleado} hanleChange={handleChange} />
                 </VentanaModal>
                 <DataTableEmpleados cargarEmpleado={cargarEmpleado} usuarios={lista} eliminar={eliminarEmpleado}
-                    cargar={cargarImagen} loading={loading} />
+                    cargar={cargarImagen} loading={loading} rol={rol} />
                 <VentanaModal size={'2xl'} titulo={tituloModalImage} openModal={openModalImage} cerrarModal={toggleModalImage}
                     hanleSubmit={handleUpdateImage} loading={loading}>
                     <FormImagenAdherente handleChangeImage={handleChangeImagen} />

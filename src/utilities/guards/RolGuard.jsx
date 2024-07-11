@@ -11,7 +11,7 @@ export const SuperadminGuard = () => {
 
 export const AdminGuard = () => {
     const rol = useSelector((state) => state.credenciales.Rol);
-    return rol == 1 ? <Outlet /> : prohibido;
+    return (rol == 1 || rol == 0) ? <Outlet /> : prohibido;
 }
 
 export const SocioGuard = () => {

@@ -1,10 +1,10 @@
-import React from 'react'
-import DataTable from 'react-data-table-component'
+import React from 'react';
+import DataTable from 'react-data-table-component';
 import { FaEdit, FaRegImages, FaTrash } from 'react-icons/fa';
 import { RouteBack } from '../../../models/RutasModel';
 import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 
-export default function DataTableEmpleados({ usuarios, cargarEmpleado, eliminar, loading, cargar }) {
+export default function DataTableEmpleados({ usuarios, rol, cargarEmpleado, eliminar, loading, cargar }) {
 
     const columns = [
         {
@@ -12,7 +12,7 @@ export default function DataTableEmpleados({ usuarios, cargarEmpleado, eliminar,
             cell: row => (
                 <div className="flex">
                     <button onClick={() => cargarEmpleado(row)} className="rounded-full w-9 h-9 bg-blue-700 text-white flex justify-center items-center" title="Editar"><FaEdit /></button>
-                    <button onClick={() => eliminar(row.user_id)} className="rounded-full w-9 h-9 bg-red-600 text-white flex justify-center items-center" title="Eliminar"><FaTrash /></button>
+                    {rol == 0 && <button onClick={() => eliminar(row.user_id)} className="rounded-full w-9 h-9 bg-red-600 text-white flex justify-center items-center" title="Eliminar"><FaTrash /></button>}
                     <button onClick={() => cargar(row.id)} className="rounded-full w-9 h-9 bg-fuchsia-600 text-white flex justify-center items-center" title="Cambiar Imagen"><FaRegImages /></button>
                 </div>
             ),

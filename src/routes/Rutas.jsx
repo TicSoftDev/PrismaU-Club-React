@@ -24,10 +24,10 @@ import InvitadosPage from '../pages/socio/invitados/InvitadosPage';
 import AdministradoresPage from '../pages/superAdmin/administradores/AdministradoresPage';
 import HobbiesPage from '../pages/superAdmin/hobbies/HobbiesPage';
 import RolesPage from '../pages/superAdmin/roles/RolesPage';
+import SolicitudesPage from '../pages/superAdmin/solicitudes/SolicitudesPage';
 import AuthGuard from '../utilities/guards/AuthGuard';
 import { AdminGuard, SocioGuard, SuperadminGuard } from '../utilities/guards/RolGuard';
 import { VerifyGuard } from '../utilities/guards/VerifyGuard';
-import SolicitudesPage from '../pages/superAdmin/solicitudes/SolicitudesPage';
 
 
 const Rutas = () => {

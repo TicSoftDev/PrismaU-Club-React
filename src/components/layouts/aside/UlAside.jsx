@@ -6,13 +6,6 @@ import LinkInicio from './LinkInicio';
 
 function UlAside() {
 
-    const superAdmin = [
-        { icono: "check-square", texto: "Solicitudes", color: "purple", opacidad: '600', link: PrivateRoutes.SOLICITUDES },
-        { icono: "user-shield", texto: "Administradores", color: "red", opacidad: '600', link: PrivateRoutes.ADMINISTRADORES },
-        { icono: "user-cog", texto: "Roles", color: "yellow", opacidad: '400', link: PrivateRoutes.ROLES },
-        { icono: "magic", texto: "Hobbies", color: "green", opacidad: '600', link: PrivateRoutes.HOBBIES },
-    ];
-
     const admin = [
         { icono: "search", texto: "Buscar Usuario", color: "purple", opacidad: '600', link: PrivateRoutes.BUSCAR_USER },
         { icono: "user-tie", texto: "Asociados", color: "red", opacidad: '600', link: PrivateRoutes.ASOCIADOS, activeSubroutes: [PrivateRoutes.FAMILIARESASOCIADO] },
@@ -24,6 +17,15 @@ function UlAside() {
         { icono: "id-badge", texto: "Control Accesos", color: "green", opacidad: '600', link: PrivateRoutes.ACCESOS },
         { icono: "history", texto: "Log Estados", color: "purple", opacidad: '600', link: PrivateRoutes.ESTADOS },
     ];
+
+    const superAdminUnique = [
+        { icono: "check-square", texto: "Solicitudes", color: "purple", opacidad: '600', link: PrivateRoutes.SOLICITUDES },
+        { icono: "user-shield", texto: "Administradores", color: "red", opacidad: '600', link: PrivateRoutes.ADMINISTRADORES },
+        { icono: "user-cog", texto: "Roles", color: "yellow", opacidad: '400', link: PrivateRoutes.ROLES },
+        { icono: "magic", texto: "Hobbies", color: "green", opacidad: '600', link: PrivateRoutes.HOBBIES },
+    ];
+
+    const superAdmin = [...superAdminUnique, ...admin];
 
     const socio = [
         { icono: "user-clock", texto: "Invitados", color: "purple", opacidad: '600', link: PrivateRoutes.INVITADOS },

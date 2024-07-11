@@ -8,9 +8,11 @@ import useAsociados from '../../../hooks/useAsociados';
 import Container from '../../../utilities/helpers/Container';
 import TituloPage from '../../../utilities/helpers/TituloPage';
 import VentanaModal from '../../../utilities/modals/VentanaModal';
+import { useSelector } from 'react-redux';
 
 function AsociadosPage() {
 
+    const rol = useSelector((state) => state.credenciales.Rol);
     const { titulo, titulo2, tituloModal, openModal, lista, busqueda, asociado, loading, tituloModalImage, openModalImage,
         openModalEstado, touched, estado,
         handleChangeEstado, toggleModalEstado, handleUpdateEstado, cargarAsociado, handleUpdate, handleSubmit, handleBusqueda,
@@ -26,7 +28,7 @@ function AsociadosPage() {
                 <MenuAsociados data={lista} busqueda={busqueda} titulo={titulo} handleBusqueda={handleBusqueda}
                     toggleModal={toggleModal} filtro={setEstadoFiltro} />
                 <DataTableAsociado cargarAsociado={cargarAsociado} usuarios={lista} eliminar={eliminarAsociado}
-                    change={cambiarEstado} loading={loading} cargar={cargarImagen} />
+                    change={cambiarEstado} loading={loading} cargar={cargarImagen} rol={rol} />
                 {/* Ventana para agregar y editar */}
                 <VentanaModal size={'7xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal}
                     hanleSubmit={handler} loading={loading}>

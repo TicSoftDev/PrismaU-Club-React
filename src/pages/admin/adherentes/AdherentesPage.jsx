@@ -9,9 +9,11 @@ import useAsociados from '../../../hooks/useAsociados';
 import Container from '../../../utilities/helpers/Container';
 import TituloPage from '../../../utilities/helpers/TituloPage';
 import VentanaModal from '../../../utilities/modals/VentanaModal';
+import { useSelector } from 'react-redux';
 
 function AdherentesPage() {
 
+    const rol = useSelector((state) => state.credenciales.Rol);
     const { titulo, tituloModal, openModal, lista, busqueda, adherente, loading, tituloModalImage, openModalImage,
         titulo3, openModalEstado, touched, titulo5, openModalRetirar,
         toggleModalEstado, handleChangeEstado, handleUpdateEstado, handleSelectChange, goInactivos, cambiarEstado,
@@ -34,7 +36,7 @@ function AdherentesPage() {
                         handleChangeSelect={handleSelectChange} touched={touched} />
                 </VentanaModal>
                 <DataTableAdherente cargarAdherente={cargarAdherente} usuarios={lista} eliminar={eliminarAdherente} loading={loading}
-                    change={cambiarEstado} cambiar={cambiarAsociado} cargar={cargarImagen} retirar={retirar} />
+                    change={cambiarEstado} cambiar={cambiarAsociado} cargar={cargarImagen} retirar={retirar} rol={rol} />
                 <VentanaModal size={'2xl'} titulo={tituloModalImage} openModal={openModalImage} cerrarModal={toggleModalImage}
                     hanleSubmit={handleUpdateImage} loading={loading}>
                     <FormImagenAdherente handleChangeImage={handleChangeImagen} />

@@ -3,7 +3,7 @@ import DataTable from 'react-data-table-component';
 import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
-function DataTableNoticias({ data, loading, editar, eliminar }) {
+function DataTableNoticias({ data, rol, loading, editar, eliminar }) {
 
     const columns = [
         {
@@ -11,7 +11,7 @@ function DataTableNoticias({ data, loading, editar, eliminar }) {
             cell: row => (
                 <div className="flex">
                     <button onClick={() => editar(row)} className="rounded-full w-9 h-9 bg-blue-700 text-white flex justify-center items-center" title="Editar"><FaEdit /></button>
-                    <button onClick={() => eliminar(row.id)} className="rounded-full w-9 h-9 bg-red-600 text-white flex justify-center items-center" title="Eliminar"><FaTrash /></button>
+                    {rol == 0 && <button onClick={() => eliminar(row.id)} className="rounded-full w-9 h-9 bg-red-600 text-white flex justify-center items-center" title="Eliminar"><FaTrash /></button>}
                 </div>
             ),
             width: '200px'
