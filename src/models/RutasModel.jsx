@@ -28,6 +28,7 @@ export const PrivateRoutes = {
     ESTADOS: "/estados",
     NOTICIAS: "/noticias",
     PAGE403: "/403",
+    SOLICITUDES: "/solicitudes",
 };
 
 // export const EndPoints = {

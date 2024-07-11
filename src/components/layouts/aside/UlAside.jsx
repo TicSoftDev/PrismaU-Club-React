@@ -7,9 +7,10 @@ import LinkInicio from './LinkInicio';
 function UlAside() {
 
     const superAdmin = [
-        { icono: "user-shield", texto: "Administradores", color: "purple", opacidad: '600', link: PrivateRoutes.ADMINISTRADORES },
-        { icono: "user-cog", texto: "Roles", color: "pink", opacidad: '600', link: PrivateRoutes.ROLES },
-        { icono: "magic", texto: "Hobbies", color: "red", opacidad: '600', link: PrivateRoutes.HOBBIES },
+        { icono: "check-square", texto: "Solicitudes", color: "purple", opacidad: '600', link: PrivateRoutes.SOLICITUDES },
+        { icono: "user-shield", texto: "Administradores", color: "red", opacidad: '600', link: PrivateRoutes.ADMINISTRADORES },
+        { icono: "user-cog", texto: "Roles", color: "yellow", opacidad: '400', link: PrivateRoutes.ROLES },
+        { icono: "magic", texto: "Hobbies", color: "green", opacidad: '600', link: PrivateRoutes.HOBBIES },
     ];
 
     const admin = [
