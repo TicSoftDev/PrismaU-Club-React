@@ -45,6 +45,7 @@ export const PrivateRoutes = {
 //     PERSONAL: 'https://www.apiclubsincelejo.prismau.co/api/personal',
 //     USUARIOS: 'https://www.apiclubsincelejo.prismau.co/api/usuario',
 //     NOTICIAS: 'https://www.apiclubsincelejo.prismau.co/api/noticias',
+//     SOLICITUDES: 'https://www.apiclubsincelejo.prismau.co/api/solicitudes',
 // }
 
 export const EndPoints = {
@@ -61,4 +62,5 @@ export const EndPoints = {
     PERSONAL: 'http://127.0.0.1:8000/api/personal',
     USUARIOS: 'http://127.0.0.1:8000/api/usuario',
     NOTICIAS: 'http://127.0.0.1:8000/api/noticias',
+    SOLICITUDES: 'http://127.0.0.1:8000/api/solicitudes',
 }
