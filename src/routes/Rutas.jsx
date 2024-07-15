@@ -19,6 +19,8 @@ import DashboardPage from '../pages/dashboard/DashboardPage';
 import Page403 from '../pages/errors/Page403';
 import LoginPage from '../pages/login/LoginPage';
 import PerfilPage from '../pages/perfil/PerfilPage';
+import RecuperacionPage from '../pages/reset/RecuperacionPage';
+import VerifyCodePage from '../pages/reset/VerifyCodePage';
 import FamiliaresPage from '../pages/socio/familiares/FamiliaresPage';
 import InvitadosPage from '../pages/socio/invitados/InvitadosPage';
 import AdministradoresPage from '../pages/superAdmin/administradores/AdministradoresPage';
@@ -28,6 +30,7 @@ import SolicitudesPage from '../pages/superAdmin/solicitudes/SolicitudesPage';
 import AuthGuard from '../utilities/guards/AuthGuard';
 import { AdminGuard, SocioGuard, SuperadminGuard } from '../utilities/guards/RolGuard';
 import { VerifyGuard } from '../utilities/guards/VerifyGuard';
+import ChangePassword from '../pages/reset/ChangePassword';
 
 
 const Rutas = () => {
@@ -37,6 +40,9 @@ const Rutas = () => {
                 <Route element={<VerifyGuard />}>
                     <Route element={<LoginPage />} path={PublicRoutes.LOGIN} />
                 </Route>
+                <Route element={<RecuperacionPage />} path={PublicRoutes.RECUPERAR} />
+                <Route element={<VerifyCodePage />} path={PublicRoutes.VALIDAR} />
+                <Route element={<ChangePassword />} path={PublicRoutes.RESET} />
                 <Route element={<AuthGuard />}>
                     <Route element={<Plantilla />}>
                         <Route element={<DashboardPage />} path={PrivateRoutes.DASHBOARD} />

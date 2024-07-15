@@ -6,6 +6,7 @@ import imagen from '../../assets/img/imagen';
 import Spinner from '../../utilities/spinner/Spinner';
 import { FcAndroidOs } from 'react-icons/fc';
 import { DiAndroid } from 'react-icons/di';
+import { PublicRoutes } from '../../models/RutasModel';
 
 function FormLogin({ loading, usuario, handleChange, handleSubmit, visible, toggleVisible }) {
     return (
@@ -37,7 +38,7 @@ function FormLogin({ loading, usuario, handleChange, handleSubmit, visible, togg
                     </Button>
                 </div>
                 <div className="flex flex-col items-center text-sm text-gray-500 dark:text-gray-400">
-                    <Link to="/forgot-password" className="text-gray-500 font-medium hover:underline dark:text-gray-50">
+                    <Link to={PublicRoutes.RECUPERAR} className="text-gray-500 font-medium hover:underline dark:text-gray-50">
                         Olvidé mi contraseña.
                     </Link>
                     <Link to="https://archivos.prismau.co/PrismaU.apk" target='_blank' className="flex items-center justify-center border-2 border-green-500 p-1 w-40 mt-6 text-base text-green-500 font-medium hover:bg-green-500 hover:text-gray-50 dark:text-gray-50">
