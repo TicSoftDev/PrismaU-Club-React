@@ -1,33 +1,21 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { PrivateRoutes } from '../models/RutasModel';
-import { changeRetiredAdherente, changeStatusAdherente, changeToAsociado, createAdherente, deleteAdherente, getAdherentes, getAdherentesInactivos, getAdherentesRetirados, updateAdherente, updateImage } from '../services/AdherentesService';
+import { changeStatusAdherente, changeToAsociado, createAdherente, deleteAdherente, getAdherentes, updateAdherente, updateImage } from '../services/AdherentesService';
 import { alertError, alertSucces, alertWarning } from '../utilities/alerts/Alertas';
 
 function useAdherente() {
 
     const titulo = 'Adherentes';
-    const titulo2 = 'Adherentes Inactivos';
-    const titulo3 = 'Activar - Inactivar Adherentes';
-    const titulo4 = 'Adherentes Retirados';
-    const titulo5 = 'Retirar - Activar Adherentes';
+    const titulo2 = 'Cambiar Estado';
     let lista = [];
-    let listaInactivo = [];
-    let listaRetirados = [];
-    const navigate = useNavigate();
     const [touched, setTouched] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [openModalEstado, setOpenModalEstado] = useState(false);
-    const [openModalRetirar, setOpenModalRetirar] = useState(false);
     const [openModalImage, setOpenModalImage] = useState(false);
     const [loading, setLoading] = useState(false);
     const [busqueda, setBusqueda] = useState('');
-    const [busquedaInactivo, setBusquedaInactivo] = useState('');
-    const [busquedaRetirados, setBusquedaRetirados] = useState('');
+    const [estadoFiltro, setEstadoFiltro] = useState('Todos');
     const [listadoAdherentes, setListadoAdherentes] = useState([]);
-    const [listadoAdherentesInactivos, setListadoAdherentesInactivos] = useState([]);
-    const [listadoAdherentesRetirados, setListadoAdherentesRetirados] = useState([]);
     const [adherente, setAdherente] = useState({
         asociado_id: null,
         Nombre: "",
@@ -53,24 +41,15 @@ function useAdherente() {
         CiudadOficina: "",
         Rol: 3
     });
-    const [motivo, setMotivo] = useState({
+    const [estado, setEstado] = useState({
+        Estado: "",
         Motivo: ""
     });
     const [imagen, setImagen] = useState(null);
     const tituloModal = adherente.id ? "Actualizar adherente" : "Crear adherente";
     const tituloModalImage = "Actualizar Imagen";
 
-    const goInactivos = async () => {
-        navigate(PrivateRoutes.ADHERENTESINACTIVOS);
-    };
-
-    const goActivos = async () => {
-        navigate(PrivateRoutes.ADHERENTES);
-    };
-
-    const goRetirados = async () => {
-        navigate(PrivateRoutes.ADHERENTESRETIRADOS);
-    };
+    /*=========== Recargar ==============================*/
 
     const recargar = () => {
         setAdherente({
@@ -101,22 +80,26 @@ function useAdherente() {
         setTouched(false);
     };
 
-    const handleBusqueda = ({ target }) => {
-        setBusqueda(target.value);
-    };
-
-    const handleBusquedaInactivos = ({ target }) => {
-        setBusquedaInactivo(target.value);
-    };
-
-    const handleBusquedaRetirados = ({ target }) => {
-        setBusquedaRetirados(target.value);
-    };
+    /*=========== Agregar ==============================*/
 
     const toggleModal = () => {
         setOpenModal(!openModal);
         recargar();
     }
+
+    const handleChange = ({ target }) => {
+        setAdherente({
+            ...adherente,
+            [target.name]: target.value
+        });
+    };
+
+    const handleSelectChange = (selectedOption) => {
+        setAdherente(prev => ({
+            ...prev,
+            asociado_id: selectedOption.value
+        }));
+    };
 
     const handleSubmit = async (e) => {
         try {
@@ -133,8 +116,6 @@ function useAdherente() {
                 toggleModal();
                 alertSucces("Creado correctamente");
                 await getListadoAdherentes();
-                await getListadoAdherentesInactivos();
-                await getListadoAdherentesRetirados();
             } else if (data.status === false && data.message === 'Asignado') {
                 return alertWarning("Este asociado ya ha sido asignado a otro adherente");
             } else if (data.status === false && data.message === 'Existe') {
@@ -144,23 +125,11 @@ function useAdherente() {
             }
         } catch (error) {
             setLoading(false);
-            alertError("Error de conexión al servidor: " + error.message);
+            alertError("Crear adherente: " + error.message);
         }
     };
 
-    const handleSelectChange = (selectedOption) => {
-        setAdherente(prev => ({
-            ...prev,
-            asociado_id: selectedOption.value
-        }));
-    };
-
-    const handleChange = ({ target }) => {
-        setAdherente({
-            ...adherente,
-            [target.name]: target.value
-        });
-    };
+    /*=========== Consultar ==============================*/
 
     const getListadoAdherentes = async () => {
         try {
@@ -170,33 +139,49 @@ function useAdherente() {
             setLoading(false);
         } catch (error) {
             setLoading(false);
-            alertError(error.message);
+            alertError("Cargar adherentes " + error.message);
         }
     };
 
-    const getListadoAdherentesInactivos = async () => {
-        try {
-            setLoading(true);
-            const data = await getAdherentesInactivos();
-            setListadoAdherentesInactivos(data);
-            setLoading(false);
-        } catch (error) {
-            setLoading(false);
-            alertError(error.message);
-        }
+    useEffect(() => {
+        getListadoAdherentes();
+    }, []);
+
+    /*=========== Busqueda ==============================*/
+
+    const handleBusqueda = ({ target }) => {
+        setBusqueda(target.value);
     };
 
-    const getListadoAdherentesRetirados = async () => {
-        try {
-            setLoading(true);
-            const data = await getAdherentesRetirados();
-            setLoading(false);
-            setListadoAdherentesRetirados(data);
-        } catch (error) {
-            setLoading(false);
-            alertError(error.message);
-        }
+    const normalizeText = (text) => {
+        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     };
+
+    const filterAsociados = (listado, busqueda, estadoFiltro) => {
+        if (!busqueda && estadoFiltro === 'Todos') return listado;
+
+        const busquedaNormalizada = normalizeText(busqueda);
+        const palabrasBusqueda = busquedaNormalizada.split(/\s+/);
+
+        return listado.filter((dato) => {
+            const nombreNormalizado = normalizeText(`${dato.Nombre} ${dato.Apellidos}`);
+            const documentoNormalizado = normalizeText(dato.Documento);
+            const cumpleBusqueda = palabrasBusqueda.every(palabra =>
+                nombreNormalizado.includes(palabra) || documentoNormalizado.includes(palabra)
+            );
+            const cumpleEstado = estadoFiltro === 'Todos' || dato.Estado.toString() === estadoFiltro;
+
+            return cumpleBusqueda && cumpleEstado;
+        });
+    };
+
+    if (!busqueda && estadoFiltro === 'Todos') {
+        lista = listadoAdherentes;
+    } else {
+        lista = filterAsociados(listadoAdherentes, busqueda, estadoFiltro);
+    }
+
+    /*=========== Actualizar ==============================*/
 
     const cargarAdherente = async (adherente) => {
         adherente.Rol = 3;
@@ -219,8 +204,6 @@ function useAdherente() {
                 toggleModal();
                 alertSucces("Actualizado correctamente");
                 await getListadoAdherentes();
-                await getListadoAdherentesInactivos();
-                await getListadoAdherentesRetirados();
             } else if (resultado.status === false && resultado.message === 'Asignado') {
                 return alertWarning("Este asociado ya ha sido asignado a otro adherente");
             } else if (resultado.status === false && resultado.message === 'Existe') {
@@ -228,140 +211,11 @@ function useAdherente() {
             }
         } catch (error) {
             setLoading(false);
-            alertError("Error de conexión al servidor: " + error.message);
+            alertError("Update adherente: " + error.message);
         }
     };
 
-    const eliminarAdherente = async (id) => {
-        try {
-            Swal.fire({
-                title: '¿Seguro que quiere eliminar este usuario?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Si, eliminar',
-                cancelButtonText: 'No, cancelar'
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    const resultado = await deleteAdherente(id);
-                    if (resultado.status) {
-                        alertSucces("Eliminado correctamente");
-                        await getListadoAdherentes();
-                        await getListadoAdherentesInactivos();
-                        await getListadoAdherentesRetirados();
-                    } else {
-                        alertWarning("No se pudo eliminar");
-                    }
-                }
-            });
-        } catch (error) {
-            alertError(error.message);
-        }
-    };
-
-    const handleChangeEstado = ({ target }) => {
-        setMotivo({
-            ...motivo,
-            [target.name]: target.value
-        });
-    };
-
-    const toggleModalEstado = () => {
-        setOpenModalEstado(!openModalEstado);
-    }
-
-    const toggleModalRetirar = () => {
-        setOpenModalRetirar(!openModalRetirar);
-    }
-
-    const cambiarEstado = async (id) => {
-        try {
-            Swal.fire({
-                title: '¿Seguro que quiere cambiar el estado de este usuario?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Si, cambiar',
-                cancelButtonText: 'No, cancelar'
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    toggleModalEstado();
-                    adherente.id = id;
-                    setMotivo("");
-                }
-            });
-
-        } catch (error) {
-            alertWarning("Error al cambiar ", error.message)
-        }
-    }
-
-    const retirar = async (id) => {
-        try {
-            Swal.fire({
-                title: '¿Seguro que quiere realizar esta acción?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Si, cambiar',
-                cancelButtonText: 'No, cancelar'
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    toggleModalRetirar();
-                    adherente.id = id;
-                    setMotivo("");
-                }
-            });
-
-        } catch (error) {
-            alertWarning("Error al cambiar ", error.message)
-        }
-    }
-
-    const handleUpdateEstado = async (e) => {
-        try {
-            e.preventDefault();
-            setLoading(true);
-            const resultado = await changeStatusAdherente(adherente.id, motivo);
-            setLoading(false);
-            if (resultado.status) {
-                toggleModalEstado();
-                alertSucces("Se cambio correctamente");
-                await getListadoAdherentes();
-                await getListadoAdherentesInactivos();
-                await getListadoAdherentesRetirados();
-            } else {
-                alertWarning("No se pudo cambiar");
-            }
-        } catch (error) {
-            setLoading(false);
-            alertError("No se pudo conectar al servidor");
-        }
-    }
-
-    const handleUpdateRetirar = async (e) => {
-        try {
-            e.preventDefault();
-            setLoading(true);
-            const resultado = await changeRetiredAdherente(adherente.id, motivo);
-            setLoading(false);
-            if (resultado.status) {
-                toggleModalRetirar();
-                alertSucces("Se cambio correctamente");
-                await getListadoAdherentes();
-                await getListadoAdherentesInactivos();
-                await getListadoAdherentesRetirados();
-            } else {
-                alertWarning("No se pudo cambiar");
-            }
-        } catch (error) {
-            setLoading(false);
-            alertError("No se pudo conectar al servidor");
-        }
-    }
+    /*=========== Cambiar a asociado ==============================*/
 
     const cambiarAsociado = async (id) => {
         try {
@@ -379,8 +233,6 @@ function useAdherente() {
                     if (resultado.message === "hecho") {
                         alertSucces("Se cambio correctamente");
                         await getListadoAdherentes();
-                        await getListadoAdherentesInactivos();
-                        await getListadoAdherentesRetirados();
                     } else {
                         alertWarning("No se pudo cambiar");
                     }
@@ -390,6 +242,66 @@ function useAdherente() {
 
         }
     };
+
+    /*=========== Cambiar estado ==============================*/
+
+    const toggleModalEstado = () => {
+        setOpenModalEstado(!openModalEstado);
+    }
+
+    const handleChangeEstado = ({ target }) => {
+        setEstado({
+            ...estado,
+            [target.name]: target.value
+        });
+    };
+
+    const cambiarEstado = async (id) => {
+        try {
+            Swal.fire({
+                title: '¿Seguro que quiere cambiar el estado de este usuario?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, cambiar',
+                cancelButtonText: 'No, cancelar'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    toggleModalEstado();
+                    adherente.id = id;
+                    setEstado({ Estado: "", Motivo: "" });
+                }
+            });
+
+        } catch (error) {
+            alertWarning("Error al cambiar ", error.message)
+        }
+    }
+
+    const handleUpdateEstado = async (e) => {
+        try {
+            e.preventDefault();
+            if (estado.Estado === "" || estado.Motivo === "") {
+                return alertWarning("Por favor, ingrese todos los campos");
+            }
+            setLoading(true);
+            const resultado = await changeStatusAdherente(adherente.id, estado);
+            setLoading(false);
+            if (resultado.status) {
+                toggleModalEstado();
+                alertSucces("Se cambio correctamente");
+                await getListadoAdherentes();
+            } else {
+                alertWarning("No se pudo cambiar");
+            }
+        } catch (error) {
+            setLoading(false);
+            alertError("Update Estado " + error);
+        }
+    }
+
+    /*=========== Cambiar Imagen ==============================*/
 
     const toggleModalImage = () => {
         setOpenModalImage(!openModalImage);
@@ -421,72 +333,50 @@ function useAdherente() {
                 toggleModalImage();
                 alertSucces("Imagen actualizada correctamente");
                 await getListadoAdherentes();
-                await getListadoAdherentesInactivos();
-                await getListadoAdherentesRetirados();
-
             } else {
                 alertWarning("No se pudo actualizar la imagen");
             }
         } catch (error) {
             console.log(error);
             setLoading(false);
-            alertError("No se pudo conectar al servidor");
+            alertError("Update imagen " + error.message);
         }
     }
 
-    const normalizeText = (text) => {
-        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    /*=========== Eliminar ==============================*/
+
+    const eliminarAdherente = async (id) => {
+        try {
+            Swal.fire({
+                title: '¿Seguro que quiere eliminar este usuario?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, eliminar',
+                cancelButtonText: 'No, cancelar'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    const resultado = await deleteAdherente(id);
+                    if (resultado.status) {
+                        alertSucces("Eliminado correctamente");
+                        await getListadoAdherentes();
+                    } else {
+                        alertWarning("No se pudo eliminar");
+                    }
+                }
+            });
+        } catch (error) {
+            alertError("Eliminar adherente " + error.message);
+        }
     };
-
-    const filterAsociados = (listado, busqueda) => {
-        if (!busqueda) return listado;
-
-        const busquedaNormalizada = normalizeText(busqueda);
-        const palabrasBusqueda = busquedaNormalizada.split(/\s+/);
-
-        return listado.filter((dato) => {
-            const nombreNormalizado = normalizeText(`${dato.Nombre} ${dato.Apellidos}`);
-            const documentoNormalizado = normalizeText(dato.Documento);
-
-            return palabrasBusqueda.every(palabra =>
-                nombreNormalizado.includes(palabra) || documentoNormalizado.includes(palabra)
-            );
-        });
-    };
-
-    if (!busqueda) {
-        lista = listadoAdherentes;
-    } else {
-        lista = filterAsociados(listadoAdherentes, busqueda);
-    }
-
-    if (!busquedaInactivo) {
-        listaInactivo = listadoAdherentesInactivos;
-    } else {
-        listaInactivo = filterAsociados(listadoAdherentesInactivos, busquedaInactivo);
-    }
-
-    if (!busquedaRetirados) {
-        listaRetirados = listadoAdherentesRetirados;
-    } else {
-        listaRetirados = filterAsociados(listadoAdherentesRetirados, busquedaRetirados);
-    }
-
-    useEffect(() => {
-        getListadoAdherentes();
-        getListadoAdherentesInactivos();
-        getListadoAdherentesRetirados();
-    }, []);
 
     return {
-        titulo, tituloModal, openModal, adherente, lista, busqueda, loading, listaInactivo, busquedaInactivo, titulo2,
-        openModalImage, tituloModalImage, imagen, openModalEstado, motivo, titulo3, touched, titulo4, titulo5,
-        openModalRetirar, busquedaRetirados, listaRetirados,
-        toggleModal, handleChange, handleBusqueda, handleSubmit, cargarAdherente, handleUpdate, eliminarAdherente,
-        goActivos, goInactivos, handleBusquedaInactivos, cambiarEstado, cambiarAsociado, toggleModalImage,
-        cargarImagen, handleUpdateImage, handleChangeImagen, toggleModalEstado, handleUpdateEstado, handleChangeEstado,
-        handleSelectChange, toggleModalRetirar, handleUpdateRetirar, retirar, goRetirados, handleBusquedaRetirados
-
+        titulo, titulo2, tituloModal, openModal, adherente, lista, busqueda, loading, imagen, openModalImage, tituloModalImage,
+        touched, openModalEstado, estado, estadoFiltro,
+        toggleModal, handleChange, handleSubmit, handleBusqueda, cargarAdherente, handleUpdate, toggleModalImage, cargarImagen,
+        eliminarAdherente, cambiarEstado, handleUpdateImage, handleChangeImagen, handleChangeEstado, toggleModalEstado,
+        cambiarAsociado, handleSelectChange, handleUpdateEstado, setEstadoFiltro
     };
 }
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { EndPoints } from "../models/RutasModel";
+import { EndPoints } from "../models/RutasModel"; 
 
 const URL_ADHERENTES = EndPoints.ADHERENTES;
 
@@ -22,33 +22,8 @@ export async function getAdherentes() {
     return res.data;
 };
 
-export async function getAdherentesInactivos() {
-    const res = await axios.get(URL_ADHERENTES + "/inactivos");
-    return res.data;
-};
-
-export async function getAdherentesRetirados() {
-    const res = await axios.get(URL_ADHERENTES + "/retirados");
-    return res.data;
-};
-
 export async function getCantidadAdherentes() {
     const res = await axios.get(URL_ADHERENTES + "/cantidad");
-    return res.data;
-};
-
-export async function changeStatusAdherente(id, motivo) {
-    const res = await axios.put(URL_ADHERENTES + "/status/" + id, motivo);
-    return res.data;
-};
-
-export async function changeToAsociado(id) {
-    const res = await axios.put(URL_ADHERENTES + "/asociado/" + id);
-    return res.data;
-};
-
-export async function changeRetiredAdherente(id, motivo) {
-    const res = await axios.put(URL_ADHERENTES + "/retirar/" + id, motivo);
     return res.data;
 };
 
@@ -64,6 +39,16 @@ export async function updateAdherente(adherente, id) {
     } catch (error) {
         throw error;
     }
+};
+
+export async function changeToAsociado(id) {
+    const res = await axios.put(URL_ADHERENTES + "/asociado/" + id);
+    return res.data;
+};
+
+export async function changeStatusAdherente(id, motivo) {
+    const res = await axios.put(URL_ADHERENTES + "/status/" + id, motivo);
+    return res.data;
 };
 
 export async function updateImage(foto, id) {

@@ -3,9 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Plantilla from '../components/layouts/Plantilla';
 import { PrivateRoutes, PublicRoutes } from '../models/RutasModel';
 import AccesosPage from '../pages/admin/accesos/AccesosPage';
-import AdherentesInactivosPage from '../pages/admin/adherentes/AdherentesInactivosPage';
 import AdherentesPage from '../pages/admin/adherentes/AdherentesPage';
-import AdherentesRetiradosPage from '../pages/admin/adherentes/AdherentesRetiradosPage';
 import AsociadosPage from '../pages/admin/asociados/AsociadosPage';
 import BusquedaUserPage from '../pages/admin/busquedaUser/BusquedaUserPage';
 import EmpleadosPage from '../pages/admin/empleados/EmpleadosPage';
@@ -19,6 +17,7 @@ import DashboardPage from '../pages/dashboard/DashboardPage';
 import Page403 from '../pages/errors/Page403';
 import LoginPage from '../pages/login/LoginPage';
 import PerfilPage from '../pages/perfil/PerfilPage';
+import ChangePassword from '../pages/reset/ChangePassword';
 import RecuperacionPage from '../pages/reset/RecuperacionPage';
 import VerifyCodePage from '../pages/reset/VerifyCodePage';
 import FamiliaresPage from '../pages/socio/familiares/FamiliaresPage';
@@ -30,7 +29,6 @@ import SolicitudesPage from '../pages/superAdmin/solicitudes/SolicitudesPage';
 import AuthGuard from '../utilities/guards/AuthGuard';
 import { AdminGuard, SocioGuard, SuperadminGuard } from '../utilities/guards/RolGuard';
 import { VerifyGuard } from '../utilities/guards/VerifyGuard';
-import ChangePassword from '../pages/reset/ChangePassword';
 
 
 const Rutas = () => {
@@ -57,8 +55,6 @@ const Rutas = () => {
                             <Route element={<AccesosPage />} path={PrivateRoutes.ACCESOS} />
                             <Route element={<AsociadosPage />} path={PrivateRoutes.ASOCIADOS} />
                             <Route element={<AdherentesPage />} path={PrivateRoutes.ADHERENTES} />
-                            <Route element={<AdherentesInactivosPage />} path={PrivateRoutes.ADHERENTESINACTIVOS} />
-                            <Route element={<AdherentesRetiradosPage />} path={PrivateRoutes.ADHERENTESRETIRADOS} />
                             <Route element={<EmpleadosPage />} path={PrivateRoutes.EMPLEADOS} />
                             <Route element={<FamiliaresAsociadoPage />} path={PrivateRoutes.FAMILIARESASOCIADO} />
                             <Route element={<FamiliaresAdherentePage />} path={PrivateRoutes.FAMILIARESADHERENTE} />
