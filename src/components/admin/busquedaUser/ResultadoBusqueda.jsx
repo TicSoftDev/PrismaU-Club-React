@@ -2,17 +2,23 @@ import { Label, TextInput } from 'flowbite-react';
 import React from 'react';
 import { FaCode, FaEnvelope, FaIdCard, FaKeyboard, FaMercury, FaPhoneAlt, FaUserCog } from 'react-icons/fa';
 import { RouteBack } from '../../../models/RutasModel';
-import Spinner from '../../../utilities/spinner/Spinner';
 
 function ResultadoBusqueda({ user }) {
 
     const handleNull = value => value ? value : '';
+    const estado = handleNull(user.user.Estado) == 0 ? "INACTIVO" : handleNull(user.user.Estado) == 1 ? "ACTIVO" : handleNull(user.user.Estado) == 2 ? "RETIRADO" : "EN MORA";
     const translateRole = (roleId) => {
         const roles = {
             2: "Asociado", 3: "Adherente", 4: "Empleado", 5: "Familiar", 6: "Portero"
         };
         return roles[roleId] || "Desconocido";
     };
+    const styles = {
+        color: handleNull(user.user.Estado) == 0 ? "red" : handleNull(user.user.Estado) == 1 ? "green" : handleNull(user.user.Estado) == 2 ? "orange" : "purple",
+        borderWidth: 2,
+        fontWeight: 'bold',
+        borderColor: handleNull(user.user.Estado) == 0 ? "red" : handleNull(user.user.Estado) == 1 ? "green" : handleNull(user.user.Estado) == 2 ? "orange" : "purple",
+    }
 
     return (
         <div className="w-full grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1">
@@ -26,7 +32,7 @@ function ResultadoBusqueda({ user }) {
                         <div className="mb-2 block">
                             <Label htmlFor="estado" value="Estado" />
                         </div>
-                        <TextInput id="estado" type="text" value={handleNull(user.user.Estado) == 1 ? "ACTIVO" : "INACTIVO"} disabled />
+                        <TextInput id="estado" style={styles} type="text" value={estado} disabled />
                     </div>
                 </div>
                 <div className="flex flex-col justify-between p-4 leading-normal w-full">
@@ -100,7 +106,7 @@ function ResultadoBusqueda({ user }) {
                             </div>
                             <div className="w-full sm:w-1/2">
                                 <div className="mb-2 block">
-                                    <Label htmlFor="RolF" value="Código" />
+                                    <Label htmlFor="RolF" value="Rol" />
                                 </div>
                                 <TextInput id="RolF" type="text" icon={FaCode} value={handleNull(user.user.asociado_id) ? "Asociado" : "Adherente"} disabled />
                             </div>
