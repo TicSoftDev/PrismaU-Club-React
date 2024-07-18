@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { getSolicitudes } from '../services/SolicitudesService';
+import { getContrataciones } from '../services/ContratacionesService';
 
-function useSolicitudes() {
+function useContrataciones() {
 
-    const titulo = 'Solicitudes';
+    const titulo = 'Solicitudes App';
     const [busqueda, setBusqueda] = useState('');
     const [solicitudes, setSolicitudes] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -13,7 +13,7 @@ function useSolicitudes() {
     const consultarSolicitudes = async () => {
         try {
             setLoading(true);
-            const res = await getSolicitudes();
+            const res = await getContrataciones();
             setSolicitudes(res);
             setLoading(false);
         } catch (error) {
@@ -62,4 +62,4 @@ function useSolicitudes() {
     };
 }
 
-export default useSolicitudes
+export default useContrataciones

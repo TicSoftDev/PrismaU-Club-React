@@ -3,7 +3,7 @@ import DataTable from 'react-data-table-component';
 import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 import { format } from 'date-fns';
 
-function DataTableSolicitudes({ data, loading }) {
+function DataTableContrataciones({ data, loading }) {
 
     const columns = [
         {
@@ -70,4 +70,4 @@ function DataTableSolicitudes({ data, loading }) {
     );
 }
 
-export default DataTableSolicitudes
+export default DataTableContrataciones
