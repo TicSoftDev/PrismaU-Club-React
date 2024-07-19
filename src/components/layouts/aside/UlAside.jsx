@@ -7,15 +7,18 @@ import LinkInicio from './LinkInicio';
 function UlAside() {
 
     const admin = [
-        { icono: "search", texto: "Buscar Usuario", color: "purple", opacidad: '600', link: PrivateRoutes.BUSCAR_USER },
-        { icono: "user-tie", texto: "Asociados", color: "red", opacidad: '600', link: PrivateRoutes.ASOCIADOS, activeSubroutes: [PrivateRoutes.FAMILIARESASOCIADO] },
-        { icono: "user-tie", texto: "Adherentes", color: "yellow", opacidad: '400', link: PrivateRoutes.ADHERENTES, activeSubroutes: [PrivateRoutes.FAMILIARESADHERENTE] },
-        { icono: "users", texto: "Empleados", color: "green", opacidad: '600', link: PrivateRoutes.EMPLEADOS },
-        { icono: "map-marked-alt", texto: "Espacios", color: "purple", opacidad: '600', link: PrivateRoutes.ESPACIOS },
-        { icono: "newspaper", texto: "Noticias", color: "red", opacidad: '600', link: PrivateRoutes.NOTICIAS },
-        { icono: "user-clock", texto: "Invitaciones", color: "yellow", opacidad: '400', link: PrivateRoutes.INVITACIONES },
-        { icono: "id-badge", texto: "Control Accesos", color: "green", opacidad: '600', link: PrivateRoutes.ACCESOS },
-        { icono: "history", texto: "Log Estados", color: "purple", opacidad: '600', link: PrivateRoutes.ESTADOS },
+        { icono: "envelope-open-text", texto: "Solicitudes", color: "purple", opacidad: '600', link: PrivateRoutes.SOLICITUDES },
+        { icono: "calendar-check", texto: "Reservas", color: "red", opacidad: '600', link: PrivateRoutes.RESERVAS },
+        { icono: "clipboard-list", texto: "Encuestas", color: "yellow", opacidad: '400', link: PrivateRoutes.ENCUESTAS },
+        { icono: "search", texto: "Buscar Usuario", color: "green", opacidad: '600', link: PrivateRoutes.BUSCAR_USER },
+        { icono: "user-tie", texto: "Asociados", color: "purple", opacidad: '600', link: PrivateRoutes.ASOCIADOS, activeSubroutes: [PrivateRoutes.FAMILIARESASOCIADO] },
+        { icono: "user-tie", texto: "Adherentes", color: "red", opacidad: '600', link: PrivateRoutes.ADHERENTES, activeSubroutes: [PrivateRoutes.FAMILIARESADHERENTE] },
+        { icono: "users", texto: "Empleados", color: "yellow", opacidad: '400', link: PrivateRoutes.EMPLEADOS },
+        { icono: "map-marked-alt", texto: "Espacios", color: "green", opacidad: '600', link: PrivateRoutes.ESPACIOS },
+        { icono: "newspaper", texto: "Noticias", color: "purple", opacidad: '600', link: PrivateRoutes.NOTICIAS },
+        { icono: "user-clock", texto: "Invitaciones", color: "red", opacidad: '600', link: PrivateRoutes.INVITACIONES },
+        { icono: "id-badge", texto: "Control Accesos", color: "yellow", opacidad: '400', link: PrivateRoutes.ACCESOS },
+        { icono: "history", texto: "Log Estados", color: "green", opacidad: '600', link: PrivateRoutes.ESTADOS },
     ];
 
     const superAdminUnique = [

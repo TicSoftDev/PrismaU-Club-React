@@ -7,12 +7,15 @@ import AdherentesPage from '../pages/admin/adherentes/AdherentesPage';
 import AsociadosPage from '../pages/admin/asociados/AsociadosPage';
 import BusquedaUserPage from '../pages/admin/busquedaUser/BusquedaUserPage';
 import EmpleadosPage from '../pages/admin/empleados/EmpleadosPage';
+import EncuestasPage from '../pages/admin/encuestas/EncuestasPage';
 import EspaciosPage from '../pages/admin/espacios/EspaciosPage';
 import LogEstadosPage from '../pages/admin/estados/LogEstadosPage';
 import FamiliaresAdherentePage from '../pages/admin/familiares/FamiliaresAdherentePage';
 import FamiliaresAsociadoPage from '../pages/admin/familiares/FamiliaresAsociadoPage';
 import InvitacionesPage from '../pages/admin/invitaciones/InvitacionesPage';
 import NoticiasPage from '../pages/admin/noticias/NoticiasPage';
+import ReservasPage from '../pages/admin/reservas/ReservasPage';
+import SolicitudesPage from '../pages/admin/solicitudes/SolicitudesPage';
 import DashboardPage from '../pages/dashboard/DashboardPage';
 import Page403 from '../pages/errors/Page403';
 import LoginPage from '../pages/login/LoginPage';
@@ -63,6 +66,9 @@ const Rutas = () => {
                             <Route element={<LogEstadosPage />} path={PrivateRoutes.ESTADOS} />
                             <Route element={<NoticiasPage />} path={PrivateRoutes.NOTICIAS} />
                             <Route element={<BusquedaUserPage />} path={PrivateRoutes.BUSCAR_USER} />
+                            <Route element={<SolicitudesPage />} path={PrivateRoutes.SOLICITUDES} />
+                            <Route element={<ReservasPage />} path={PrivateRoutes.RESERVAS} />
+                            <Route element={<EncuestasPage />} path={PrivateRoutes.ENCUESTAS} />
                         </Route>
                         <Route element={<SocioGuard />}>
                             <Route element={<InvitadosPage />} path={PrivateRoutes.INVITADOS} />
