@@ -32,6 +32,7 @@ import RolesPage from '../pages/superAdmin/roles/RolesPage';
 import AuthGuard from '../utilities/guards/AuthGuard';
 import { AdminGuard, SocioGuard, SuperadminGuard } from '../utilities/guards/RolGuard';
 import { VerifyGuard } from '../utilities/guards/VerifyGuard';
+import DisponibilidadEspacioPage from '../pages/admin/disponibilidad_espacios/DisponibilidadEspacioPage';
 
 
 const Rutas = () => {
@@ -69,6 +70,7 @@ const Rutas = () => {
                             <Route element={<SolicitudesPage />} path={PrivateRoutes.SOLICITUDES} />
                             <Route element={<ReservasPage />} path={PrivateRoutes.RESERVAS} />
                             <Route element={<EncuestasPage />} path={PrivateRoutes.ENCUESTAS} />
+                            <Route element={<DisponibilidadEspacioPage />} path={PrivateRoutes.DISPONIBILIDAD_ESPACIO} />
                         </Route>
                         <Route element={<SocioGuard />}>
                             <Route element={<InvitadosPage />} path={PrivateRoutes.INVITADOS} />

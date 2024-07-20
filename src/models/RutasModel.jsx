@@ -33,6 +33,7 @@ export const PrivateRoutes = {
     SOLICITUDES: "/solicitudes",
     RESERVAS: "/reservas",
     ENCUESTAS: "/encuestas",
+    DISPONIBILIDAD_ESPACIO: "/disponibilidades-espacios",
 };
 
 // export const EndPoints = {
