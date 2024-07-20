@@ -9,6 +9,7 @@ import { getCantidadFamiliares, getCantidadFamiliaresSocio } from '../services/F
 import { getCantidadInvitados, getCantidadInvitadosSocio } from '../services/InvitadosService';
 import { getCantidadNoticias } from '../services/NoticiasService';
 import { getCantidadContrataciones } from '../services/ContratacionesService';
+import { getCantidadSolicitudes } from '../services/SolicitudesService';
 
 function useCantidad() {
 
@@ -25,6 +26,7 @@ function useCantidad() {
     const [contAdmins, setContAdmins] = useState(0);
     const [contNoticias, setContNoticias] = useState(0); 
     const [contContrataciones, setContContrataciones] = useState(0); 
+    const [contSolicitudes, setContSolicitudes] = useState(0);
 
     const cantidadAsociados = async () => {
         try {
@@ -115,23 +117,32 @@ function useCantidad() {
             console.log("Count", error.message);
         } 0
     };
+    const cantidadSolicitudes = async () => {
+        try {
+            const data = await getCantidadSolicitudes();
+            setContSolicitudes(data);
+        } catch (error) {
+            console.log("Count", error.message);
+        } 0
+    };
 
     useEffect(() => {
+        cantidadAdmins();
+        cantidadContrataciones();
+        cantidadSolicitudes();
+        cantidadFamiliares();
         cantidadAsociados();
         cantidadAdherentes();
         cantidadEmpleados();
-        cantidadFamiliares();
-        cantidadFamiliaresSocio();
         cantidadEspacios();
+        cantidadNoticias();
         cantidadInvitados();
         cantidadInvitadosSocio();
-        cantidadAdmins();
-        cantidadNoticias();
-        cantidadContrataciones();
+        cantidadFamiliaresSocio();
     }, []);
 
     return {
-        contAdherentes, contAsociados, contEmpleados, contFamiliares, contEspacios, contInvitados,
+        contAdherentes, contAsociados, contEmpleados, contFamiliares, contEspacios, contInvitados, contSolicitudes,
         contAdmins, contFamiliaresSocio, contInvitadosSocio, contNoticias, contContrataciones
     };
 }
