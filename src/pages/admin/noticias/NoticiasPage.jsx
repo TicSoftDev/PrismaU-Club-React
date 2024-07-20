@@ -1,12 +1,12 @@
-import React from 'react'
-import TituloPage from '../../../utilities/helpers/TituloPage'
-import Container from '../../../utilities/helpers/Container'
-import useNoticia from '../../../hooks/useNoticia'
-import DataTableNoticias from '../../../components/admin/noticias/DataTableNoticias';
-import MenuEmpleados from '../../../components/admin/empleados/MenuEmpleados';
-import VentanaModal from '../../../utilities/modals/VentanaModal';
-import FormNoticias from '../../../components/admin/noticias/FormNoticias';
+import React from 'react';
 import { useSelector } from 'react-redux';
+import DataTableNoticias from '../../../components/admin/noticias/DataTableNoticias';
+import FormNoticias from '../../../components/admin/noticias/FormNoticias';
+import MenuSencillo from '../../../components/layouts/menu/MenuSencillo';
+import useNoticia from '../../../hooks/useNoticia';
+import Container from '../../../utilities/helpers/Container';
+import TituloPage from '../../../utilities/helpers/TituloPage';
+import VentanaModal from '../../../utilities/modals/VentanaModal';
 
 function NoticiasPage() {
 
@@ -20,8 +20,7 @@ function NoticiasPage() {
         <>
             <TituloPage titulo={titulo} />
             <Container>
-                <MenuEmpleados toggleModal={toggleModal} busqueda={busqueda} handleBusqueda={handleBusqueda} data={lista}
-                    titulo={titulo} />
+                <MenuSencillo toggleModal={toggleModal} busqueda={busqueda} handleBusqueda={handleBusqueda} />
                 <DataTableNoticias data={lista} loading={loading} editar={cargarNoticia} eliminar={eliminarNoticia} rol={rol} />
                 <VentanaModal size={'7xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal}
                     hanleSubmit={handler} loading={loading}>
