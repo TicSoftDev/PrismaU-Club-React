@@ -1,9 +1,9 @@
 import React from 'react';
 import { FaCalendarAlt, FaEdit, FaRegImage, FaTrashAlt } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import imagen from '../../../assets/img/imagen';
 import { PrivateRoutes, RouteBack } from '../../../models/RutasModel';
 import CardSkeleton from '../../../utilities/skeletons/CardSkeleton';
-import { useNavigate } from 'react-router-dom';
 
 function CardEspacio({ espacios, rol, cargar, eliminar, loading, change }) {
 
@@ -36,7 +36,7 @@ function CardEspacio({ espacios, rol, cargar, eliminar, loading, change }) {
                                             <FaTrashAlt />
                                         </button>
                                     }
-                                    <button onClick={() => navigate(PrivateRoutes.DISPONIBILIDAD_ESPACIO)} type="button" className="flex justify-center w-1/3 px-4 py-2 text-xl font-medium text-white bg-orange-500 hover:bg-gray-100 hover:border-2 hover:border-orange-500 hover:text-orange-500">
+                                    <button onClick={() => navigate(PrivateRoutes.DISPONIBILIDAD_ESPACIO, { state: { espacio } })} type="button" className="flex justify-center w-1/3 px-4 py-2 text-xl font-medium text-white bg-orange-500 hover:bg-gray-100 hover:border-2 hover:border-orange-500 hover:text-orange-500">
                                         <FaCalendarAlt />
                                     </button>
                                     <button onClick={() => change(espacio.id)} type="button" className="flex justify-center w-1/3 px-4 py-2 text-xl font-medium text-white bg-pink-600 rounded-r-lg hover:bg-gray-100 hover:border-2 hover:border-pink-600 hover:text-pink-600">

@@ -8,6 +8,7 @@ import useFamiliares from '../../../hooks/useFamiliares';
 import Container from '../../../utilities/helpers/Container';
 import TituloPage from '../../../utilities/helpers/TituloPage';
 import VentanaModal from '../../../utilities/modals/VentanaModal';
+import MenuSencillo from '../../../components/layouts/menu/MenuSencillo';
 
 function FamiliaresAdherentePage() {
 
@@ -22,7 +23,7 @@ function FamiliaresAdherentePage() {
         <>
             <TituloPage titulo={titulo} />
             <Container>
-                <MenuEmpleados toggleModal={toggleModal} />
+                <MenuSencillo toggleModal={toggleModal} noBuscar={true}/>
                 <VentanaModal size={'7xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal}
                     hanleSubmit={handler} loading={loading}>
                     <FormFamiliar familiar={familiar} hanleChange={handleChange} touched={touched} />
