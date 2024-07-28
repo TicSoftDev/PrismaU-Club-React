@@ -1,16 +1,19 @@
 import React from 'react';
 import { FaSearch, FaUserPlus } from 'react-icons/fa';
 
-function MenuSencillo({ busqueda, handleBusqueda, toggleModal, noBuscar }) {
+function MenuSencillo({ busqueda, handleBusqueda, toggleModal, noBuscar, noCrear }) {
     return (
         <div className="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
-
-            <div className="inline-flex rounded-md shadow-sm" role="group">
-                <button onClick={toggleModal} type="button" className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-blue-600 rounded-lg hover:bg-white hover:text-blue-600 hover:border-blue-600 focus:z-10 focus:ring-2  dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
-                    <FaUserPlus className='me-2' />
-                    Crear
-                </button>
-            </div>
+            {!noCrear ?
+                <div className="inline-flex rounded-md shadow-sm" role="group">
+                    <button onClick={toggleModal} type="button" className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-blue-600 rounded-lg hover:bg-white hover:text-blue-600 hover:border-blue-600 focus:z-10 focus:ring-2  dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
+                        <FaUserPlus className='me-2' />
+                        Crear
+                    </button>
+                </div>
+                :
+                <div></div>
+            }
             {!noBuscar &&
                 <div className="relative">
                     <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
