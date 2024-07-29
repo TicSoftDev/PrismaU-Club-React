@@ -10,6 +10,7 @@ import { getCantidadInvitados, getCantidadInvitadosSocio } from '../services/Inv
 import { getCantidadNoticias } from '../services/NoticiasService';
 import { getCantidadContrataciones } from '../services/ContratacionesService';
 import { getCantidadSolicitudes } from '../services/SolicitudesService';
+import { getCantidadEncuestas } from '../services/EncuestasService';
 
 function useCantidad() {
 
@@ -27,6 +28,7 @@ function useCantidad() {
     const [contNoticias, setContNoticias] = useState(0); 
     const [contContrataciones, setContContrataciones] = useState(0); 
     const [contSolicitudes, setContSolicitudes] = useState(0);
+    const [contEncuestas, setContEncuestas] = useState(0);
 
     const cantidadAsociados = async () => {
         try {
@@ -126,10 +128,20 @@ function useCantidad() {
         } 0
     };
 
+    const cantidadEncuestas = async () => {
+        try {
+            const data = await getCantidadEncuestas();
+            setContEncuestas(data);
+        } catch (error) {
+            console.log("Count", error.message);
+        }
+    };
+
     useEffect(() => {
         cantidadAdmins();
         cantidadContrataciones();
         cantidadSolicitudes();
+        cantidadEncuestas();
         cantidadFamiliares();
         cantidadAsociados();
         cantidadAdherentes();
@@ -143,7 +155,7 @@ function useCantidad() {
 
     return {
         contAdherentes, contAsociados, contEmpleados, contFamiliares, contEspacios, contInvitados, contSolicitudes,
-        contAdmins, contFamiliaresSocio, contInvitadosSocio, contNoticias, contContrataciones
+        contAdmins, contFamiliaresSocio, contInvitadosSocio, contNoticias, contContrataciones, contEncuestas
     };
 }
 

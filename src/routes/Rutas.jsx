@@ -6,8 +6,11 @@ import AccesosPage from '../pages/admin/accesos/AccesosPage';
 import AdherentesPage from '../pages/admin/adherentes/AdherentesPage';
 import AsociadosPage from '../pages/admin/asociados/AsociadosPage';
 import BusquedaUserPage from '../pages/admin/busquedaUser/BusquedaUserPage';
+import DisponibilidadEspacioPage from '../pages/admin/disponibilidad_espacios/DisponibilidadEspacioPage';
 import EmpleadosPage from '../pages/admin/empleados/EmpleadosPage';
 import EncuestasPage from '../pages/admin/encuestas/EncuestasPage';
+import PreguntasPage from '../pages/admin/encuestas/PreguntasPage';
+import RespuestasPage from '../pages/admin/encuestas/RespuestasPage';
 import EspaciosPage from '../pages/admin/espacios/EspaciosPage';
 import LogEstadosPage from '../pages/admin/estados/LogEstadosPage';
 import FamiliaresAdherentePage from '../pages/admin/familiares/FamiliaresAdherentePage';
@@ -32,7 +35,6 @@ import RolesPage from '../pages/superAdmin/roles/RolesPage';
 import AuthGuard from '../utilities/guards/AuthGuard';
 import { AdminGuard, SocioGuard, SuperadminGuard } from '../utilities/guards/RolGuard';
 import { VerifyGuard } from '../utilities/guards/VerifyGuard';
-import DisponibilidadEspacioPage from '../pages/admin/disponibilidad_espacios/DisponibilidadEspacioPage';
 
 
 const Rutas = () => {
@@ -71,6 +73,8 @@ const Rutas = () => {
                             <Route element={<ReservasPage />} path={PrivateRoutes.RESERVAS} />
                             <Route element={<EncuestasPage />} path={PrivateRoutes.ENCUESTAS} />
                             <Route element={<DisponibilidadEspacioPage />} path={PrivateRoutes.DISPONIBILIDAD_ESPACIO} />
+                            <Route element={<PreguntasPage />} path={PrivateRoutes.PREGUNTAS} />
+                            <Route element={<RespuestasPage />} path={PrivateRoutes.RESPUESTAS} />
                         </Route>
                         <Route element={<SocioGuard />}>
                             <Route element={<InvitadosPage />} path={PrivateRoutes.INVITADOS} />

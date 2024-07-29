@@ -11,12 +11,12 @@ function DashboardPage() {
     const titulo = 'Dashboard';
     const credenciales = useSelector((state) => state.credenciales);
     const { contAsociados, contAdherentes, contEmpleados, contFamiliares, contEspacios, contInvitados, contSolicitudes,
-        contAdmins, contFamiliaresSocio, contInvitadosSocio, contNoticias, contContrataciones } = useCantidad();
+        contAdmins, contFamiliaresSocio, contInvitadosSocio, contNoticias, contContrataciones, contEncuestas } = useCantidad();
 
     const adminCards = [
         { color: "purple", cantidad: contSolicitudes, titulo: "Solicitudes", icono: "envelope-open-text", opacidad: "500" },
         { color: "red", cantidad: 0, titulo: "Reservas", icono: "calendar-check", opacidad: "600" },
-        { color: "yellow", cantidad: 0, titulo: "Encuestas", icono: "clipboard-list", opacidad: "400" },
+        { color: "yellow", cantidad: contEncuestas, titulo: "Encuestas", icono: "clipboard-list", opacidad: "400" },
         { color: "green", cantidad: contFamiliares, titulo: "Familiares", icono: "user-friends", opacidad: "500" },
         { color: "purple", cantidad: contAsociados, titulo: "Asociados", icono: "user-tie", opacidad: "500" },
         { color: "red", cantidad: contAdherentes, titulo: "Adherentes", icono: "user-tie", opacidad: "600" },
