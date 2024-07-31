@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { PrivateRoutes } from '../../../models/RutasModel';
 import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 
-function DataTablePreguntasRespuestas({ data, loading, editar, eliminar, rol, name }) {
+function DataTablePreguntasRespuestas({ data, loading, editar, eliminar, rol, name, respuesta }) {
 
     const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ function DataTablePreguntasRespuestas({ data, loading, editar, eliminar, rol, na
                 <div className="flex">
                     <Button onClick={() => editar(row)} className='rounded-full w-9 bg-blue-700 text-white' title='Editar' > <FaEdit /> </Button>
                     {rol == 0 && <Button onClick={() => eliminar(row.id)} className='rounded-full w-9 bg-red-600 text-white' title='Eliminar' > <FaTrashAlt /> </Button>}
-                    <Button onClick={() => navigate(PrivateRoutes.RESPUESTAS, { state: { id: row.id } })} className='rounded-full w-9 bg-purple-600 text-white' title='Respuestas' > <FaComment /> </Button>
+                    {!respuesta && <Button onClick={() => navigate(PrivateRoutes.RESPUESTAS, { state: { entidad: row } })} className='rounded-full w-9 bg-purple-600 text-white' title='Respuestas' > <FaComment /> </Button>}
                 </div>
             ),
             width: '150px',
