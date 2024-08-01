@@ -33,9 +33,11 @@ export const PrivateRoutes = {
     SOLICITUDES: "/solicitudes",
     RESERVAS: "/reservas",
     ENCUESTAS: "/encuestas",
+    ENCUESTA : "/encuesta",
     DISPONIBILIDAD_ESPACIO: "/disponibilidades-espacios",
     PREGUNTAS: "/preguntas",
     RESPUESTAS: "/respuestas",
+    RESPUESTAS_ENCUESTA: "/respuestas-encuesta",
 };
 
 // export const EndPoints = {

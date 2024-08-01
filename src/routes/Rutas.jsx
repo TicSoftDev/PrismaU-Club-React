@@ -10,6 +10,7 @@ import DisponibilidadEspacioPage from '../pages/admin/disponibilidad_espacios/Di
 import EmpleadosPage from '../pages/admin/empleados/EmpleadosPage';
 import EncuestasPage from '../pages/admin/encuestas/EncuestasPage';
 import PreguntasPage from '../pages/admin/encuestas/PreguntasPage';
+import RespuestasEncuestaPage from '../pages/admin/encuestas/RespuestasEncuestaPage';
 import RespuestasPage from '../pages/admin/encuestas/RespuestasPage';
 import EspaciosPage from '../pages/admin/espacios/EspaciosPage';
 import LogEstadosPage from '../pages/admin/estados/LogEstadosPage';
@@ -35,6 +36,7 @@ import RolesPage from '../pages/superAdmin/roles/RolesPage';
 import AuthGuard from '../utilities/guards/AuthGuard';
 import { AdminGuard, SocioGuard, SuperadminGuard } from '../utilities/guards/RolGuard';
 import { VerifyGuard } from '../utilities/guards/VerifyGuard';
+import RespuestasUserEncuestaPage from '../pages/admin/encuestas/RespuestasUserEncuestaPage';
 
 
 const Rutas = () => {
@@ -72,9 +74,11 @@ const Rutas = () => {
                             <Route element={<SolicitudesPage />} path={PrivateRoutes.SOLICITUDES} />
                             <Route element={<ReservasPage />} path={PrivateRoutes.RESERVAS} />
                             <Route element={<EncuestasPage />} path={PrivateRoutes.ENCUESTAS} />
-                            <Route element={<DisponibilidadEspacioPage />} path={PrivateRoutes.DISPONIBILIDAD_ESPACIO} />
+                            <Route element={<RespuestasEncuestaPage />} path={PrivateRoutes.ENCUESTA} />
+                            <Route element={<RespuestasUserEncuestaPage />} path={PrivateRoutes.RESPUESTAS_ENCUESTA} />
                             <Route element={<PreguntasPage />} path={PrivateRoutes.PREGUNTAS} />
                             <Route element={<RespuestasPage />} path={PrivateRoutes.RESPUESTAS} />
+                            <Route element={<DisponibilidadEspacioPage />} path={PrivateRoutes.DISPONIBILIDAD_ESPACIO} />
                         </Route>
                         <Route element={<SocioGuard />}>
                             <Route element={<InvitadosPage />} path={PrivateRoutes.INVITADOS} />

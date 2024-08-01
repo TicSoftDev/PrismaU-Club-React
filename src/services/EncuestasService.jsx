@@ -18,6 +18,11 @@ export async function getCantidadEncuestas() {
     return res.data;
 };
 
+export async function getEncuesta(id) {
+    const res = await axios.get(URL + "/respuestas/" + id);
+    return res.data;
+};
+
 export async function updateEncuesta(id, data) {
     const res = await axios.put(URL + "/" + id, data);
     return res.data;

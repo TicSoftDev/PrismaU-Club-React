@@ -2,6 +2,7 @@ import { Button } from 'flowbite-react';
 import React from 'react';
 import DataTable from 'react-data-table-component';
 import { FaEdit, FaQuestion, FaTrashAlt } from 'react-icons/fa';
+import { FaChartColumn } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 import { PrivateRoutes } from '../../../models/RutasModel';
 import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
@@ -14,7 +15,7 @@ function DataTableEncuestas({ data, loading, editar, eliminar, rol }) {
         {
             name: "N°",
             cell: (row, i) => i + 1,
-            width: '50px',
+            width: '40px',
         },
         {
             name: "Actions",
@@ -23,13 +24,20 @@ function DataTableEncuestas({ data, loading, editar, eliminar, rol }) {
                     <Button onClick={() => editar(row)} className='rounded-full w-9 bg-blue-700 text-white' title='Editar' > <FaEdit /> </Button>
                     {rol == 0 && <Button onClick={() => eliminar(row.id)} className='rounded-full w-9 bg-red-600 text-white' title='Eliminar' > <FaTrashAlt /> </Button>}
                     <Button onClick={() => navigate(PrivateRoutes.PREGUNTAS, { state: { id: row.id } })} className='rounded-full w-9 bg-purple-600 text-white' title='Preguntas' > <FaQuestion /> </Button>
+                    <Button onClick={() => navigate(PrivateRoutes.ENCUESTA, { state: { encuesta: row } })} className='rounded-full w-9 bg-purple-600 text-white' title='Preguntas' > <FaChartColumn /> </Button>
                 </div>
             ),
             width: '150px',
         },
         {
+            name: "Preguntas",
+            cell: row => row.preguntas_count,
+            width: '110px',
+        },
+        {
             name: "Titulo",
             cell: row => row.Titulo,
+            width: '250px',
         },
         {
             name: "Descripción",

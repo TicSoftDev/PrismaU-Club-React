@@ -1,6 +1,6 @@
 import React from 'react';
 import Swal from 'sweetalert2';
-import { createEncuesta, deleteEncuesta, getEncuestas, updateEncuesta } from '../services/EncuestasService';
+import { createEncuesta, deleteEncuesta, getEncuesta, getEncuestas, updateEncuesta } from '../services/EncuestasService';
 import { alertError, alertSucces, alertWarning } from '../utilities/alerts/Alertas';
 
 function useEncuestas() {
@@ -10,6 +10,7 @@ function useEncuestas() {
     const [busqueda, setBusqueda] = React.useState('');
     const [loading, setLoading] = React.useState(false);
     const [encuestas, setEncuestas] = React.useState([]);
+    const [resultadoEncuesta, setResultadoEncuesta] = React.useState([]);
     const [encuesta, setEncuesta] = React.useState({
         Titulo: '',
         Descripcion: '',
@@ -175,6 +176,19 @@ function useEncuestas() {
         }
     }
 
+    /*=========== Resultados ==============================*/
+
+    const getRespuestasEncuesta = async (id) => {
+        setLoading(true);
+        try {
+            const data = await getEncuesta(id);
+            setResultadoEncuesta(data);
+        } catch (error) {
+            alertError("Consultar encuesta: " + error.message);
+        }
+        setLoading(false);
+    }
+
     return {
         loading,
         titulo,
@@ -183,13 +197,15 @@ function useEncuestas() {
         openModal,
         encuesta,
         tituloModal,
+        resultadoEncuesta,
         handleBusqueda,
         toggleModal,
         handleChange,
         handleSubmit,
         cargarEncuesta,
         handleUpdate,
-        handleDelete
+        handleDelete,
+        getRespuestasEncuesta
     }
 }
 
