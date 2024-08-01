@@ -9,7 +9,7 @@ export async function getReservas() {
 };
 
 export async function getCantidadReservas() {
-    const res = await axios.get(URL + "/pendientes");
+    const res = await axios.get(URL + "/cantidad");
     return res.data;
 };
 

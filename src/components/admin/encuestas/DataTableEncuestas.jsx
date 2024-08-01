@@ -24,7 +24,7 @@ function DataTableEncuestas({ data, loading, editar, eliminar, rol }) {
                     <Button onClick={() => editar(row)} className='rounded-full w-9 bg-blue-700 text-white' title='Editar' > <FaEdit /> </Button>
                     {rol == 0 && <Button onClick={() => eliminar(row.id)} className='rounded-full w-9 bg-red-600 text-white' title='Eliminar' > <FaTrashAlt /> </Button>}
                     <Button onClick={() => navigate(PrivateRoutes.PREGUNTAS, { state: { id: row.id } })} className='rounded-full w-9 bg-purple-600 text-white' title='Preguntas' > <FaQuestion /> </Button>
-                    <Button onClick={() => navigate(PrivateRoutes.ENCUESTA, { state: { encuesta: row } })} className='rounded-full w-9 bg-purple-600 text-white' title='Preguntas' > <FaChartColumn /> </Button>
+                    <Button onClick={() => navigate(PrivateRoutes.ENCUESTA, { state: { encuesta: row } })} className='rounded-full w-9 bg-pink-600 text-white' title='Preguntas' > <FaChartColumn /> </Button>
                 </div>
             ),
             width: '150px',

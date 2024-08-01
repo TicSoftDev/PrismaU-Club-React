@@ -3,14 +3,15 @@ import { useSelector } from 'react-redux';
 import { getCantidadAdherentes } from '../services/AdherentesService';
 import { getCantidadAdmins } from '../services/AdminsService';
 import { getCantidadAsociados } from '../services/AsociadosService';
+import { getCantidadContrataciones } from '../services/ContratacionesService';
 import { getCantidadEmpleados } from '../services/EmpleadosService';
+import { getCantidadEncuestas } from '../services/EncuestasService';
 import { getCantidadEspacios } from '../services/EspaciosService';
 import { getCantidadFamiliares, getCantidadFamiliaresSocio } from '../services/FamiliaresService';
 import { getCantidadInvitados, getCantidadInvitadosSocio } from '../services/InvitadosService';
 import { getCantidadNoticias } from '../services/NoticiasService';
-import { getCantidadContrataciones } from '../services/ContratacionesService';
+import { getCantidadReservas } from '../services/ReservasService';
 import { getCantidadSolicitudes } from '../services/SolicitudesService';
-import { getCantidadEncuestas } from '../services/EncuestasService';
 
 function useCantidad() {
 
@@ -25,10 +26,11 @@ function useCantidad() {
     const [contInvitados, setContInvitados] = useState(0);
     const [contInvitadosSocio, setContInvitadosSocio] = useState(0);
     const [contAdmins, setContAdmins] = useState(0);
-    const [contNoticias, setContNoticias] = useState(0); 
-    const [contContrataciones, setContContrataciones] = useState(0); 
+    const [contNoticias, setContNoticias] = useState(0);
+    const [contContrataciones, setContContrataciones] = useState(0);
     const [contSolicitudes, setContSolicitudes] = useState(0);
     const [contEncuestas, setContEncuestas] = useState(0);
+    const [contReservas, setContReservas] = useState(0);
 
     const cantidadAsociados = async () => {
         try {
@@ -137,10 +139,20 @@ function useCantidad() {
         }
     };
 
+    const cantidadReservas = async () => {
+        try {
+            const data = await getCantidadReservas();
+            setContReservas(data);
+        } catch (error) {
+            console.log("Count", error.message);
+        }
+    };
+
     useEffect(() => {
         cantidadAdmins();
         cantidadContrataciones();
         cantidadSolicitudes();
+        cantidadReservas();
         cantidadEncuestas();
         cantidadFamiliares();
         cantidadAsociados();
@@ -155,7 +167,7 @@ function useCantidad() {
 
     return {
         contAdherentes, contAsociados, contEmpleados, contFamiliares, contEspacios, contInvitados, contSolicitudes,
-        contAdmins, contFamiliaresSocio, contInvitadosSocio, contNoticias, contContrataciones, contEncuestas
+        contAdmins, contFamiliaresSocio, contInvitadosSocio, contNoticias, contContrataciones, contEncuestas, contReservas
     };
 }
 
