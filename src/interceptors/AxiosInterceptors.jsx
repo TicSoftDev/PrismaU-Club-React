@@ -1,7 +1,7 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-import { usarStorage } from "../utilities/localstorage/localstorage";
 import { TokenGuard } from "../utilities/guards/TokenGuard";
+import { usarStorage } from "../utilities/localstorage/localstorage";
 
 export const AxiosInterceptor = () => {
     axios.interceptors.request.use(request => {

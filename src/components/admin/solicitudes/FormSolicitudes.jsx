@@ -1,6 +1,7 @@
 import React from 'react'
 
 function FormSolicitudes({ handleChange, solicitud }) {
+
     return (
         <div className="max-w-full flex flex-col">
             <div className="w-full mb-5">

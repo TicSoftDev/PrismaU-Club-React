@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { PrivateRoutes } from '../../../models/RutasModel';
 
 function LinkInicio() {
+
     return (
         <>
             <li>
@@ -10,7 +11,7 @@ function LinkInicio() {
                     <i className={`fa fa-home flex-shrink-0 w-5 text-xl mr-4 text-green-600 transition duration-75 dark:group-hover:text-white`}></i>
                     <span className="flex-1 ms-3 mt-1 whitespace-nowrap">Inicio</span>
                 </NavLink>
-            </li>            
+            </li>
         </>
     );
 }

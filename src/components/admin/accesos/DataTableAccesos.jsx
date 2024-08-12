@@ -1,8 +1,8 @@
 import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 import React from 'react';
 import DataTable from 'react-data-table-component';
 import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
-import { es } from 'date-fns/locale';
 
 function DataTableAccesos({ entradas, loading }) {
 

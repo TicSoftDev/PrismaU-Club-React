@@ -1,9 +1,10 @@
-import React from 'react';
 import { Label, Select } from 'flowbite-react';
+import React from 'react';
 import { FaCalendarAlt } from 'react-icons/fa';
 
 
 function FiltroInvitaciones({ selectedMonth, setSelectedMonth }) {
+
     return (
         <div className="w-full">
             <div className="mb-2 block">

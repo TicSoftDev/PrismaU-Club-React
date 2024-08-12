@@ -1,8 +1,9 @@
-import React from 'react';
 import { Label, Select, TextInput } from 'flowbite-react';
+import React from 'react';
 import { FaIdCard, FaKeyboard, FaPhoneAlt } from 'react-icons/fa';
 
-function FormInvitacion({ hanleChange, invitado, hanleSubmit, generado ,loading}) {
+function FormInvitacion({ hanleChange, invitado, hanleSubmit, generado, loading }) {
+
     return (
         <div className='flex flex-col'>
             <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4">

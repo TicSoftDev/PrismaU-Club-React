@@ -3,7 +3,7 @@ import React from 'react';
 import Spinner from '../spinner/Spinner';
 
 function VentanaModal({ titulo, size, children, openModal, cerrarModal, hanleSubmit, loading }) {
-    
+
     return (
         <Modal dismissible size={size} show={openModal} onClose={cerrarModal}>
             <Modal.Header>{titulo}</Modal.Header>

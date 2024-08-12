@@ -126,7 +126,7 @@ function FormFamiliar({ familiar, hanleChange, touched }) {
                         <Label htmlFor="direccion" value="Dirección Residencia" />
                     </div>
                     <TextInput id="direccion" type="tel" icon={FaMapMarkerAlt} onChange={hanleChange}
-                        value={familiar.DireccionResidencia ? familiar.DireccionResidencia : ''} 
+                        value={familiar.DireccionResidencia ? familiar.DireccionResidencia : ''}
                         name='DireccionResidencia' placeholder="Escriba la dirección de residencia..." />
                 </div>
                 <div className="w-full">
@@ -134,7 +134,7 @@ function FormFamiliar({ familiar, hanleChange, touched }) {
                         <Label htmlFor="ciudadResidencia" value="Ciudad Residencia" />
                     </div>
                     <TextInput id="ciudadResidencia" type="text" icon={FaCity} onChange={hanleChange}
-                        value={familiar.CiudadResidencia ? familiar.CiudadResidencia : ''} 
+                        value={familiar.CiudadResidencia ? familiar.CiudadResidencia : ''}
                         name='CiudadResidencia' placeholder="Escriba la ciudad de residencia..." />
                 </div>
                 <div className="w-full">
@@ -142,7 +142,7 @@ function FormFamiliar({ familiar, hanleChange, touched }) {
                         <Label htmlFor="cargo" value="Cargo" />
                     </div>
                     <TextInput id="cargo" type="text" icon={FaSuitcase} onChange={hanleChange}
-                        value={familiar.Cargo ? familiar.Cargo : ''} 
+                        value={familiar.Cargo ? familiar.Cargo : ''}
                         name='Cargo' placeholder="Escriba el cargo que ocupa" />
                 </div>
                 <div className="w-full">

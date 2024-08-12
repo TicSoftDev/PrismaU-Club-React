@@ -3,6 +3,7 @@ import React from 'react';
 import { FaEnvelope, FaIdCard, FaKey, FaKeyboard, FaPhoneAlt } from 'react-icons/fa';
 
 function FormAdmin({ admin, hanleChange }) {
+
     return (
         <>
             <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4">

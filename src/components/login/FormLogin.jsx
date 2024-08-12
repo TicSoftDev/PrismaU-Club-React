@@ -1,14 +1,14 @@
 import { Button, Label, TextInput } from 'flowbite-react';
 import React from 'react';
-import { FaAndroid, FaEye, FaIdCard, FaLock } from 'react-icons/fa';
+import { DiAndroid } from 'react-icons/di';
+import { FaEye, FaIdCard, FaLock } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import imagen from '../../assets/img/imagen';
-import Spinner from '../../utilities/spinner/Spinner';
-import { FcAndroidOs } from 'react-icons/fc';
-import { DiAndroid } from 'react-icons/di';
 import { PublicRoutes } from '../../models/RutasModel';
+import Spinner from '../../utilities/spinner/Spinner';
 
 function FormLogin({ loading, usuario, handleChange, handleSubmit, visible, toggleVisible }) {
+
     return (
         <div className="md:w-1/2 p-8 flex flex-col items-start justify-center w-full">
             <div className="space-y-4 w-full">
@@ -42,7 +42,7 @@ function FormLogin({ loading, usuario, handleChange, handleSubmit, visible, togg
                         Olvidé mi contraseña.
                     </Link>
                     <Link to="https://archivos.prismau.co/PrismaU.apk" target='_blank' className="flex items-center justify-center border-2 border-green-500 p-1 w-40 mt-6 text-base text-green-500 font-medium hover:bg-green-500 hover:text-gray-50 dark:text-gray-50">
-                       <DiAndroid size={20} className='me-1' />
+                        <DiAndroid size={20} className='me-1' />
                         Descargar app
                     </Link>
                 </div>

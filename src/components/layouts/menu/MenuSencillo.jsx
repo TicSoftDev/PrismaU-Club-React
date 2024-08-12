@@ -2,6 +2,7 @@ import React from 'react';
 import { FaSearch, FaUserPlus } from 'react-icons/fa';
 
 function MenuSencillo({ busqueda, handleBusqueda, toggleModal, noBuscar, noCrear }) {
+
     return (
         <div className="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
             {!noCrear ?

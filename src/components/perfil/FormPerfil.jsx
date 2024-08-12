@@ -1,9 +1,10 @@
 import { Label, Select, TextInput } from 'flowbite-react';
 import React from 'react';
-import { FaCalendarAlt, FaCity, FaEnvelope, FaEye, FaIdCard, FaKey, FaKeyboard, FaMapMarkerAlt, FaMercury, FaPhoneAlt, FaSortNumericUp, FaSuitcase, FaUserGraduate, FaUserTag, FaUserTie } from 'react-icons/fa';
+import { FaCalendarAlt, FaCity, FaEnvelope, FaEye, FaIdCard, FaKey, FaKeyboard, FaMapMarkerAlt, FaMercury, FaPhoneAlt, FaSortNumericUp, FaSuitcase, FaUserGraduate, FaUserTag } from 'react-icons/fa';
 import { FaMapLocation } from 'react-icons/fa6';
 
 function FormPerfil({ user, hanleChange, change, usuario, credenciales }) {
+
     return (
         <>
             <span className='font-bold'>Informacion Personal</span>

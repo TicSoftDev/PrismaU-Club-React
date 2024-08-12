@@ -1,7 +1,8 @@
-import React from 'react'
+import React from 'react';
 import { FaFilter, FaSearch } from 'react-icons/fa';
 
 function BuscadorAvanzado({ busqueda, handleBusqueda, filtro, options }) {
+
     return (
         <div className="flex items-center justify-end flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
             <div className="flex">

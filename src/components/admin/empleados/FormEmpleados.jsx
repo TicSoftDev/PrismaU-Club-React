@@ -148,7 +148,7 @@ function FormEmpleados({ empleado, hanleChange, touched }) {
                         <Label htmlFor="Portero" value="¿Es un portero?" />
                     </div>
                     <Select id="Portero" onChange={hanleChange} name='Rol' className={inputClass(empleado.Rol)}
-                        value={empleado.Rol } >
+                        value={empleado.Rol} >
                         <option value="" disabled>Escoja una opción...</option>
                         <option value={6}>Si</option>
                         <option value={4}>No </option>

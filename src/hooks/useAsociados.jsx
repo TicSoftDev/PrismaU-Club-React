@@ -244,7 +244,7 @@ function useAsociados() {
         try {
             e.preventDefault();
             if (estado.Estado === "" || estado.Motivo === "") {
-               return alertWarning("Por favor, ingrese todos los campos");
+                return alertWarning("Por favor, ingrese todos los campos");
             }
             setLoading(true);
             const resultado = await changeStatusAsociado(asociado.id, estado);

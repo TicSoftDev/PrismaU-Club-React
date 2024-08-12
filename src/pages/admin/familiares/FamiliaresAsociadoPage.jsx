@@ -1,14 +1,13 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import FormImagenAdherente from '../../../components/admin/adherentes/FormImagenAdherente';
-import MenuEmpleados from '../../../components/admin/empleados/MenuEmpleados';
 import FormFamiliar from '../../../components/admin/familiares/FormFamiliar';
 import TablaFamiliares from '../../../components/admin/familiares/TablaFamiliares';
+import MenuSencillo from '../../../components/layouts/menu/MenuSencillo';
 import useFamiliares from '../../../hooks/useFamiliares';
 import Container from '../../../utilities/helpers/Container';
 import TituloPage from '../../../utilities/helpers/TituloPage';
 import VentanaModal from '../../../utilities/modals/VentanaModal';
-import MenuSencillo from '../../../components/layouts/menu/MenuSencillo';
 
 function FamiliaresAsociadoPage() {
 

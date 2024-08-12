@@ -1,6 +1,6 @@
 import React from 'react';
-import * as XLSX from 'xlsx';
 import { SiMicrosoftexcel } from "react-icons/si";
+import * as XLSX from 'xlsx';
 
 
 const ExportExcelAsociados = ({ data, fileName }) => {

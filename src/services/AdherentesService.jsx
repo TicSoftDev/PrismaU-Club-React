@@ -1,5 +1,5 @@
 import axios from "axios";
-import { EndPoints } from "../models/RutasModel"; 
+import { EndPoints } from "../models/RutasModel";
 
 const URL_ADHERENTES = EndPoints.ADHERENTES;
 

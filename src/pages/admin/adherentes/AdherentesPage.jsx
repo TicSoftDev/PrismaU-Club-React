@@ -1,15 +1,15 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import DataTableAdherente from '../../../components/admin/adherentes/DataTableAdherente';
 import FormAdherentes from '../../../components/admin/adherentes/FormAdherentes';
 import FormImagenAdherente from '../../../components/admin/adherentes/FormImagenAdherente';
 import FormMotivo from '../../../components/admin/asociados/FormMotivo';
+import MenuAsociados from '../../../components/admin/asociados/MenuAsociados';
 import useAdherente from '../../../hooks/useAdherente';
 import useAsociados from '../../../hooks/useAsociados';
 import Container from '../../../utilities/helpers/Container';
 import TituloPage from '../../../utilities/helpers/TituloPage';
 import VentanaModal from '../../../utilities/modals/VentanaModal';
-import { useSelector } from 'react-redux';
-import MenuAsociados from '../../../components/admin/asociados/MenuAsociados';
 
 function AdherentesPage() {
 

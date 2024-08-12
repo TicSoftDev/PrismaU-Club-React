@@ -1,6 +1,7 @@
 import React from 'react';
 
 function Cards({ card }) {
+
     return (
         <div className="size-card">
             <div className={`card border bg-white border-${card.color}-${card.opacidad} text-${card.color}-${card.opacidad}`}>

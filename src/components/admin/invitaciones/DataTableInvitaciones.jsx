@@ -1,7 +1,7 @@
-import React from 'react';
-import DataTable from 'react-data-table-component'
-import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 import { format } from 'date-fns';
+import React from 'react';
+import DataTable from 'react-data-table-component';
+import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 
 function DataTableInvitaciones({ data, loading }) {
 
@@ -46,9 +46,9 @@ function DataTableInvitaciones({ data, loading }) {
     const customStyles = {
         headCells: {
             style: {
-                backgroundColor: '#379861', 
-                color: '#FFF', 
-                fontSize: '12px', 
+                backgroundColor: '#379861',
+                color: '#FFF',
+                fontSize: '12px',
                 textTransform: 'uppercase',
                 fontWeight: 'bold',
             },

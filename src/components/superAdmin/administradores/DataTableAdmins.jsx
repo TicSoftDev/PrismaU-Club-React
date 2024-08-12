@@ -1,9 +1,10 @@
 import React from 'react';
 import DataTable from 'react-data-table-component';
-import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 import { FaEdit, FaTrash, FaUser, FaUserSlash } from 'react-icons/fa';
+import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 
 function DataTableAdmins({ data, cargarAdmin, eliminar, loading, change }) {
+
     const columns = [
         {
             name: "Actions",

@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 import DataTable from 'react-data-table-component';
-import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 
 function DataTableNoticias({ data, rol, loading, editar, eliminar }) {
 

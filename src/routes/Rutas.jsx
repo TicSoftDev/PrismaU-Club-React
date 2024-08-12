@@ -12,6 +12,7 @@ import EncuestasPage from '../pages/admin/encuestas/EncuestasPage';
 import PreguntasPage from '../pages/admin/encuestas/PreguntasPage';
 import RespuestasEncuestaPage from '../pages/admin/encuestas/RespuestasEncuestaPage';
 import RespuestasPage from '../pages/admin/encuestas/RespuestasPage';
+import RespuestasUserEncuestaPage from '../pages/admin/encuestas/RespuestasUserEncuestaPage';
 import EspaciosPage from '../pages/admin/espacios/EspaciosPage';
 import LogEstadosPage from '../pages/admin/estados/LogEstadosPage';
 import FamiliaresAdherentePage from '../pages/admin/familiares/FamiliaresAdherentePage';
@@ -36,7 +37,6 @@ import RolesPage from '../pages/superAdmin/roles/RolesPage';
 import AuthGuard from '../utilities/guards/AuthGuard';
 import { AdminGuard, SocioGuard, SuperadminGuard } from '../utilities/guards/RolGuard';
 import { VerifyGuard } from '../utilities/guards/VerifyGuard';
-import RespuestasUserEncuestaPage from '../pages/admin/encuestas/RespuestasUserEncuestaPage';
 
 
 const Rutas = () => {

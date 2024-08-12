@@ -2,6 +2,7 @@ import React from 'react'
 import { FaSearch } from 'react-icons/fa'
 
 function FiltroEstados({ busqueda, handleBusqueda }) {
+
   return (
     <div className="flex justify-end p-4">
       <div className="relative">

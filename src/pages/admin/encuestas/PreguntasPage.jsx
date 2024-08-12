@@ -1,14 +1,13 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
-import DataTablePreguntas from '../../../components/admin/encuestas/DataTablePreguntasRespuestas'
+import DataTablePreguntasRespuestas from '../../../components/admin/encuestas/DataTablePreguntasRespuestas'
 import FormPreguntasRespuesta from '../../../components/admin/encuestas/FormPreguntasRespuesta'
 import MenuSencillo from '../../../components/layouts/menu/MenuSencillo'
 import usePreguntasEncuesta from '../../../hooks/usePreguntasEncuesta'
 import Container from '../../../utilities/helpers/Container'
 import TituloPage from '../../../utilities/helpers/TituloPage'
 import VentanaModal from '../../../utilities/modals/VentanaModal'
-import DataTablePreguntasRespuestas from '../../../components/admin/encuestas/DataTablePreguntasRespuestas'
 
 function PreguntasPage() {
 

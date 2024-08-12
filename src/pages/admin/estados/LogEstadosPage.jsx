@@ -1,9 +1,9 @@
 import React from 'react';
 import DataTableLogEstados from '../../../components/admin/estados/DataTableLogEstados';
+import FiltroEstados from '../../../components/admin/estados/FiltroEstados';
 import useEstados from '../../../hooks/useEstados';
 import Container from '../../../utilities/helpers/Container';
 import TituloPage from '../../../utilities/helpers/TituloPage';
-import FiltroEstados from '../../../components/admin/estados/FiltroEstados';
 
 function LogEstadosPage() {
 

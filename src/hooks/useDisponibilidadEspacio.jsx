@@ -90,22 +90,22 @@ function useDisponibilidadEspacio(id) {
 
     const convertTo24HourFormat = (time) => {
         let parsedTime;
-    
+
         parsedTime = parse(time, 'hh:mm a', new Date());
         if (isValid(parsedTime)) {
             return format(parsedTime, 'HH:mm');
         }
-    
+
         parsedTime = parse(time, 'HH:mm:ss', new Date());
         if (isValid(parsedTime)) {
             return format(parsedTime, 'HH:mm');
         }
-    
+
         parsedTime = parse(time, 'HH:mm', new Date());
         if (isValid(parsedTime)) {
             return format(parsedTime, 'HH:mm');
         }
-    
+
         throw new Error(`Invalid time value: ${time}`);
     };
 

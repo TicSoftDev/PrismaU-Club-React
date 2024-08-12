@@ -21,16 +21,16 @@ function DataTableReservas({ data, loading }) {
         },
         {
             name: "Hora inicial",
-            cell: row => {    
+            cell: row => {
                 const parsedDate = parse(row.Inicio, 'HH:mm:ss', new Date());
                 return format(parsedDate, 'hh:mm a');
-        }
+            }
         },
         {
             name: "Hora final",
-            cell: row => {    
-                    const parsedDate = parse(row.Fin, 'HH:mm:ss', new Date());
-                    return format(parsedDate, 'hh:mm a');
+            cell: row => {
+                const parsedDate = parse(row.Fin, 'HH:mm:ss', new Date());
+                return format(parsedDate, 'hh:mm a');
             }
         },
         {

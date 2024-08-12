@@ -19,10 +19,10 @@ function useAccesos() {
             let data = await getEntradas();
             if (busqueda) {
                 const busquedaDate = new Date(busqueda);
-                const busquedaDateString = busquedaDate.toISOString().split('T')[0]; 
+                const busquedaDateString = busquedaDate.toISOString().split('T')[0];
                 data = data.filter(entrada => {
                     const entradaDate = new Date(entrada.created_at);
-                    const entradaDateString = entradaDate.toISOString().split('T')[0]; 
+                    const entradaDateString = entradaDate.toISOString().split('T')[0];
                     return entradaDateString === busquedaDateString;
                 });
             }

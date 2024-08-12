@@ -1,5 +1,5 @@
-import { Label, TextInput, Textarea } from 'flowbite-react';
-import React from 'react'
+import { Label, TextInput } from 'flowbite-react';
+import React from 'react';
 import { FaCalendarAlt, FaKeyboard } from 'react-icons/fa';
 
 function FormNoticias({ noticia, hanleChange, touched }) {

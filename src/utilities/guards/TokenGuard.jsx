@@ -1,6 +1,6 @@
 import { PublicRoutes } from "../../models/RutasModel";
 
 export const TokenGuard = () => {
-    localStorage.clear(); 
-    window.location.assign(PublicRoutes.LOGIN); 
+    localStorage.clear();
+    window.location.assign(PublicRoutes.LOGIN);
 }

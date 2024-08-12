@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { alertError, alertSucces, alertWarning } from "../utilities/alerts/Alertas";
-import { changePassword, getByDocumento } from "../services/usuariosService";
 import { useSelector } from "react-redux";
+import { changePassword, getByDocumento } from "../services/usuariosService";
+import { alertError, alertSucces, alertWarning } from "../utilities/alerts/Alertas";
 
 function useUsuario() {
 

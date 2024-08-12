@@ -1,7 +1,8 @@
-import React from 'react'
+import React from 'react';
 import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 
 function TableFamiliaresSocio({ familiares, loading }) {
+
     if (loading) {
         return (
             <TableSkeleton />

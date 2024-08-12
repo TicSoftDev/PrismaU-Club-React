@@ -1,7 +1,7 @@
+import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { getEstados } from "../services/EstadosService";
 import { alertError } from "../utilities/alerts/Alertas";
-import { format } from "date-fns";
 
 function useEstados() {
 

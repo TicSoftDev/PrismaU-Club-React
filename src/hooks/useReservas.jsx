@@ -1,6 +1,5 @@
 import React from 'react';
 import { getReservas } from '../services/ReservasService';
-import { format } from 'date-fns';
 
 function useReservas() {
 

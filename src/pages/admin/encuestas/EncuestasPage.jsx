@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import DataTableEncuestas from '../../../components/admin/encuestas/DataTableEncuestas';
 import FormEncuesta from '../../../components/admin/encuestas/FormEncuesta';
 import MenuSencillo from '../../../components/layouts/menu/MenuSencillo';
@@ -6,7 +7,6 @@ import useEncuestas from '../../../hooks/useEncuestas';
 import Container from '../../../utilities/helpers/Container';
 import TituloPage from '../../../utilities/helpers/TituloPage';
 import VentanaModal from '../../../utilities/modals/VentanaModal';
-import { useSelector } from 'react-redux';
 
 function EncuestasPage() {
 

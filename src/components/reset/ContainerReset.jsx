@@ -1,6 +1,7 @@
 import React from 'react';
 
 function ContainerReset({ children }) {
+
     return (
         <div className='bg-gray-100 min-h-screen animated-element'>
             <div className="flex flex-col min-h-screen justify-center items-center px-4 md:px-0">

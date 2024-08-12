@@ -1,8 +1,7 @@
 import React from 'react';
 import Swal from 'sweetalert2';
-import { createEncuesta, deleteEncuesta, getEncuestas, updateEncuesta } from '../services/EncuestasService';
-import { alertError, alertSucces, alertWarning } from '../utilities/alerts/Alertas';
 import { createRespuesta, deleteRespuesta, getRespuestas, updateRespuesta } from '../services/RespuestasService';
+import { alertError, alertSucces, alertWarning } from '../utilities/alerts/Alertas';
 
 function useRespuestasEncuesta(id) {
 

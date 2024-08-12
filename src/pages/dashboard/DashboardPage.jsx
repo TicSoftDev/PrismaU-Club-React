@@ -8,6 +8,7 @@ import './../../assets/styles/cards.css';
 
 
 function DashboardPage() {
+    
     const titulo = 'Dashboard';
     const credenciales = useSelector((state) => state.credenciales);
     const { contAsociados, contAdherentes, contEmpleados, contFamiliares, contEspacios, contInvitados, contSolicitudes,

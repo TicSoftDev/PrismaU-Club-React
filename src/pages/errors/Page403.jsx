@@ -5,6 +5,7 @@ import Svg from '../../components/errors/Svg';
 import { PrivateRoutes } from '../../models/RutasModel.jsx';
 
 function Page403() {
+    
     return (
         <div className='contenedor-403'>
             <Svg />

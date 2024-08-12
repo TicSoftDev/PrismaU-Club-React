@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import FormImagenAdherente from '../../../components/admin/adherentes/FormImagenAdherente';
 import DataTableEmpleados from '../../../components/admin/empleados/DataTableEmpleados';
 import FormEmpleados from '../../../components/admin/empleados/FormEmpleados';
@@ -7,7 +8,6 @@ import useEmpleado from '../../../hooks/useEmpleado';
 import Container from '../../../utilities/helpers/Container';
 import TituloPage from '../../../utilities/helpers/TituloPage';
 import VentanaModal from '../../../utilities/modals/VentanaModal';
-import { useSelector } from 'react-redux';
 
 function EmpleadosPage() {
 
@@ -24,8 +24,8 @@ function EmpleadosPage() {
             <Container>
                 <MenuEmpleados toggleModal={toggleModal} busqueda={busqueda} handleBusqueda={handleBusqueda}
                     entidad={true} titulo={titulo} data={lista} />
-                <VentanaModal size={'7xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal} 
-                hanleSubmit={handler} loading={loading}>
+                <VentanaModal size={'7xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal}
+                    hanleSubmit={handler} loading={loading}>
                     <FormEmpleados touched={touched} empleado={empleado} hanleChange={handleChange} />
                 </VentanaModal>
                 <DataTableEmpleados cargarEmpleado={cargarEmpleado} usuarios={lista} eliminar={eliminarEmpleado}

@@ -1,5 +1,5 @@
-import { Accordion } from 'flowbite-react'
-import React from 'react'
+import { Accordion } from 'flowbite-react';
+import React from 'react';
 
 function RespuestasUsuarios({ pregunta, respuesta }) {
 

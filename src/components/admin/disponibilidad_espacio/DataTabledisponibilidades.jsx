@@ -1,11 +1,11 @@
-import React from 'react';
-import DataTable from 'react-data-table-component';
-import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 import { format, parse } from 'date-fns';
 import { Button } from 'flowbite-react';
+import React from 'react';
+import DataTable from 'react-data-table-component';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 
-function DataTableDisponibilidades({ data, loading , editar, eliminar}) {
+function DataTableDisponibilidades({ data, loading, editar, eliminar }) {
 
     const columns = [
         {
@@ -24,16 +24,16 @@ function DataTableDisponibilidades({ data, loading , editar, eliminar}) {
         },
         {
             name: "Hora inicial",
-            cell: row => {    
+            cell: row => {
                 const parsedDate = parse(row.Inicio, 'HH:mm:ss', new Date());
                 return format(parsedDate, 'hh:mm a');
-        }
+            }
         },
         {
             name: "Hora final",
-            cell: row => {    
-                    const parsedDate = parse(row.Fin, 'HH:mm:ss', new Date());
-                    return format(parsedDate, 'hh:mm a');
+            cell: row => {
+                const parsedDate = parse(row.Fin, 'HH:mm:ss', new Date());
+                return format(parsedDate, 'hh:mm a');
             }
         },
     ];

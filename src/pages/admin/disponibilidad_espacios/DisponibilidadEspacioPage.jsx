@@ -1,13 +1,13 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import CardDetalleEspacio from '../../../components/admin/disponibilidad_espacio/CardDetalleEspacio';
 import DataTableDisponibilidades from '../../../components/admin/disponibilidad_espacio/DataTabledisponibilidades';
+import FormDisponibilidadEspacio from '../../../components/admin/disponibilidad_espacio/FormDisponibilidadEspacio';
+import MenuSencillo from '../../../components/layouts/menu/MenuSencillo';
 import useDisponibilidadEspacio from '../../../hooks/useDisponibilidadEspacio';
 import Container from '../../../utilities/helpers/Container';
 import TituloPage from '../../../utilities/helpers/TituloPage';
-import CardDetalleEspacio from '../../../components/admin/disponibilidad_espacio/CardDetalleEspacio';
-import MenuSencillo from '../../../components/layouts/menu/MenuSencillo';
 import VentanaModal from '../../../utilities/modals/VentanaModal';
-import FormDisponibilidadEspacio from '../../../components/admin/disponibilidad_espacio/FormDisponibilidadEspacio';
 
 const DisponibilidadEspacioPage = () => {
 
