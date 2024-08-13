@@ -27,7 +27,7 @@ function DataTableEncuestas({ data, loading, editar, eliminar, rol }) {
                     <Button onClick={() => navigate(PrivateRoutes.ENCUESTA, { state: { encuesta: row } })} className='rounded-full w-9 bg-pink-600 text-white' title='Preguntas' > <FaChartColumn /> </Button>
                 </div>
             ),
-            width: '150px',
+            width: '180px',
         },
         {
             name: "Preguntas",
