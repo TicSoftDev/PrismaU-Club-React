@@ -16,6 +16,11 @@ function useMenu() {
     const [menusRol, setMenusRol] = React.useState([]);
     const [menu, setMenu] = React.useState({
         Name: '',
+        Type: '',
+        Route: '',
+        Icon: '',
+        Color: '',
+        Estado: ''
     });
     const [menuRol, setMenuRol] = React.useState({
         menu_id: null,
@@ -29,6 +34,11 @@ function useMenu() {
     const recargar = () => {
         setMenu({
             Name: '',
+            Type: '',
+            Route: '',
+            Icon: '',
+            Color: '',
+            Estado: ''
         })
         setMenuRol({
             menu_id: null,
@@ -54,7 +64,7 @@ function useMenu() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!menu.Name) {
+        if (!menu.Name || !menu.Type || !menu.Route || !menu.Icon || !menu.Color) {
             alertWarning("Por favor, ingrese todos los campos.");
             return;
         }
@@ -121,7 +131,7 @@ function useMenu() {
     const handleUpdate = async (e) => {
         try {
             e.preventDefault();
-            if (!menu.Name) {
+            if (!menu.Name || !menu.Type || !menu.Route || !menu.Icon || !menu.Color) {
                 alertWarning("Por favor, ingrese todos los campos.");
                 return;
             }

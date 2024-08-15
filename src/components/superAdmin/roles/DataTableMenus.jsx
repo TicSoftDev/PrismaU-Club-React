@@ -19,12 +19,28 @@ function DataTableMenus({ data, loading, cargar, eliminar }) {
                     <button onClick={() => eliminar(row.id)} className="rounded-full w-9 h-9 bg-red-600 text-white flex justify-center items-center" title="Eliminar"><FaTrash /></button>
                 </div>
             ),
-            width: '180px'
+            width: '160px'
         },
         {
-            name: "Descripción",
+            name: "Label",
             cell: row => row.Name,
-        }
+        },
+        {
+            name: "Tipo",
+            cell: row => row.Type,
+        },
+        {
+            name: "Ruta",
+            cell: row => row.Route,
+        },
+        {
+            name: "Icono",
+            cell: row => (<i className={`fa fa-${row.Icon} text-lg`}></i>),
+        },
+        {
+            name: "Color",
+            cell: row => (<div className={`w-6 h-6 rounded-full bg-${row.Color}`}></div>),
+        },
     ];
 
     const customStyles = {

@@ -70,7 +70,7 @@ function RolesPage() {
                     <div className="p-4 border-2 bg-white rounded-lg dark:border-gray-700 w-full">
                         <MenuSencillo noBuscar={true} toggleModal={toggleModal} />
                         <DataTableMenus data={menus} loading={loading} cargar={cargarMenu} eliminar={handleDelete} />
-                        <VentanaModal size={'2xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal}
+                        <VentanaModal size={'4xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal}
                             hanleSubmit={handler} loading={loading}>
                             <FormMenu handleChange={handleChange} menu={menu} />
                         </VentanaModal>
