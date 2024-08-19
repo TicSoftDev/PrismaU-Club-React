@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import { createFamiliarAdherente, createFamiliarAsociado, deleteFamiliar, getFamiliares, updateFamiliar, updateImageFamiliar } from '../services/FamiliaresService';
 import { alertError, alertSucces, alertWarning } from '../utilities/alerts/Alertas';
 
-function useFamiliares(id, codigo, type) {
+function useFamiliares(id, codigo, estado, type) {
 
     const titulo = 'Familiares';
     const [openModal, setOpenModal] = useState(false);
@@ -29,7 +29,8 @@ function useFamiliares(id, codigo, type) {
         Cargo: "",
         Parentesco: '',
         Rol: "5",
-        type: type
+        type: type,
+        Estado: estado
     });
     const [imagen, setImagen] = useState(null);
     const tituloModal = familiar.id ? "Actualizar Familiar" : "Crear Familiar";
@@ -54,7 +55,8 @@ function useFamiliares(id, codigo, type) {
             Cargo: "",
             Parentesco: '',
             Rol: "5",
-            type: type
+            type: type,
+            Estado: estado
         });
         setTouched(false);
     };

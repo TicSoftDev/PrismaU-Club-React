@@ -17,7 +17,7 @@ function DataTableAsociado({ usuarios, rol, cargarAsociado, eliminar, loading, c
                 <div className="flex">
                     <Button onClick={() => cargarAsociado(row)} className='rounded-full w-9 bg-blue-700 text-white' title='Editar' > <FaEdit /> </Button>
                     {rol == 0 && <Button onClick={() => eliminar(row.user_id)} className='rounded-full w-9 bg-red-600 text-white' title='Eliminar'> <FaTrash /> </Button>}
-                    <Button onClick={() => navigate(PrivateRoutes.FAMILIARESASOCIADO, { state: { id: row.id, codigo: row.Codigo } })} className='rounded-full w-9 bg-pink-600 text-white' title='Familiares'> <FaUserPlus /> </Button>
+                    <Button onClick={() => navigate(PrivateRoutes.FAMILIARESASOCIADO, { state: { id: row.id, codigo: row.Codigo, estado: row.Estado } })} className='rounded-full w-9 bg-pink-600 text-white' title='Familiares'> <FaUserPlus /> </Button>
                     <Button onClick={() => change(row.id)} className='rounded-full w-9 bg-yellow-400 text-white' title="Cambiar estado"> <FaUserSlash />  </Button>
                     <Button onClick={() => cargar(row.id)} className='rounded-full w-9 bg-fuchsia-600 text-white' title='Cambiar Imagen'> <FaRegImages />  </Button>
                 </div>
