@@ -12,10 +12,10 @@ import VentanaModal from '../../../utilities/modals/VentanaModal';
 function FamiliaresAdherentePage() {
 
     const location = useLocation();
-    const { id, codigo } = location.state || {};
+    const { id, codigo, estado } = location.state || {};
     const { titulo, tituloModal, openModal, familiares, loading, familiar, touched, tituloModalImage, openModalImage,
         toggleModal, handleChange, handleSubmit, handleUpdate, cargarFamiliar, eliminarFamiliar, toggleModalImage,
-        handleChangeImagen, cargarImagen, handleUpdateImage } = useFamiliares(id, codigo, 'Adherente');
+        handleChangeImagen, cargarImagen, handleUpdateImage } = useFamiliares(id, codigo, estado, 'Adherente');
     const handler = familiar.id ? handleUpdate : handleSubmit;
 
     return (
