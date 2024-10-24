@@ -19,3 +19,7 @@ export const SocioGuard = () => {
     return rol == 2 || rol == 3 ? <Outlet /> : prohibido;
 }
 
+export const AdminSocioGuard = () => {
+    const rol = useSelector((state) => state.credenciales.Rol);
+    return (rol == 1 || rol == 0 || rol == 2 || rol == 3) ? <Outlet /> : prohibido;
+}

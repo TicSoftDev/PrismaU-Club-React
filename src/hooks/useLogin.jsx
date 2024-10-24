@@ -52,7 +52,7 @@ function useLogin() {
                 return;
             }
             setLoading(true);
-            const resultado = await iniciarSesion(usuario);
+            const resultado = await iniciarSesion(usuario);            
             setLoading(false);
             if (resultado.status === false && resultado.message === "Credenciales Invalidas") {
                 setUsuario({ Documento: "", password: "" })

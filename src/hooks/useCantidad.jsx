@@ -40,6 +40,7 @@ function useCantidad() {
             console.log("Count", error.message);
         }
     };
+
     const cantidadEmpleados = async () => {
         try {
             const data = await getCantidadEmpleados();
@@ -48,6 +49,7 @@ function useCantidad() {
             console.log("Count", error.message);
         }
     };
+
     const cantidadAdherentes = async () => {
         try {
             const data = await getCantidadAdherentes();
@@ -56,6 +58,7 @@ function useCantidad() {
             console.log("Count", error.message);
         }
     };
+
     const cantidadFamiliaresSocio = async () => {
         try {
             const rol = user.Rol == 2 ? "Asociado" : "Adherente";
@@ -65,6 +68,7 @@ function useCantidad() {
             console.log("Count", error.message);
         }
     };
+
     const cantidadFamiliares = async () => {
         try {
             const data = await getCantidadFamiliares();
@@ -73,6 +77,7 @@ function useCantidad() {
             console.log("Count", error.message);
         }
     };
+
     const cantidadInvitadosSocio = async () => {
         try {
             const data = await getCantidadInvitadosSocio(user.id);
@@ -81,6 +86,7 @@ function useCantidad() {
             console.log("Count", error.message);
         }
     };
+
     const cantidadInvitados = async () => {
         try {
             const data = await getCantidadInvitados();
@@ -89,6 +95,7 @@ function useCantidad() {
             console.log("Count", error.message);
         }
     };
+
     const cantidadEspacios = async () => {
         try {
             const data = await getCantidadEspacios();
@@ -97,6 +104,7 @@ function useCantidad() {
             console.log("Count", error.message);
         }
     };
+
     const cantidadAdmins = async () => {
         try {
             const data = await getCantidadAdmins();
@@ -105,6 +113,7 @@ function useCantidad() {
             console.log("Count", error.message);
         }
     };
+
     const cantidadContrataciones = async () => {
         try {
             const data = await getCantidadContrataciones();
@@ -113,6 +122,7 @@ function useCantidad() {
             console.log("Count", error.message);
         } 0
     };
+
     const cantidadNoticias = async () => {
         try {
             const data = await getCantidadNoticias();
@@ -121,6 +131,7 @@ function useCantidad() {
             console.log("Count", error.message);
         } 0
     };
+
     const cantidadSolicitudes = async () => {
         try {
             const data = await getCantidadSolicitudes();
@@ -149,21 +160,36 @@ function useCantidad() {
     };
 
     useEffect(() => {
-        cantidadAdmins();
-        cantidadContrataciones();
-        cantidadSolicitudes();
-        cantidadReservas();
-        cantidadEncuestas();
-        cantidadFamiliares();
-        cantidadAsociados();
-        cantidadAdherentes();
-        cantidadEmpleados();
-        cantidadEspacios();
-        cantidadNoticias();
-        cantidadInvitados();
-        cantidadInvitadosSocio();
-        cantidadFamiliaresSocio();
+        if (user.Rol == 0) {
+            cantidadContrataciones();
+            cantidadAdmins();
+            cantidadSolicitudes();
+            cantidadReservas();
+            cantidadEncuestas();
+            cantidadFamiliares();
+            cantidadAsociados();
+            cantidadAdherentes();
+            cantidadEmpleados();
+            cantidadEspacios();
+            cantidadNoticias();
+            cantidadInvitados();
+        } else if (user.Rol == 1) {
+            cantidadSolicitudes();
+            cantidadReservas();
+            cantidadEncuestas();
+            cantidadFamiliares();
+            cantidadAsociados();
+            cantidadAdherentes();
+            cantidadEmpleados();
+            cantidadEspacios();
+            cantidadNoticias();
+            cantidadInvitados();
+        } else if (user.Rol == 2 || user.Rol == 3) {
+            cantidadInvitadosSocio();
+            cantidadFamiliaresSocio();
+        }
     }, []);
+    
 
     return {
         contAdherentes, contAsociados, contEmpleados, contFamiliares, contEspacios, contInvitados, contSolicitudes,

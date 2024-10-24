@@ -19,6 +19,13 @@ import FamiliaresAdherentePage from '../pages/admin/familiares/FamiliaresAdheren
 import FamiliaresAsociadoPage from '../pages/admin/familiares/FamiliaresAsociadoPage';
 import InvitacionesPage from '../pages/admin/invitaciones/InvitacionesPage';
 import NoticiasPage from '../pages/admin/noticias/NoticiasPage';
+import PagarPage from '../pages/admin/pagos/pagar/PagarPage';
+import HistorialPagosCuotasPage from '../pages/admin/pagos/pagos/HistorialPagosCuotasPage';
+import HistorialPagosPage from '../pages/admin/pagos/pagos/HistorialPagosPage';
+import PagosPage from '../pages/admin/pagos/PagosPage';
+import ProgramacionPagosPage from '../pages/admin/pagos/programacion/ProgramacionPagosPage';
+import RubrosPage from '../pages/admin/pagos/RubrosPage';
+import SociosPage from '../pages/admin/pagos/usuarios/SociosPage';
 import ReservasPage from '../pages/admin/reservas/ReservasPage';
 import SolicitudesPage from '../pages/admin/solicitudes/SolicitudesPage';
 import DashboardPage from '../pages/dashboard/DashboardPage';
@@ -30,12 +37,14 @@ import RecuperacionPage from '../pages/reset/RecuperacionPage';
 import VerifyCodePage from '../pages/reset/VerifyCodePage';
 import FamiliaresPage from '../pages/socio/familiares/FamiliaresPage';
 import InvitadosPage from '../pages/socio/invitados/InvitadosPage';
+import CuotasBaileSocioPage from '../pages/socio/pagos/CuotasBaileSocioPage';
+import MensualidadesSocioPage from '../pages/socio/pagos/MensualidadesSocioPage';
 import AdministradoresPage from '../pages/superAdmin/administradores/AdministradoresPage';
 import ContratacionesPage from '../pages/superAdmin/contrataciones/ContratacionesPage';
 import HobbiesPage from '../pages/superAdmin/hobbies/HobbiesPage';
 import RolesPage from '../pages/superAdmin/roles/RolesPage';
 import AuthGuard from '../utilities/guards/AuthGuard';
-import { AdminGuard, SocioGuard, SuperadminGuard } from '../utilities/guards/RolGuard';
+import { AdminGuard, AdminSocioGuard, SocioGuard, SuperadminGuard } from '../utilities/guards/RolGuard';
 import { VerifyGuard } from '../utilities/guards/VerifyGuard';
 
 
@@ -79,10 +88,21 @@ const Rutas = () => {
                             <Route element={<PreguntasPage />} path={PrivateRoutes.PREGUNTAS} />
                             <Route element={<RespuestasPage />} path={PrivateRoutes.RESPUESTAS} />
                             <Route element={<DisponibilidadEspacioPage />} path={PrivateRoutes.DISPONIBILIDAD_ESPACIO} />
+                            <Route element={<PagosPage />} path={PrivateRoutes.PAGOS} />
+                            <Route element={<RubrosPage />} path={PrivateRoutes.RUBROS} />
+                            <Route element={<SociosPage />} path={PrivateRoutes.SOCIOS} />
+                            <Route element={<ProgramacionPagosPage />} path={PrivateRoutes.PROGRAMACION_PAGOS} />
+                            <Route element={<HistorialPagosPage />} path={PrivateRoutes.HISTORIAL_PAGOS} />
+                            <Route element={<HistorialPagosCuotasPage />} path={PrivateRoutes.HISTORIAL_PAGOS_CUOTAS} />
+                            <Route element={<PagarPage />} path={PrivateRoutes.PAGAR} />
                         </Route>
                         <Route element={<SocioGuard />}>
                             <Route element={<InvitadosPage />} path={PrivateRoutes.INVITADOS} />
                             <Route element={<FamiliaresPage />} path={PrivateRoutes.FAMILIARES} />
+                        </Route>
+                        <Route element={<AdminSocioGuard />}>
+                            <Route element={<MensualidadesSocioPage />} path={PrivateRoutes.PAGOS_SOCIOS} />
+                            <Route element={<CuotasBaileSocioPage />} path={PrivateRoutes.PAGOS_CUOTAS_BAILE} />
                         </Route>
                     </Route>
                     <Route element={<Page403 />} path={PrivateRoutes.PAGE403} />
