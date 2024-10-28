@@ -18,9 +18,9 @@ export default function MensualidadesSocioPage() {
     const rol = useSelector(state => state.credenciales.Rol);
     const documento = (rol === 2 || rol === 3) ? useSelector(state => state.user.Documento) : location.state.documento;
 
-    const { titulo, loading, listado, mensualidad, preferencia, openFactura, factura, user, openModal, busquedaAño,
+    const { titulo, loading, listado, mensualidad, preferencia, openFactura, factura, user, openModal, busquedaAño, touched,
         toggleModal, handleChange, cargar, pagoManual, crearPreferencia, toggleModalFactura, cargarFactura,
-        getMensualidadesUsuario, handleBusquedaAño } = useMensualidades();
+        getMensualidadesUsuario, handleBusquedaAño, handleChangeCheck, handleChangeImagen } = useMensualidades();
 
     const columns = MensualidadesColumn(cargar, cargarFactura);
 
@@ -40,12 +40,13 @@ export default function MensualidadesSocioPage() {
                 {
                     (rol === 2 || rol === 3) ?
                         <>
-                            <FormMensualidad mensualidad={mensualidad} loading={loading} getPago={crearPreferencia} />
+                            <FormMensualidad mensualidad={mensualidad} loading={loading} getPago={crearPreferencia}
+                                touched={touched} handleChange={handleChange} handleChangeCheck={handleChangeCheck} />
                             {preferencia && <Wallet initialization={{ preferenceId: preferencia }}
                                 customization={{ texts: { valueProp: 'smart_option' } }} />}
                         </> :
                         <FormPagar documento={documento} mensualidad={mensualidad} loading={loading} pagar={pagoManual}
-                            handleChange={handleChange} />
+                            handleChange={handleChange} handleChangeImagen={handleChangeImagen} touched={touched} handleChangeCheck={handleChangeCheck} />
                 }
             </ModalSencillo>
             <ModalSencillo size={'full'} openModal={openFactura} cerrarModal={toggleModalFactura}

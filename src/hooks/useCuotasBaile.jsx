@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PrivateRoutes } from "../models/RutasModel";
-import { createPreferencia, getCuotasUser, pagarCuota } from "../services/CuotasBaileService";
+import { createPreferencia, getCuotasUser, pagarCuota, updateValorCuotasUser } from "../services/CuotasBaileService";
 import { alertError, alertSucces, alertWarning } from "../utilities/alerts/Alertas";
 
-export default function useCuotasBaile() {
+export default function useCuotasBaile(consultarSocios) {
 
     const navigate = useNavigate();
     const titulo = 'Cuotas baile';
@@ -21,7 +21,11 @@ export default function useCuotasBaile() {
         cuotas_baile_id: "",
         valor: "",
         metodo_pago: "",
+        soporte: null,
+        referencia_pago: "",
     });
+    const [valorCuota, setValorCuota] = useState('');
+    const [editingCuotaBaile, setEditingCuotaBaile] = useState(null);
 
     /*=========== Recargar ==============================*/
 
@@ -33,6 +37,8 @@ export default function useCuotasBaile() {
             cuotas_baile_id: "",
             valor: "",
             metodo_pago: "",
+            soporte: null,
+            referencia_pago: "",
         });
     }
 
@@ -86,8 +92,13 @@ export default function useCuotasBaile() {
         })
     }
 
+    const handleChangeImagen = (event) => {
+        const file = event.target.files[0];
+        setPago({ ...pago, soporte: file });
+    };
+
     const pagoManual = async (documento) => {
-        if (!pago.metodo_pago || !pago.valor) {
+        if (!pago.metodo_pago || !pago.valor || !pago.referencia_pago || !pago.soporte) {
             alertWarning("Debe llenar todos los campos");
             return;
         }
@@ -97,7 +108,13 @@ export default function useCuotasBaile() {
         }
         setLoading(true);
         try {
-            const response = await pagarCuota(pago);
+            const formData = new FormData();
+            formData.append("soporte", pago.soporte);
+            formData.append("referencia_pago", pago.referencia_pago);
+            formData.append("metodo_pago", pago.metodo_pago);
+            formData.append("valor", pago.valor);
+            formData.append("cuotas_baile_id", pago.cuotas_baile_id);
+            const response = await pagarCuota(formData);
             if (response.status) {
                 setOpenModal(false);
                 await getCuotasBaile(documento);
@@ -149,6 +166,38 @@ export default function useCuotasBaile() {
         setFactura(factura);
     }
 
+    /*=========== Editar valor mensualidad =======================*/
+
+    const handleEditCuotaBaile = (row) => {
+        setEditingCuotaBaile(row.documento);
+        setValorCuota(row.cuota_baile);
+    };
+
+    const handleSaveCuotaBaile = async (documento) => {
+        console.log(documento, valorCuota);
+        setLoading(true);
+        try {
+            const response = await updateValorCuotasUser(documento, valorCuota);
+            console.log(response);
+            if (response.status) {
+                alertSucces(response.message);
+                await consultarSocios();
+                setEditingCuotaBaile(null);
+            } else {
+                alertWarning(response.message);
+                setEditingCuotaBaile(null);
+            }
+        } catch (error) {
+            alertError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleCancelCuotaBaile = () => {
+        setEditingCuotaBaile(null);
+    };
+
     return {
         titulo,
         loading,
@@ -160,15 +209,22 @@ export default function useCuotasBaile() {
         preferencia,
         openFactura,
         factura,
+        valorCuota,
+        editingCuotaBaile,
         handleBusqueda,
         toggleModal,
         getCuotasBaile,
         goCuotasBaile,
         cargar,
         handleChange,
+        handleChangeImagen,
         pagoManual,
         crearPreferencia,
         toggleModalFactura,
         cargarFactura,
+        handleEditCuotaBaile,
+        handleSaveCuotaBaile,
+        handleCancelCuotaBaile,
+        setValorCuota,
     }
 }

@@ -18,3 +18,8 @@ export async function getCuotasUser(documento) {
     const res = await axios.get(URL + "/" + documento);
     return res.data;
 }
+
+export async function updateValorCuotasUser(documento, valor) {
+    const res = await axios.put(URL + "/valor", { documento, valor });
+    return res.data;
+}

@@ -1,12 +1,12 @@
 import { Button, Label, Select, TextInput } from 'flowbite-react'
 import React from 'react'
-import { FaCalendarAlt, FaCreditCard, FaDollarSign, FaKey } from 'react-icons/fa'
+import { FaCalendarAlt, FaCreditCard, FaDollarSign, FaKey, FaMoneyBill } from 'react-icons/fa'
 import { AportesCuotasColumn } from '../../../../models/columns/AportesCuotasColumn'
 import { formatearMoneda } from '../../../../models/FormateadorModel'
 import DataTableComponent from '../../../../utilities/dataTable/DataTableComponent'
 import Spinner from '../../../../utilities/spinner/Spinner'
 
-export default function FormPagoCuota({ cuota, handleChange, pagar, documento, loading }) {
+export default function FormPagoCuota({ cuota, handleChange, pagar, documento, loading, handleChangeImagen }) {
 
     const columns = AportesCuotasColumn();
 
@@ -38,33 +38,52 @@ export default function FormPagoCuota({ cuota, handleChange, pagar, documento, l
                     <TextInput id="restante" type="text" icon={FaDollarSign} value={formatearMoneda(cuota.restante)} disabled />
                 </div>
             </div>
-            <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4 sm:mt-5">
-                <div className="w-full">
-                    <div className="mb-2 block">
-                        <span className='font-medium text-sm'>Abonos</span>
+            {
+                cuota.pago.length > 0 &&
+                <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4 sm:mt-5">
+                    <div className="w-full">
+                        <div className="mb-2 block">
+                            <span className='font-medium text-sm'>Abonos</span>
+                        </div>
+                        <DataTableComponent columns={columns} data={cuota.pago} />
                     </div>
-                    <DataTableComponent columns={columns} data={cuota.pago} />
                 </div>
-            </div>
-            <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4 sm:mt-3 border p-4 rounded-lg">
-                <div className="w-full">
-                    <div className="mb-2 block">
-                        <Label htmlFor="tipo" value="Metodo de pago" />
+            }
+            <div className='border p-4 rounded-lg mt-3'>
+                <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4">
+                    <div className="w-full">
+                        <div className="mb-2 block">
+                            <Label htmlFor="tipo" value="Metodo de pago" />
+                        </div>
+                        <Select id="tipo" type="text" icon={FaCreditCard} onChange={handleChange} name='metodo_pago'
+                            defaultValue={"Escoja una Opción..."}>
+                            <option disabled>Escoja una Opción...</option>
+                            <option value="Efectivo">Efectivo</option>
+                            <option value="Tarjeta de Credito">Tarjeta de Credito</option>
+                            <option value="Transferencia">Transferencia</option>
+                        </Select>
                     </div>
-                    <Select id="tipo" type="text" icon={FaCreditCard} onChange={handleChange} name='metodo_pago'
-                        defaultValue={"Escoja una Opción..."}>
-                        <option disabled>Escoja una Opción...</option>
-                        <option value="Efectivo">Efectivo</option>
-                        <option value="Tarjeta de Credito">Tarjeta de Credito</option>
-                        <option value="Transferencia">Transferencia</option>
-                    </Select>
+                    <div className="w-full">
+                        <div className="mb-2 block">
+                            <Label htmlFor="monto" value="Monto a pagar" />
+                        </div>
+                        <TextInput id="monto" type="number" icon={FaDollarSign} name='valor' onChange={handleChange}
+                            placeholder='Ingrese el monto...' />
+                    </div>
                 </div>
-                <div className="w-full">
-                    <div className="mb-2 block">
-                        <Label htmlFor="monto" value="Monto a pagar" />
+                <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4 mt-5">
+                    <div className="w-full">
+                        <div className="mb-2 block">
+                            <Label htmlFor="referencia" value="Referencia de pago" />
+                        </div>
+                        <TextInput id="referencia" type="text" icon={FaMoneyBill} onChange={handleChange} name='referencia_pago'
+                            placeholder='Referencia de pago' />
                     </div>
-                    <TextInput id="monto" type="number" icon={FaDollarSign} name='valor' onChange={handleChange}
-                        placeholder='Ingrese el monto...' />
+                    <div className="w-full">
+                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="file_input">Soporte de pago</label>
+                        <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input"
+                            type="file" name='soporte' onChange={handleChangeImagen} />
+                    </div>
                 </div>
             </div>
             <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4 mt-5">

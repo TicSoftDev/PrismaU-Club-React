@@ -1,7 +1,8 @@
 import React from 'react';
-import CardsSocios from '../../../../components/admin/pagos/CardsSocios';
 import MenuSencillo from '../../../../components/layouts/menu/MenuSencillo';
+import useCuotasBaile from '../../../../hooks/useCuotasBaile';
 import useMensualidades from '../../../../hooks/useMensualidades';
+import useUsuario from '../../../../hooks/useUsuario';
 import { SociosColumn } from '../../../../models/columns/SociosColumn';
 import DataTableComponent from '../../../../utilities/dataTable/DataTableComponent';
 import TituloPage from '../../../../utilities/helpers/TituloPage';
@@ -9,20 +10,23 @@ import TituloPage from '../../../../utilities/helpers/TituloPage';
 export default function SociosPage() {
 
     const tituloSocios = 'Administración de socios';
-    const { lista, busqueda, touched, loading, handleBusqueda, getSocios } = useMensualidades();
-    const columns = SociosColumn();
+    const { lista, busqueda, loading, handleChangeBusqueda, consultarSocios } = useUsuario();
+    const { valorMensualidad, editingMensualidad, loading: loadingMensualidad, handleEditMensualidad, handleSaveMensualidad,
+        handleCancelMensualidad, setValorMensualidad } = useMensualidades(consultarSocios);
+    const { valorCuota, editingCuotaBaile, loading: loadingCuotaBaile, handleEditCuotaBaile, handleSaveCuotaBaile,
+        handleCancelCuotaBaile, setValorCuota } = useCuotasBaile(consultarSocios);
+    const columns = SociosColumn({
+        editingMensualidad, valorMensualidad, loadingMensualidad, handleEditMensualidad, handleSaveMensualidad,
+        handleCancelMensualidad, setValorMensualidad,
+        editingCuotaBaile, valorCuota, loadingCuotaBaile, handleEditCuotaBaile, handleSaveCuotaBaile,
+        handleCancelCuotaBaile, setValorCuota
+    });
 
     return (
         <>
             <TituloPage titulo={tituloSocios} />
-            <CardsSocios consultar={getSocios} />
-            {
-                touched &&
-                <div className="mt-7">
-                    <MenuSencillo noCrear={true} busqueda={busqueda} handleBusqueda={handleBusqueda} />
-                    <DataTableComponent columns={columns} data={lista} loading={loading} />
-                </div>
-            }
+            <MenuSencillo noCrear={true} busqueda={busqueda} handleBusqueda={handleChangeBusqueda} />
+            <DataTableComponent columns={columns} data={lista} loading={loading} />
         </>
     )
 }

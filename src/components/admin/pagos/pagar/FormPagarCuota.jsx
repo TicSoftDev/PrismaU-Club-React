@@ -37,7 +37,7 @@ export default function FormPagarCuota({ cuota, handleChange, pagar, loading }) 
                     <div className="mb-2 block">
                         <span className='font-medium text-sm'>Abonos</span>
                     </div>
-                    <DataTableComponent columns={columns} data={formatearMoneda(cuota.pago)} />
+                    <DataTableComponent columns={columns} data={cuota.pago} />
                 </div>
             </div>
             <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4 sm:mt-3 border p-4 rounded-lg">

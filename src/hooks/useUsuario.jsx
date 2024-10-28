@@ -1,43 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { changePassword, getByDocumento } from "../services/usuariosService";
-import { alertError, alertSucces, alertWarning } from "../utilities/alerts/Alertas";
+import { changePassword, getByDocumento, getSocios, } from "../services/usuariosService";
+import { alertError, alertSucces, alertWarning, } from "../utilities/alerts/Alertas";
 
 function useUsuario() {
-
     const titulo = "Busqueda de usuarios";
     const id = useSelector((state) => state.credenciales.id);
-    const [busqueda, setBusqueda] = useState('');
+    const [busqueda, setBusqueda] = useState("");
     const [loading, setLoading] = useState(false);
     const [userData, setUserData] = useState(null);
+    const [socios, setSocios] = useState([]);
     const [usuario, setUsuario] = useState({
         Documento: "",
-        password: ""
-    })
+        password: "",
+    });
 
+    /*=========== Recargar ==============================*/
     const recargar = () => {
         setUsuario({
             Documento: "",
-            password: ""
+            password: "",
         });
         setUserData(null);
-        setBusqueda('');
+        setBusqueda("");
     };
 
-    const handleChange = ({ target }) => {
-        setUsuario({
-            ...usuario,
-            [target.name]: target.value
-        });
-    };
+    /*=========== Buscador usuario ==============================*/
 
-    const handleChangeBusqueda = ({ target }) => {
+    const handleChangeBusqueda = ({ target }) => {    
         setBusqueda(target.value);
-    }
+    };
 
     const buscarUsuario = async () => {
         if (!busqueda) {
-            return alertWarning('Se debe ingresar un valor');
+            return alertWarning("Se debe ingresar un valor");
         }
         try {
             setLoading(true);
@@ -52,24 +48,91 @@ function useUsuario() {
             setLoading(false);
             alertError("Busqueda: ", error.message);
         }
-    }
+    };
+
+    /*=========== Cambiar Clave ==============================*/
+
+    const handleChange = ({ target }) => {
+        setUsuario({
+            ...usuario,
+            [target.name]: target.value,
+        });
+    };
 
     const cambiarClave = async () => {
         try {
             const resultado = await changePassword(id, usuario);
-            console.log(resultado)
+            console.log(resultado);
             if (resultado.message === "hecho") {
                 alertSucces("Contraseña actualizada correctamente");
                 recargar();
             }
-
         } catch (error) {
             alertError("Algo salio mal");
         }
-    }
+    };
+
+    /*=========== Consultar socios ==============================*/
+
+    const consultarSocios = async () => {
+        setLoading(true);
+        try {
+            const data = await getSocios();
+            setSocios(data);
+        } catch (e) {
+            console.log("Socios", e.message);
+        }
+        setLoading(false);
+    };
+
+    useEffect(() => {
+        consultarSocios();
+    }, []);
+
+    /*=========== Consultar socios ==============================*/
+
+    const normalizeText = (text) => {
+        if (typeof text !== 'string') {
+            return '';
+        }
+        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    };
+
+    const filterBusqueda = (listado, busqueda) => {
+        if (!busqueda) return listado;
+
+        const busquedaNormalizada = normalizeText(busqueda);
+        const palabrasBusqueda = busquedaNormalizada.split(/\s+/);
+
+        return listado.filter((dato) => {
+            const nombreNormalizado = normalizeText(
+                `${dato.nombre} ${dato.apellidos}`
+            );
+            const documentoNormalizado = normalizeText(dato.documento);
+            const cumpleBusqueda = palabrasBusqueda.every(
+                (palabra) =>
+                    nombreNormalizado.includes(palabra) ||
+                    documentoNormalizado.includes(palabra)
+            );
+            return cumpleBusqueda;
+        });
+    };
+
+    const lista = filterBusqueda(socios, busqueda);
 
     return {
-        titulo, usuario, userData, busqueda, loading, handleChange, handleChangeBusqueda, buscarUsuario, cambiarClave, recargar
+        titulo,
+        usuario,
+        userData,
+        busqueda,
+        loading,
+        lista,
+        handleChange,
+        handleChangeBusqueda,
+        buscarUsuario,
+        cambiarClave,
+        recargar,
+        consultarSocios
     };
 }
 

@@ -44,6 +44,14 @@ export const MensualidadesColumn = (cargar, cargarFactura) => {
             selector: row => formatearMoneda(row.valor),
         },
         {
+            name: "Total abonos",
+            selector: row => formatearMoneda(row.total_pagos),
+        },
+        {
+            name: "Restante",
+            selector: row => formatearMoneda(row.restante),
+        },
+        {
             name: "Estado",
             selector: row => row.estado === 1 ?
                 <span className="bg-green-100 text-green-800 text-md font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">Pagado</span> :

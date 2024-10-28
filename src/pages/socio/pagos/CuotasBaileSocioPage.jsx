@@ -20,7 +20,7 @@ export default function CuotasBaileSocioPage() {
 
     const { titulo, loading, listado, busqueda, openModal, user, cuota, preferencia, openFactura, factura,
         getCuotasBaile, toggleModal, cargar, handleChange, pagoManual, crearPreferencia, cargarFactura,
-        toggleModalFactura, handleBusqueda } = useCuotasBaile();
+        toggleModalFactura, handleBusqueda, handleChangeImagen } = useCuotasBaile();
 
     const columns = CuotasBaileColumn({ cargar, cargarFactura });
 
@@ -48,7 +48,7 @@ export default function CuotasBaileSocioPage() {
                             }
                         </> :
                         <FormPagoCuota cuota={cuota} documento={documento} loading={loading} pagar={pagoManual}
-                            handleChange={handleChange} />
+                            handleChange={handleChange} handleChangeImagen={handleChangeImagen} />
                 }
             </ModalSencillo>
             <ModalSencillo size={'full'} openModal={openFactura} cerrarModal={toggleModalFactura}

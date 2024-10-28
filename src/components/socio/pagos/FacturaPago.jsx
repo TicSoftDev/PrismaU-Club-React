@@ -14,9 +14,10 @@ import {
 } from "react-icons/hi";
 import imagen from '../../../assets/img/imagen';
 import { formatearMoneda } from '../../../models/FormateadorModel';
+import { RouteBack } from '../../../models/RutasModel';
 
 export default function FacturaPago({ pago, user }) {
-
+    console.log(pago)
     const zonaHoraria = 'America/Bogota';
     const zoneDate = toZonedTime(pago.updated_at, zonaHoraria);
     const fecha = format(zoneDate, 'dd MMM yyyy', { locale: es }).toUpperCase();
@@ -171,13 +172,17 @@ export default function FacturaPago({ pago, user }) {
                                         <Table.HeadCell className="bg-gray-200 text-right">Valor</Table.HeadCell>
                                     </Table.Head>
                                     <Table.Body>
-                                        <Table.Row>
-                                            <Table.Cell>{pago.id}</Table.Cell>
-                                            <Table.Cell>PAGO FACTURA {month}</Table.Cell>
-                                            <Table.Cell>{pago.pago.metodo_pago}</Table.Cell>
-                                            <Table.Cell>{pago.pago.referencia_pago}</Table.Cell>
-                                            <Table.Cell className="text-right">{formatearMoneda(pago.pago.monto)}</Table.Cell>
-                                        </Table.Row>
+                                        {
+                                            pago.pago.map((pago) => (
+                                                <Table.Row key={pago.id}>
+                                                    <Table.Cell>{pago.id}</Table.Cell>
+                                                    <Table.Cell>PAGO FACTURA {month}</Table.Cell>
+                                                    <Table.Cell>{pago.metodo_pago}</Table.Cell>
+                                                    <Table.Cell>{pago.referencia_pago}</Table.Cell>
+                                                    <Table.Cell className="text-right">{formatearMoneda(pago.monto)}</Table.Cell>
+                                                </Table.Row>
+                                            ))
+                                        }
                                     </Table.Body>
                                 </Table>
                             </div>
@@ -201,10 +206,21 @@ export default function FacturaPago({ pago, user }) {
                             <div className="flex justify-between items-center pt-2">
                                 <span className="text-lg font-semibold">Total</span>
                                 <span className="text-md sm:text-2xl font-bold text-green-600">
-                                    {formatearMoneda(pago.pago.monto)}
+                                    {formatearMoneda(pago.valor)}
                                 </span>
                             </div>
                         </div>
+                    </Card>
+
+                    <Card>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                            Soporte
+                        </h3>
+                        {
+                            pago.pago.map((pago) => (
+                                <img src={RouteBack + pago.soporte} alt="soporte" key={pago.id} />
+                            ))
+                        }
                     </Card>
 
                 </div>

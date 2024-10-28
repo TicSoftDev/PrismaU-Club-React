@@ -15,6 +15,7 @@ import {
 } from "react-icons/hi";
 import imagen from "../../../assets/img/imagen";
 import { formatearMoneda } from "../../../models/FormateadorModel";
+import { RouteBack } from "../../../models/RutasModel";
 
 export default function FacturaPagoCuotas({ pago, user }) {
     const zonaHoraria = "America/Bogota";
@@ -258,6 +259,17 @@ export default function FacturaPagoCuotas({ pago, user }) {
                                 );
                             })}
                         </Timeline>
+                    </Card>
+
+                    <Card>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                            Soporte
+                        </h3>
+                        {
+                            pago.pago.map((pago) => (
+                                <img src={RouteBack + pago.soporte} alt="soporte" key={pago.id} />
+                            ))
+                        }
                     </Card>
                 </div>
             </div>

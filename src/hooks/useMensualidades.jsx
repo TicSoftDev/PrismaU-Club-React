@@ -1,13 +1,11 @@
+import { toZonedTime } from 'date-fns-tz';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PrivateRoutes } from '../models/RutasModel';
-import { getAdherentes } from '../services/AdherentesService';
-import { getAsociados } from '../services/AsociadosService';
-import { createPreferencia, getMensualidadesUser, pagarManual } from '../services/MensualidadService';
+import { createPreferencia, getMensualidadesUser, pagarManual, updateValorMensualidadesUser } from '../services/MensualidadService';
 import { alertError, alertSucces, alertWarning } from '../utilities/alerts/Alertas';
-import { toZonedTime } from 'date-fns-tz';
 
-export default function useMensualidades() {
+export default function useMensualidades(consultarSocios) {
 
     const navigate = useNavigate();
     const titulo = "Mensualidades";
@@ -20,15 +18,16 @@ export default function useMensualidades() {
     const [preferencia, setPreferencia] = useState(null);
     const [mensualidades, setMensualidades] = useState([]);
     const [busquedaAño, setBusquedaAño] = useState(new Date().getFullYear().toString());
+    const [touched, setTouched] = useState(false);
     const [user, setUser] = useState({});
     const [pago, setPago] = useState({
         mensualidad_id: null,
         metodo_pago: null,
+        soporte: null,
+        referencia_pago: null,
     });
-
-    const [touched, setTouched] = useState(false);
-    const [busqueda, setBusqueda] = useState('');
-    const [socios, setSocios] = useState([]);
+    const [valorMensualidad, setValorMensualidad] = useState('');
+    const [editingMensualidad, setEditingMensualidad] = useState(null);
 
     /*=========== Recargar ==============================*/
 
@@ -38,7 +37,6 @@ export default function useMensualidades() {
         setPreferencia(null);
         setMensualidad(null);
         setFactura(null);
-        setBusqueda('');
         setTouched(false);
         setOpenFactura(false);
     }
@@ -59,12 +57,13 @@ export default function useMensualidades() {
     const cargar = (mensualidad) => {
         setMensualidad(mensualidad);
         setOpenModal(true);
+        setPago({ metodo_pago: null, valor: null, mensualidad_id: mensualidad.id });
     }
 
     const crearPreferencia = async () => {
         setLoading(true);
         try {
-            const response = await createPreferencia(mensualidad.id);
+            const response = await createPreferencia(pago);
             if (response) {
                 setOpenModal(true);
                 setPreferencia(response);
@@ -77,6 +76,11 @@ export default function useMensualidades() {
 
     /*=========== Pagar manual ==============================*/
 
+    const handleChangeCheck = () => {
+        setTouched(!touched);
+        pago.valor = null;
+    }
+
     const handleChange = ({ target }) => {
         setPago({
             ...pago,
@@ -85,14 +89,40 @@ export default function useMensualidades() {
         })
     }
 
+    const handleChangeImagen = (event) => {
+        const file = event.target.files[0];
+        setPago({ ...pago, soporte: file });
+    };
+
     const pagoManual = async (documento) => {
-        if (!pago.metodo_pago) {
+        if (!pago.metodo_pago || !pago.soporte || !pago.referencia_pago) {
             alertWarning("Debe llenar todos los campos");
+            return;
+        }
+        if (mensualidad.total_pagos != 0 && !pago.valor) {
+            alertWarning("Debe ingresar un valor");
+            return;
+        }
+        if (touched && pago.valor < mensualidad.restante) {
+            alertWarning("El valor no puede ser menor al restante");
             return;
         }
         setLoading(true);
         try {
-            const response = await pagarManual(pago);
+            const formData = new FormData();
+            formData.append('mensualidad_id', pago.mensualidad_id);
+            formData.append('metodo_pago', pago.metodo_pago);
+            formData.append('referencia_pago', pago.referencia_pago);
+            const valor = pago.valor !== null ? parseFloat(pago.valor) : null;
+            if (valor !== null) {
+                formData.append('valor', valor);
+            }
+            if (pago.soporte) {
+                formData.append('soporte', pago.soporte);
+            }
+            const response = await pagarManual(formData);
+            console.log(response);
+
             if (response.status) {
                 setOpenModal(false);
                 await getMensualidadesUsuario(documento);
@@ -151,52 +181,35 @@ export default function useMensualidades() {
         setFactura(factura);
     }
 
-    /*=========== Consultar socios ==============================*/
+    /*=========== Editar valor mensualidad ==============================*/
 
-    const getSocios = async (rol) => {
-        setTouched(true);
+    const handleEditMensualidad = (row) => {
+        setEditingMensualidad(row.documento);
+        setValorMensualidad(row.mensualidad);
+    };
+
+    const handleSaveMensualidad = async (documento) => {
         setLoading(true);
         try {
-            let data;
-            if (rol === 2) {
-                data = await getAsociados();
-            } else if (rol === 3) {
-                data = await getAdherentes();
+            const response = await updateValorMensualidadesUser(documento, valorMensualidad);
+            if (response.status) {
+                alertSucces(response.message);
+                await consultarSocios();
+                setEditingMensualidad(null);
+            } else {
+                alertWarning(response.message);
+                setEditingMensualidad(null);
             }
-            setSocios(data);
-        } catch (e) {
-            console.log("Socios", e.message);
+        } catch (error) {
+            alertError(error.message);
+        } finally {
+            setLoading(false);
         }
-        setLoading(false);
     };
 
-    /*=========== Consultar socios ==============================*/
-
-    const handleBusqueda = ({ target }) => {
-        setBusqueda(target.value);
+    const handleCancelMensualidad = () => {
+        setEditingMensualidad(null);
     };
-
-    const normalizeText = (text) => {
-        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-    };
-
-    const filterBusqueda = (listado, busqueda) => {
-        if (!busqueda) return listado;
-
-        const busquedaNormalizada = normalizeText(busqueda);
-        const palabrasBusqueda = busquedaNormalizada.split(/\s+/);
-
-        return listado.filter((dato) => {
-            const nombreNormalizado = normalizeText(`${dato.Nombre} ${dato.Apellidos}`);
-            const documentoNormalizado = normalizeText(dato.Documento);
-            const cumpleBusqueda = palabrasBusqueda.every(palabra =>
-                nombreNormalizado.includes(palabra) || documentoNormalizado.includes(palabra)
-            );
-            return cumpleBusqueda;
-        });
-    };
-
-    const lista = filterBusqueda(socios, busqueda);
 
     return {
         titulo,
@@ -209,7 +222,11 @@ export default function useMensualidades() {
         mensualidad,
         openFactura,
         factura,
+        touched,
         busquedaAño,
+        valorMensualidad,
+        editingMensualidad,
+        handleChangeImagen,
         getMensualidadesUsuario,
         toggleModal,
         cargar,
@@ -220,13 +237,11 @@ export default function useMensualidades() {
         cargarFactura,
         goMensualidades,
         handleBusquedaAño,
-
-        touched,
-        handleBusqueda,
-        normalizeText,
-        filterBusqueda,
-        lista,
-        getSocios
+        handleChangeCheck,
+        handleEditMensualidad,
+        handleSaveMensualidad,
+        handleCancelMensualidad,
+        setValorMensualidad,
     }
 
 }
