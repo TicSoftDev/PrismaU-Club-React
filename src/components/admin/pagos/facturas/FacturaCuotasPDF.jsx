@@ -7,7 +7,7 @@ import { styles } from '../../../../assets/styles/factura';
 import { formatearMoneda } from '../../../../models/FormateadorModel';
 
 export default function FacturaCuotasPDF({ pago, user }) {
-console.log(pago)
+
     const zonaHoraria = "America/Bogota";
     const zoneDate = toZonedTime(pago.updated_at, zonaHoraria);
     const fecha = format(zoneDate, "dd MMMM yyyy", { locale: es });

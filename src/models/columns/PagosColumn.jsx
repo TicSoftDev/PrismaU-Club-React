@@ -14,7 +14,7 @@ export const PagosColumn = () => {
             width: '320px',
         },
         {
-            name: "Perido",
+            name: "Periodo",
             selector: row => {
                 const zonedDate = toZonedTime(row.mensualidad.fecha, zonaHoraria);
                 const month = format(zonedDate, 'MMMM yyyy', { locale: es });
