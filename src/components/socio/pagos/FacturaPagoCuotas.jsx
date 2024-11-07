@@ -1,26 +1,27 @@
+import { pdf } from "@react-pdf/renderer";
 import { format } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
 import { es } from "date-fns/locale";
 import { Badge, Button, Card, Table, Timeline } from "flowbite-react";
 import React from "react";
 import {
-    HiOutlineClock,
-    HiOutlineDocumentText,
-    HiOutlineDownload,
-    HiOutlineGlobe,
-    HiOutlineLocationMarker,
-    HiOutlineMail,
-    HiOutlinePhone,
-    HiOutlinePrinter,
+    HiOutlineClock, HiOutlineDocumentText, HiOutlineDownload, HiOutlineGlobe, HiOutlineLocationMarker, HiOutlineMail, HiOutlinePhone
 } from "react-icons/hi";
 import imagen from "../../../assets/img/imagen";
 import { formatearMoneda } from "../../../models/FormateadorModel";
 import { RouteBack } from "../../../models/RutasModel";
+import FacturaCuotasPDF from "../../admin/pagos/facturas/FacturaCuotasPDF";
 
 export default function FacturaPagoCuotas({ pago, user }) {
     const zonaHoraria = "America/Bogota";
     const zoneDate = toZonedTime(pago.updated_at, zonaHoraria);
     const fecha = format(zoneDate, "dd MMMM yyyy", { locale: es });
+
+    const handleOpenPdfInNewTab = async () => {
+        const blob = await pdf(<FacturaCuotasPDF pago={pago} user={user} />).toBlob();
+        const pdfUrl = URL.createObjectURL(blob);
+        window.open(pdfUrl, "_blank");
+    };
 
     return (
         <div className="min-h-screen">
@@ -36,11 +37,7 @@ export default function FacturaPagoCuotas({ pago, user }) {
                         </div>
                     </div>
                     <div className="flex flex-col sm:flex-row items-center space-x-2">
-                        <Button size="sm" color="gray" pill>
-                            <HiOutlinePrinter className="w-4 h-4 mr-2" />
-                            Imprimir
-                        </Button>
-                        <Button size="sm" color="gray" pill>
+                        <Button size="sm" color="gray" pill onClick={handleOpenPdfInNewTab}>
                             <HiOutlineDownload className="w-4 h-4 mr-2" />
                             Descargar
                         </Button>

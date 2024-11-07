@@ -41,10 +41,10 @@ function FormLogin({ loading, usuario, handleChange, handleSubmit, visible, togg
                     <Link to={PublicRoutes.RECUPERAR} className="text-gray-500 font-medium hover:underline dark:text-gray-50">
                         Olvidé mi contraseña.
                     </Link>
-                    <Link to="https://archivos.prismau.co/PrismaU.apk" target='_blank' className="flex items-center justify-center border-2 border-green-500 p-1 w-40 mt-6 text-base text-green-500 font-medium hover:bg-green-500 hover:text-gray-50 dark:text-gray-50">
+                    {/* <Link to="https://archivos.prismau.co/PrismaU.apk" target='_blank' className="flex items-center justify-center border-2 border-green-500 p-1 w-40 mt-6 text-base text-green-500 font-medium hover:bg-green-500 hover:text-gray-50 dark:text-gray-50">
                         <DiAndroid size={20} className='me-1' />
                         Descargar app
-                    </Link>
+                    </Link> */}
                 </div>
             </form>
         </div>
