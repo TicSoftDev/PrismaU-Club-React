@@ -10,6 +10,7 @@ import useAsociados from '../../../hooks/useAsociados';
 import Container from '../../../utilities/helpers/Container';
 import TituloPage from '../../../utilities/helpers/TituloPage';
 import VentanaModal from '../../../utilities/modals/VentanaModal';
+import useUsuario from '../../../hooks/useUsuario';
 
 function AdherentesPage() {
 
@@ -20,6 +21,7 @@ function AdherentesPage() {
         cambiarAsociado, toggleModal, handleChange, handleSubmit, handleBusqueda, handleUpdate, handleChangeImagen,
         cargarAdherente, eliminarAdherente, toggleModalImage, cargarImagen, handleUpdateImage, setEstadoFiltro
     } = useAdherente();
+    const { resetearPassword } = useUsuario();
     const handler = adherente.id ? handleUpdate : handleSubmit;
     const { lista: socio } = useAsociados();
 
@@ -30,7 +32,7 @@ function AdherentesPage() {
                 <MenuAsociados data={lista} busqueda={busqueda} titulo={titulo} handleBusqueda={handleBusqueda}
                     toggleModal={toggleModal} filtro={setEstadoFiltro} />
                 <DataTableAdherente cargarAdherente={cargarAdherente} usuarios={lista} eliminar={eliminarAdherente} loading={loading}
-                    change={cambiarEstado} cambiar={cambiarAsociado} cargar={cargarImagen} rol={rol} />
+                    change={cambiarEstado} cambiar={cambiarAsociado} cargar={cargarImagen} rol={rol} reset={resetearPassword} />
                 {/* Ventana para agregar y editar */}
                 <VentanaModal size={'7xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal}
                     hanleSubmit={handler} loading={loading}>

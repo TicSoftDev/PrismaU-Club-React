@@ -1,12 +1,12 @@
 import { Button } from 'flowbite-react';
 import React from 'react';
 import DataTable from 'react-data-table-component';
-import { FaEdit, FaRegImages, FaTrash, FaUserCog, FaUserPlus, FaUserSlash } from 'react-icons/fa';
+import { FaEdit, FaLock, FaRegImages, FaTrash, FaUserCog, FaUserPlus, FaUserSlash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { PrivateRoutes, RouteBack } from '../../../models/RutasModel';
 import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 
-function DataTableAdherente({ usuarios, rol, cargarAdherente, eliminar, loading, change, cambiar, cargar }) {
+function DataTableAdherente({ usuarios, rol, cargarAdherente, eliminar, loading, change, cambiar, cargar, reset }) {
 
     const navigate = useNavigate();
     const columns = [
@@ -20,6 +20,7 @@ function DataTableAdherente({ usuarios, rol, cargarAdherente, eliminar, loading,
                     <Button onClick={() => change(row.id)} className='rounded-full w-9 bg-yellow-400 text-white' title='Cambiar estado'> <FaUserSlash />  </Button>
                     <Button onClick={() => cambiar(row.user_id)} className='rounded-full w-9 bg-purple-600 text-white' title='Hacer Asociado'> <FaUserCog /> </Button>
                     <Button onClick={() => cargar(row.id)} className='rounded-full w-9 bg-fuchsia-600 text-white' title='Cambiar Imagen'> <FaRegImages />  </Button>
+                    <Button onClick={() => reset(row.user_id)} className='rounded-full w-9 bg-red-600 text-white' title='Resetear Contraseña'> <FaLock />  </Button>
                 </div>
             ),
             width: '280px'
