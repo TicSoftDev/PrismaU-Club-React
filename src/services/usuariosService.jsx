@@ -13,6 +13,11 @@ export async function changePassword(id, usuario) {
     return res.data;
 };
 
+export async function resetPassword(id) {
+    const res = await axios.put(URL_USUARIO + "/reset-password/" + id);
+    return res.data;
+};
+
 export async function getByDocumento(documento) {
     try {
         const res = await axios.get(URL_USUARIO + "/" + documento);

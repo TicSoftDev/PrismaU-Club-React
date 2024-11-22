@@ -1,12 +1,12 @@
 import { Button } from 'flowbite-react';
 import React from 'react';
 import DataTable from 'react-data-table-component';
-import { FaEdit, FaRegImages, FaTrash, FaUserPlus, FaUserSlash } from 'react-icons/fa';
+import { FaEdit, FaLock, FaRegImages, FaTrash, FaUserPlus, FaUserSlash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { PrivateRoutes, RouteBack } from '../../../models/RutasModel';
 import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 
-function DataTableAsociado({ usuarios, rol, cargarAsociado, eliminar, loading, change, cargar }) {
+function DataTableAsociado({ usuarios, rol, cargarAsociado, eliminar, loading, change, cargar, reset }) {
 
     const navigate = useNavigate();
 
@@ -20,6 +20,7 @@ function DataTableAsociado({ usuarios, rol, cargarAsociado, eliminar, loading, c
                     <Button onClick={() => navigate(PrivateRoutes.FAMILIARESASOCIADO, { state: { id: row.id, codigo: row.Codigo, estado: row.Estado } })} className='rounded-full w-9 bg-pink-600 text-white' title='Familiares'> <FaUserPlus /> </Button>
                     <Button onClick={() => change(row.id)} className='rounded-full w-9 bg-yellow-400 text-white' title="Cambiar estado"> <FaUserSlash />  </Button>
                     <Button onClick={() => cargar(row.id)} className='rounded-full w-9 bg-fuchsia-600 text-white' title='Cambiar Imagen'> <FaRegImages />  </Button>
+                    <Button onClick={() => reset(row.user_id)} className='rounded-full w-9 bg-red-600 text-white' title='Resetear Contraseña'> <FaLock />  </Button>
                 </div>
             ),
             width: '270px'

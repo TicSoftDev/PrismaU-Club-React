@@ -33,10 +33,6 @@ export const styles = StyleSheet.create({
         marginTop: 8,
         marginBottom: 15,
     },
-    tableRow: {
-        flexDirection: 'row',
-        paddingVertical: 4,
-    },
     tableCell: {
         fontSize: 10,
         paddingHorizontal: 4,
@@ -73,8 +69,8 @@ export const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderColor: '#d3d3d3',
     },
-    col1: { flex: 1 },       
-    col2: { flex: 3 },       
-    col3: { flex: 2 },     
+    col1: { flex: 1 },
+    col2: { flex: 3 },
+    col3: { flex: 2 },
     colFull: { flex: 5 },
 });

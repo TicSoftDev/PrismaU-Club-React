@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { changePassword, getByDocumento, getSocios, } from "../services/usuariosService";
+import Swal from "sweetalert2";
+import { changePassword, getByDocumento, getSocios, resetPassword, } from "../services/usuariosService";
 import { alertError, alertSucces, alertWarning, } from "../utilities/alerts/Alertas";
 
 function useUsuario() {
@@ -27,7 +28,7 @@ function useUsuario() {
 
     /*=========== Buscador usuario ==============================*/
 
-    const handleChangeBusqueda = ({ target }) => {    
+    const handleChangeBusqueda = ({ target }) => {
         setBusqueda(target.value);
     };
 
@@ -67,6 +68,33 @@ function useUsuario() {
                 alertSucces("Contraseña actualizada correctamente");
                 recargar();
             }
+        } catch (error) {
+            alertError("Algo salio mal");
+        }
+    };
+
+    /*=========== Reseet Password ==============================*/
+
+    const resetearPassword = async (id) => {
+        try {
+            Swal.fire({
+                title: '¿Seguro que quiere resetear la contraseña de este usuario?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, resetear',
+                cancelButtonText: 'No, cancelar'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    const resultado = await resetPassword(id);
+                    if (resultado.status) {
+                        alertSucces("La contraseña es el numero de documento");
+                    } else {
+                        alertWarning("No se pudo resetear la contraseña");
+                    }
+                }
+            });
         } catch (error) {
             alertError("Algo salio mal");
         }
@@ -132,7 +160,8 @@ function useUsuario() {
         buscarUsuario,
         cambiarClave,
         recargar,
-        consultarSocios
+        consultarSocios,
+        resetearPassword,
     };
 }
 
