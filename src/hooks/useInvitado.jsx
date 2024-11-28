@@ -80,7 +80,7 @@ function useInvitado() {
                 setInvitacion(data.data);
                 alertSucces("Se ha generado el codigo de invitación");
             } else {
-                alertWarning("Esta persona superó el límite de invitaciones mensuales.");
+                alertWarning(data.message);
             }
         } catch (error) {
             alertError(error.message);
