@@ -25,6 +25,7 @@ function MenuAsociados({ data, titulo, busqueda, handleBusqueda, toggleModal, fi
                         <option value="0">Inactivo</option>
                         <option value="3">En Mora</option>
                         <option value="2">Retirado</option>
+                        <option value="4">Retirado en Mora</option>
                     </select>
                 </div>
                 <div className="relative">

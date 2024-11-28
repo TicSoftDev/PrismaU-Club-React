@@ -23,7 +23,7 @@ function DataTableAsociado({ usuarios, rol, cargarAsociado, eliminar, loading, c
                     <Button onClick={() => reset(row.user_id)} className='rounded-full w-9 bg-red-600 text-white' title='Resetear Contraseña'> <FaLock />  </Button>
                 </div>
             ),
-            width: '270px'
+            width: '200px'
         },
         {
             name: "Familiares",
@@ -40,11 +40,11 @@ function DataTableAsociado({ usuarios, rol, cargarAsociado, eliminar, loading, c
             name: "Estado",
             cell: row => (
                 <div className="flex items-center">
-                    <div className={`h-2.5 w-2.5 rounded-full ${row.Estado == 1 ? 'bg-green-500' : row.Estado == 2 ? 'bg-orange-500' : row.Estado == 3 ? 'bg-purple-500' : 'bg-red-600'} mr-2`}></div>
-                    {row.Estado == 0 ? "Inactivo" : row.Estado == 1 ? "Activo" : row.Estado == 2 ? "Retirado" : "En Mora"}
+                    <div className={`h-2.5 w-2.5 rounded-full ${row.Estado == 1 ? 'bg-green-500' : row.Estado == 2 ? 'bg-orange-500' : row.Estado == 3 ? 'bg-purple-500' : row.Estado == 4 ? 'bg-black' : 'bg-red-600'} mr-2`}></div>
+                    {row.Estado == 0 ? "Inactivo" : row.Estado == 1 ? "Activo" : row.Estado == 2 ? "Retirado" : row.Estado == 3 ? "En Mora" :  "Retirado en Mora"}
                 </div>
             ),
-            width: '100px',
+            width: '150px',
         },
         {
             name: "Nombre Completo",

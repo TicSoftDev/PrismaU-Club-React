@@ -13,6 +13,7 @@ function FormMotivo({ handleChangeEstado }) {
                     <option value="3">En Mora</option>
                     <option value="0">Inactivo</option>
                     <option value="2">Retirado</option>
+                    <option value="4">Retirado en Mora</option>
                 </select>
                 <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="motivo_help">*Requerido.</p>
             </div>

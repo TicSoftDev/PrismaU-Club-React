@@ -18,7 +18,7 @@ function DataTableLogEstados({ data, loading }) {
             name: "Rol",
             cell: row => row.user.asociado ? "Asociado" : "Adherente",
             sortable: true,
-            width: '120px'
+            width: '100px'
         },
         {
             name: "Fecha",
@@ -32,7 +32,7 @@ function DataTableLogEstados({ data, loading }) {
         {
             name: "Estado",
             selector: row => row.Estado,
-            width: '120px',
+            width: '140px',
         },
     ];
 
