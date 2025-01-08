@@ -1,7 +1,7 @@
 import React from 'react';
 import { SiMicrosoftexcel } from 'react-icons/si';
 import * as XLSX from 'xlsx';
-import { formatearFecha, formatearFechaMes, formatearMoneda } from '../../../../models/FormateadorModel';
+import { formatearFecha, formatearMoneda } from '../../../../models/FormateadorModel';
 
 export default function PagosCuotasExcel({ data, fileName }) {
 

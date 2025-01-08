@@ -21,3 +21,7 @@ export const formatearFecha = (valor) => {
     const zonedDate = toZonedTime(valor, zonaHoraria);
     return format(zonedDate, 'dd/MM/yyyy', { locale: es });
 }
+
+export const normalizeText = (text) => {
+    return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+};

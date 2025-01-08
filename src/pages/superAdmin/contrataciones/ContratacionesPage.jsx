@@ -1,18 +1,23 @@
 import React from 'react';
-import DataTableContrataciones from '../../../components/superAdmin/contrataciones/DataTableContrataciones';
 import useContrataciones from '../../../hooks/useContrataciones';
-import Container from '../../../utilities/helpers/Container';
+import ContratacionesColumn from '../../../models/columns/ContratacionesColumn';
+import DataTableComponent from '../../../utilities/dataTable/DataTableComponent';
+import Contenido from '../../../utilities/helpers/Contenido';
 import TituloPage from '../../../utilities/helpers/TituloPage';
+import MenuSencillo from '../../../components/layouts/menu/MenuSencillo';
 
 function ContratacionesPage() {
 
-  const { titulo, lista, loading } = useContrataciones();
+  const { titulo, lista, isLoading, busqueda, handleBusqueda } = useContrataciones();
+  const columns = ContratacionesColumn();
+
   return (
     <>
       <TituloPage titulo={titulo} />
-      <Container>
-        <DataTableContrataciones data={lista} loading={loading} />
-      </Container>
+      <Contenido>
+        <MenuSencillo noCrear={true} busqueda={busqueda} handleBusqueda={handleBusqueda} />
+        <DataTableComponent data={lista} columns={columns} loading={isLoading} />
+      </Contenido>
     </>
   );
 }

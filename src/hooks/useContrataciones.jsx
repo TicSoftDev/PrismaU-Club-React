@@ -1,39 +1,17 @@
-import { useEffect, useState } from 'react';
-import { getContrataciones } from '../services/ContratacionesService';
+import { useState } from 'react';
+import apiQueryContrataciones from '../api/apiQueryContrataciones';
+import { normalizeText } from '../models/FormateadorModel';
 
 function useContrataciones() {
 
     const titulo = 'Solicitudes App';
     const [busqueda, setBusqueda] = useState('');
-    const [solicitudes, setSolicitudes] = useState([]);
-    const [loading, setLoading] = useState(false);
-
-    /*=========== Consultar ==============================*/
-
-    const consultarSolicitudes = async () => {
-        try {
-            setLoading(true);
-            const res = await getContrataciones();
-            setSolicitudes(res);
-            setLoading(false);
-        } catch (error) {
-            setLoading(false);
-            alertError("cargar solicitudes", error.message);
-        }
-    }
-
-    useEffect(() => {
-        consultarSolicitudes();
-    }, []);
+    const { contrataciones, isLoading } = apiQueryContrataciones();
 
     /*=========== Busqueda ==============================*/
 
     const handleBusqueda = ({ target }) => {
         setBusqueda(target.value);
-    };
-
-    const normalizeText = (text) => {
-        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     };
 
     const filterBusqueda = (listado, busqueda) => {
@@ -43,22 +21,24 @@ function useContrataciones() {
         const palabrasBusqueda = busquedaNormalizada.split(/\s+/);
 
         return listado.filter((dato) => {
-            const nombreCompleto = dato.user.asociado ?
-                `${dato.user.asociado.Nombre} ${dato.user.asociado.Apellidos}` :
-                `${dato.user.adherente.Nombre} ${dato.user.adherente.Apellidos}`;
+            const nombreCompleto = `${dato.Nombres} ${dato.Apellidos}`;
             const nombreNormalizado = normalizeText(nombreCompleto);
-            const fechaNormalizada = normalizeText(format(new Date(dato.created_at), 'dd/MM/yyyy'));
+            const empresa = normalizeText(dato.Empresa);
 
             return palabrasBusqueda.every(palabra =>
-                nombreNormalizado.includes(palabra) || fechaNormalizada.includes(palabra)
+                nombreNormalizado.includes(palabra) || empresa.includes(palabra)
             );
         });
     };
 
-    const lista = filterBusqueda(solicitudes, busqueda);
+    const lista = filterBusqueda(contrataciones, busqueda);
 
     return {
-        titulo, lista, loading, busqueda, handleBusqueda
+        titulo,
+        lista,
+        isLoading,
+        busqueda,
+        handleBusqueda
     };
 }
 
