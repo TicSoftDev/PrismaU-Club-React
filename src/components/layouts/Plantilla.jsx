@@ -1,21 +1,20 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 import useLogin from '../../hooks/useLogin';
+import { useAppSelector } from '../../hooks/useStore';
 import Sidebar from './aside/Sidebar';
 import ContainerContenido from './content/ContainerContenido';
 import Navbar from './nav/Navbar';
 
 function Plantilla() {
 
-    const usuario = useSelector((state) => state.user);
-    const credenciales = useSelector((state) => state.credenciales);
-    const { openAside, toggleAside, openNav, toggleNav, logout, } = useLogin();
+    const usuario = useAppSelector((state) => state.user);
+    const credenciales = useAppSelector((state) => state.credenciales);
+    const { openAside, toggleAside, logout, } = useLogin();
 
     return (
         <>
-            <Navbar toggleNav={toggleNav} toggleAside={toggleAside} open={openNav} credenciales={credenciales}
-                usuario={usuario} logout={logout} />
+            <Navbar toggleAside={toggleAside} credenciales={credenciales} usuario={usuario} logout={logout} />
             <Sidebar open={openAside} />
             <ContainerContenido>
                 <Outlet />

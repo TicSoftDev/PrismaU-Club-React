@@ -1,9 +1,21 @@
+import { Dropdown } from 'flowbite-react';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import imagen from '../../../assets/img/imagen';
 import { PrivateRoutes } from '../../../models/RutasModel';
 
-const Navbar = React.memo(({ toggleNav, toggleAside, open, usuario, credenciales, logout }) => {
+const Navbar = React.memo(({ toggleAside, usuario, credenciales, logout }) => {
+
+    const toggleDropdown = (usuario) => {
+        return (
+            <div className="relative inline-flex items-center justify-center w-9 h-9 bg-gray-200 rounded-full dark:bg-gray-600">
+                <span className="font-medium text-gray-600 dark:text-gray-300">
+                    {usuario.Nombre.charAt(0) + usuario.Apellidos.charAt(0)}
+                </span>
+                <span className="bottom-0 left-6 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full"></span>
+            </div>
+        );
+    };
 
     return (
         <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -23,37 +35,23 @@ const Navbar = React.memo(({ toggleNav, toggleAside, open, usuario, credenciales
                     </div>
                     <div className="flex items-center ms-3">
                         <div className="flex items-center ms-3">
-                            <div>
-                                <button type="button" className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user" onClick={toggleNav}>
-                                    <div className="relative inline-flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full dark:bg-gray-600">
-                                        <span className="font-medium text-gray-600 dark:text-gray-300">
-                                            {usuario.Nombre.charAt(0) + usuario.Apellidos.charAt(0)}
-                                        </span>
-                                        <span className="bottom-0 left-6 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full"></span>
-                                    </div>
-                                </button>
-                            </div>
-                            {open &&
-                                <div className="z-50 w-60 absolute top-11 right-5 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
-                                    <div className="px-4 py-3 text-end" role="none">
-                                        <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
-                                            {credenciales.Rol == 0 ? 'Super Administrador' : credenciales.Rol == 1 ? 'Administrador' : credenciales.Rol == 2 ? "Asociado" : "Adherente"}
-                                        </span>
-                                    </div>
-                                    <ul className="py-1" role="none">
-                                        <li>
-                                            <Link to={PrivateRoutes.PERFIL} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                                                <i className="fas fa-user-circle mr-2"></i> Perfil
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link onClick={logout} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                                                <i className="fas fa-sign-out-alt mr-2"></i> Salir
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                </div>
-                            }
+                            <Dropdown inline label={toggleDropdown(usuario)} arrowIcon={false} className='w-60'>
+                                <Dropdown.Item>
+                                    <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
+                                        {credenciales.Rol == 0 ? 'Super Administrador' : credenciales.Rol == 1 ? 'Administrador' : credenciales.Rol == 2 ? "Asociado" : "Adherente"}
+                                    </span>
+                                </Dropdown.Item>
+                                <Dropdown.Item>
+                                    <Link to={PrivateRoutes.PERFIL} className="block px-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+                                        <i className="fas fa-user-circle mr-2"></i> Perfil
+                                    </Link>
+                                </Dropdown.Item>
+                                <Dropdown.Item>
+                                    <Link onClick={logout} className="block px-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+                                        <i className="fas fa-sign-out-alt mr-2"></i> Salir
+                                    </Link>
+                                </Dropdown.Item>
+                            </Dropdown>
                         </div>
                     </div>
                 </div>

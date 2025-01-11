@@ -30,7 +30,7 @@
 .animated-element {
     animation: fadeIn;
     position: relative;
-    animation-duration: 1s;
+    animation-duration: 0.8s;
 }
 
 @keyframes fadeIn {
