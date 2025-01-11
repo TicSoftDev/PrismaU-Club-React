@@ -13,8 +13,8 @@ export async function getCantidadSolicitudes() {
     return res.data;
 };
 
-export async function responderSolicitud(id, solicitud) {
-    const res = await axios.put(URL + "/" + id, solicitud);
+export async function responderSolicitud(solicitud) {
+    const res = await axios.put(URL + "/" + solicitud.id, solicitud);
     return res.data;
 };
 

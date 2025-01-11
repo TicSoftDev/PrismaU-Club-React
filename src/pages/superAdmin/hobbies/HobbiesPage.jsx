@@ -1,7 +1,7 @@
 import React from 'react';
-import Container from '../../../utilities/helpers/Container';
-import TituloPage from '../../../utilities/helpers/TituloPage';
 import TablaHobbies from '../../../components/superAdmin/hobbies/TablaHobbies';
+import Contenido from '../../../utilities/helpers/Contenido';
+import TituloPage from '../../../utilities/helpers/TituloPage';
 
 function HobbiesPage() {
 
@@ -10,9 +10,9 @@ function HobbiesPage() {
     return (
         <>
             <TituloPage titulo={titulo} />
-            <Container>
+            <Contenido>
                 <TablaHobbies />
-            </Container>
+            </Contenido>
         </>
     );
 }

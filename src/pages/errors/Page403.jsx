@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../../assets/styles/403.css';
 import Svg from '../../components/errors/Svg';
-import { PrivateRoutes } from '../../models/RutasModel.jsx';
+import { PrivateRoutes } from '../../models/RutasModel';
 
 function Page403() {
-    
+
     return (
         <div className='contenedor-403'>
             <Svg />

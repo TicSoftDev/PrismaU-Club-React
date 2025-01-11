@@ -1,6 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
-import { useAppSelector } from '../hooks/useStore';
+import { useAppQuery, useAppSelector } from '../hooks/useStore';
 import { getCantidadAdherentes } from '../services/AdherentesService';
 import { getCantidadAdmins } from '../services/AdminsService';
 import { getCantidadAsociados } from '../services/AsociadosService';
@@ -24,98 +23,98 @@ export default function useCantidad() {
         toast.error(`${message}: ${error.message}`);
     };
 
-    const { data: contContrataciones } = useQuery({
+    const { data: contContrataciones } = useAppQuery({
         queryKey: ['contContrataciones'],
         queryFn: getCantidadContrataciones,
         enabled: rol === 0,
         onError: handleError('Error al cargar la cantidad de contrataciones'),
     });
 
-    const { data: contAdmins } = useQuery({
+    const { data: contAdmins } = useAppQuery({
         queryKey: ['contAdmins'],
         queryFn: getCantidadAdmins,
         enabled: rol === 0,
         onError: handleError('Error al cargar la cantidad de admins'),
     });
 
-    const { data: contSolicitudes } = useQuery({
+    const { data: contSolicitudes } = useAppQuery({
         queryKey: ['contSolicitudes'],
         queryFn: getCantidadSolicitudes,
         enabled: rol === 0 || rol === 1,
         onError: handleError('Error al cargar la cantidad de solicitudes'),
     });
 
-    const { data: contReservas } = useQuery({
+    const { data: contReservas } = useAppQuery({
         queryKey: ['contReservas'],
         queryFn: getCantidadReservas,
         enabled: rol === 0 || rol === 1,
         onError: handleError('Error al cargar la cantidad de reservas'),
     });
 
-    const { data: contEncuestas } = useQuery({
+    const { data: contEncuestas } = useAppQuery({
         queryKey: ['contEncuestas'],
         queryFn: getCantidadEncuestas,
         enabled: rol === 0 || rol === 1,
         onError: handleError('Error al cargar la cantidad de encuestas'),
     });
 
-    const { data: contFamiliares } = useQuery({
+    const { data: contFamiliares } = useAppQuery({
         queryKey: ['contFamiliares'],
         queryFn: getCantidadFamiliares,
         enabled: rol === 0 || rol === 1,
         onError: handleError('Error al cargar la cantidad de familiares'),
     });
 
-    const { data: contAsociados } = useQuery({
+    const { data: contAsociados } = useAppQuery({
         queryKey: ['contAsociados'],
         queryFn: getCantidadAsociados,
         enabled: rol === 0 || rol === 1,
         onError: handleError('Error al cargar la cantidad de asociados'),
     });
 
-    const { data: contAdherentes } = useQuery({
+    const { data: contAdherentes } = useAppQuery({
         queryKey: ['contAdherentes'],
         queryFn: getCantidadAdherentes,
         enabled: rol === 0 || rol === 1,
         onError: handleError('Error al cargar la cantidad de adherentes'),
     });
 
-    const { data: contEmpleados } = useQuery({
+    const { data: contEmpleados } = useAppQuery({
         queryKey: ['contEmpleados'],
         queryFn: getCantidadEmpleados,
         enabled: rol === 0 || rol === 1,
         onError: handleError('Error al cargar la cantidad de empleados'),
     });
 
-    const { data: contEspacios } = useQuery({
+    const { data: contEspacios } = useAppQuery({
         queryKey: ['contEspacios'],
         queryFn: getCantidadEspacios,
         enabled: rol === 0 || rol === 1,
         onError: handleError('Error al cargar la cantidad de espacios'),
     });
 
-    const { data: contNoticias } = useQuery({
+    const { data: contNoticias } = useAppQuery({
         queryKey: ['contNoticias'],
         queryFn: getCantidadNoticias,
         enabled: rol === 0 || rol === 1,
         onError: handleError('Error al cargar la cantidad de noticias'),
     });
 
-    const { data: contInvitados } = useQuery({
+    const { data: contInvitados } = useAppQuery({
         queryKey: ['contInvitados'],
         queryFn: getCantidadInvitados,
         enabled: rol === 0 || rol === 1,
         onError: handleError('Error al cargar la cantidad de invitados'),
     });
 
-    const { data: contInvitadosSocio } = useQuery({
+    const { data: contInvitadosSocio } = useAppQuery({
         queryKey: ['contInvitadosSocio', id],
         queryFn: () => getCantidadInvitadosSocio(id),
         enabled: rol === 2 || rol === 3,
         onError: handleError('Error al cargar la cantidad de invitados del socio'),
     });
 
-    const { data: contFamiliaresSocio } = useQuery({
+    const { data: contFamiliaresSocio } = useAppQuery({
         queryKey: ['contFamiliaresSocio', id],
         queryFn: () => getCantidadFamiliaresSocio(id, rol === 2 ? 'Asociado' : 'Adherente'),
         enabled: rol === 2 || rol === 3,

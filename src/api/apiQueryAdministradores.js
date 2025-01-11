@@ -1,40 +1,40 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useAppMutation, useAppQuery, useAppQueryCliente } from '../hooks/useStore';
 import { changeStatus, createAdmin, deleteAdmin, getAdmins, updateAdmin } from '../services/AdminsService';
 
 export default function apiQueryAdministradores() {
 
-    const queryClient = useQueryClient();
+    const queryClient = useAppQueryCliente();
 
     //=========== CREAR ==============================
 
-    const { mutate: createAdminMutation, isPending: isCreating } = useMutation({
+    const { mutate: createAdminMutation, isPending: isCreating } = useAppMutation({
         mutationFn: createAdmin,
         onSuccess: () => { queryClient.refetchQueries({ queryKey: ['admins'] }); }
     });
 
     //=========== CONSULTAR ==========================
 
-    const { data: admins, isLoading } = useQuery({
+    const { data: admins, isLoading } = useAppQuery({
         queryKey: ['admins'], queryFn: getAdmins
     });
 
     //=========== EDITAR ==============================
 
-    const { mutate: actualizarAdminMutation, isPending: isUpdating } = useMutation({
+    const { mutate: actualizarAdminMutation, isPending: isUpdating } = useAppMutation({
         mutationFn: updateAdmin,
         onSuccess: () => { queryClient.refetchQueries({ queryKey: ['admins'] }); }
     });
 
     //=========== INACTIVAR ==============================
 
-    const { mutate: cambiarEstadoMutation } = useMutation({
+    const { mutate: cambiarEstadoMutation } = useAppMutation({
         mutationFn: changeStatus,
         onSuccess: () => { queryClient.refetchQueries({ queryKey: ['admins'] }); }
     });
 
     //=========== ELIMINAR ==============================
 
-    const { mutate: eliminarAdminMutation } = useMutation({
+    const { mutate: eliminarAdminMutation } = useAppMutation({
         mutationFn: deleteAdmin,
         onSuccess: () => { queryClient.refetchQueries({ queryKey: ['admins'] }); }
     });
