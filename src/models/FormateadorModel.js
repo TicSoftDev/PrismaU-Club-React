@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format, parse } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
 import { es } from "date-fns/locale";
 
@@ -20,6 +20,11 @@ export const formatearFechaMes = (valor) => {
 export const formatearFecha = (valor) => {
     const zonedDate = toZonedTime(valor, zonaHoraria);
     return format(zonedDate, 'dd/MM/yyyy', { locale: es });
+}
+
+export const formatearHora = (valor) => {
+    const parsedDate = parse(valor, 'HH:mm:ss', new Date());
+    return format(parsedDate, 'hh:mm a');
 }
 
 export const normalizeText = (text) => {

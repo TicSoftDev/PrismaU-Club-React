@@ -1,38 +1,17 @@
 import React from 'react';
-import { getReservas } from '../services/ReservasService';
+import apiQueryReservas from '../api/apiQueryReservas';
+import { normalizeText } from '../models/FormateadorModel';
 
 function useReservas() {
 
     const titulo = 'Reservas';
     const [busqueda, setBusqueda] = React.useState('');
-    const [loading, setLoading] = React.useState(false);
-    const [reservas, setReservas] = React.useState([]);
-
-    /*=========== Consultar ==============================*/
-
-    const consultarReservas = async () => {
-        setLoading(true);
-        try {
-            const data = await getReservas();
-            setReservas(data);
-        } catch (error) {
-            console.log("Reservas", error.message);
-        }
-        setLoading(false);
-    }
-
-    React.useEffect(() => {
-        consultarReservas();
-    }, []);
+    const { reservas, isLoading } = apiQueryReservas();
 
     /*=========== Buscar ==============================*/
 
     const handleBusqueda = ({ target }) => {
         setBusqueda(target.value);
-    };
-
-    const normalizeText = (text) => {
-        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     };
 
     const filterBusqueda = (listado, busqueda) => {
@@ -58,7 +37,7 @@ function useReservas() {
     const lista = filterBusqueda(reservas, busqueda);
 
     return {
-        loading,
+        isLoading,
         titulo,
         lista,
         busqueda,

@@ -1,21 +1,23 @@
 import React from 'react';
-import DataTableReservas from '../../../components/admin/reservas/DataTableReservas';
 import MenuSencillo from '../../../components/layouts/menu/MenuSencillo';
 import useReservas from '../../../hooks/useReservas';
-import Container from '../../../utilities/helpers/Container';
+import DataTableComponent from '../../../utilities/dataTable/DataTableComponent';
+import Contenido from '../../../utilities/helpers/Contenido';
 import TituloPage from '../../../utilities/helpers/TituloPage';
+import ReservasColumn from '../../../models/columns/ReservasColumn';
 
 function ReservasPage() {
 
-    const { titulo, loading, lista, busqueda, handleBusqueda } = useReservas();
+    const { titulo, isLoading, lista, busqueda, handleBusqueda } = useReservas();
+    const columns = ReservasColumn();
 
     return (
         <>
             <TituloPage titulo={titulo} />
-            <Container>
+            <Contenido>
                 <MenuSencillo busqueda={busqueda} handleBusqueda={handleBusqueda} noCrear={true} />
-                <DataTableReservas data={lista} loading={loading} />
-            </Container>
+                <DataTableComponent data={lista} loading={isLoading} columns={columns} />
+            </Contenido>
         </>
     );
 }
