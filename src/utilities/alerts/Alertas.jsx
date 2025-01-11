@@ -1,31 +1,13 @@
-import Swal from 'sweetalert2';
+import toast from 'react-hot-toast';
 
 export const alertSucces = (text) => {
-    Swal.fire({
-        icon: 'success',
-        title: 'Realizado',
-        text: text,
-        showConfirmButton: false,
-        timer: 1500
-    })
+    toast.success(text);
 }
 
 export const alertError = (text) => {
-    Swal.fire({
-        icon: 'error',
-        title: 'Error!',
-        text: text,
-        showConfirmButton: false,
-        timer: 1500
-    })
+    toast.error(text);
 }
 
 export const alertWarning = (text) => {
-    Swal.fire({
-        icon: 'warning',
-        title: 'Incompleto',
-        text: text,
-        showConfirmButton: false,
-        timer: 3000
-    })
+    toast.error(text, { icon: '⚠️' });
 }

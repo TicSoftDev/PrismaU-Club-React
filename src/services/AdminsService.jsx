@@ -30,9 +30,9 @@ export async function getCantidadAdmins() {
     return res.data;
 };
 
-export async function updateAdmin(admin, id) {
+export async function updateAdmin(admin) {
     try {
-        const res = await axios.put(URL_ADMIN + "/" + id, admin);
+        const res = await axios.put(URL_ADMIN + "/" + admin.id, admin);
         return res.data;
     } catch (error) {
         if (error.response && error.response.status === 422) {

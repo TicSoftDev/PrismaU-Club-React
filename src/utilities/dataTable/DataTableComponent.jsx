@@ -7,8 +7,8 @@ function DataTableComponent({ data, columns, loading }) {
     const customStyles = {
         headCells: {
             style: {
-                backgroundColor: '#379861',
-                color: 'white',
+                backgroundColor: '#f0f0f0',
+                color: 'gray',
                 fontSize: '15px',
             },
         },
@@ -18,7 +18,6 @@ function DataTableComponent({ data, columns, loading }) {
             },
         },
     };
-
 
     return (
         <div className="border border-gray-200 rounded-lg shadow w-full dark:border-gray-700 dark:bg-gray-800">

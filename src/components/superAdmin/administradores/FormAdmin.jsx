@@ -22,7 +22,8 @@ function FormAdmin({ admin, hanleChange }) {
                         value={admin.Apellidos} name='Apellidos' placeholder="Escribe los apellidos..." required />
                 </div>
             </div>
-            {!admin.id &&
+            {
+                !admin.id &&
                 <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4 sm:mt-3">
                     <div className="w-full">
                         <div className="mb-2 block">

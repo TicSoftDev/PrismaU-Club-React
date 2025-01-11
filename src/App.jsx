@@ -11,7 +11,7 @@ function App() {
   return (
     <Provider store={store}>
       <QueryClientProvider client={client}>
-        <Toaster />
+        <Toaster position='top-right' />
         <Rutas />
       </QueryClientProvider>
     </Provider>

@@ -1,11 +1,9 @@
 import React from 'react';
-import DataTable from 'react-data-table-component';
 import { FaEdit, FaTrash, FaUser, FaUserSlash } from 'react-icons/fa';
-import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 
-function DataTableAdmins({ data, cargarAdmin, eliminar, loading, change }) {
+export default function AdministradoresColumns(cargarAdmin, eliminar, change) {
 
-    const columns = [
+    return [
         {
             name: "Actions",
             cell: row => (
@@ -48,20 +46,4 @@ function DataTableAdmins({ data, cargarAdmin, eliminar, loading, change }) {
 
         },
     ];
-
-    return (
-        <div className="overflow-x-auto">
-            <DataTable
-                columns={columns}
-                data={data}
-                defaultSortFieldId={1}
-                pagination
-                progressPending={loading}
-                progressComponent={<TableSkeleton />}
-                noDataComponent={<div className='flex justify-center font-bold my-20 text-gray-500'>No hay ningun administrador registrado</div>}
-            />
-        </div>
-    );
 }
-
-export default DataTableAdmins;
