@@ -104,10 +104,6 @@ function useAdherente() {
     const handleSubmit = async (e) => {
         try {
             setTouched(true);
-            if (adherente.asociado_id === null || adherente.Nombre === "" || adherente.Apellidos === "" || adherente.Documento === "" || adherente.TipoDocumento === "" || adherente.Correo === "" || adherente.Telefono === "" || adherente.Sexo === "") {
-                alertWarning("Por favor, ingrese todos los campos");
-                return;
-            }
             e.preventDefault();
             setLoading(true);
             const data = await createAdherente(adherente);
@@ -116,12 +112,8 @@ function useAdherente() {
                 toggleModal();
                 alertSucces("Creado correctamente");
                 await getListadoAdherentes();
-            } else if (data.status === false && data.message === 'Asignado') {
-                return alertWarning("Este asociado ya ha sido asignado a otro adherente");
-            } else if (data.status === false && data.message === 'Existe') {
-                return alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
             } else {
-                alertWarning("No se pudo crear el Adherente");
+                data.errors.forEach((err) => alertWarning(err));
             }
         } catch (error) {
             setLoading(false);
@@ -192,22 +184,16 @@ function useAdherente() {
     const handleUpdate = async (e) => {
         try {
             setTouched(true);
-            if (adherente.asociado_id === null || adherente.Nombre === "" || adherente.Apellidos === "" || adherente.Documento === "" || adherente.TipoDocumento === "" || adherente.Correo === "" || adherente.Telefono === "" || adherente.Sexo === "") {
-                alertWarning("Por favor, ingrese todos los campos");
-                return;
-            }
             e.preventDefault();
             setLoading(true);
-            const resultado = await updateAdherente(adherente, adherente.user_id);
+            const resultado = await updateAdherente(adherente, adherente.id);
             setLoading(false);
             if (resultado.status) {
                 toggleModal();
                 alertSucces("Actualizado correctamente");
                 await getListadoAdherentes();
-            } else if (resultado.status === false && resultado.message === 'Asignado') {
-                return alertWarning("Este asociado ya ha sido asignado a otro adherente");
-            } else if (resultado.status === false && resultado.message === 'Existe') {
-                return alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
+            } else {
+                resultado.errors.forEach((err) => alertWarning(err));
             }
         } catch (error) {
             setLoading(false);

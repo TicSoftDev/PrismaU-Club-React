@@ -23,7 +23,7 @@ function DataTableAdherente({ usuarios, rol, cargarAdherente, eliminar, loading,
                     <Button onClick={() => reset(row.user_id)} className='rounded-full w-9 bg-red-600 text-white' title='Resetear Contraseña'> <FaLock />  </Button>
                 </div>
             ),
-            width: '230px'
+            width: '270px'
         },
         {
             name: "Familiares",

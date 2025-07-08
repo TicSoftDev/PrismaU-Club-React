@@ -36,8 +36,9 @@ export function getCardsByRole(role) {
         contAdherentes = 0, contEmpleados = 0, contEspacios = 0, contNoticias = 0, contInvitados = 0,
         contFamiliaresSocio = 0, contInvitadosSocio = 0, contContrataciones = 0, contAdmins = 0,
     } = apiQueryCantidad();
+    const numericRole = Number(role);
 
-    switch (role) {
+    switch (numericRole) {
         case 0:
             return [...SUPER_ADMIN_CARDS(contContrataciones, contAdmins),
             ...ADMIN_CARDS(contSolicitudes, contReservas, contEncuestas, contFamiliares, contAsociados,

@@ -3,7 +3,6 @@ import { format } from 'date-fns';
 import { toZonedTime } from 'date-fns-tz';
 import { es } from 'date-fns/locale';
 import { Badge, Button, Card, Table } from "flowbite-react";
-import React from 'react';
 import { HiOutlineDocumentText, HiOutlineDownload, HiOutlineGlobe, HiOutlineLocationMarker, HiOutlineMail, HiOutlinePhone } from "react-icons/hi";
 import imagen from '../../../assets/img/imagen';
 import { formatearMoneda } from '../../../models/FormateadorModel';
@@ -215,9 +214,12 @@ export default function FacturaPago({ pago, user }) {
                         </h3>
                         {
                             pago.pago.map((pago) => (
-                                <img src={RouteBack + pago.soporte} alt="soporte" key={pago.id} />
+                                pago.soporte
+                                    ? <img src={RouteBack + pago.soporte} alt="soporte" key={pago.id} className="mb-2 max-h-80 object-contain border rounded" />
+                                    : <p key={pago.id} className="text-sm text-gray-500">El pago se realizó con el metodo de pago: {pago.metodo_pago}</p>
                             ))
                         }
+
                     </Card>
 
                 </div>

@@ -17,7 +17,7 @@ export default function useCantidad() {
 
     const id = useAppSelector(state => state.user.id);
     const user = useAppSelector(state => state.credenciales);
-    const rol = user.Rol;
+    const rol = Number(user.Rol);
 
     const handleError = (message) => (error) => {
         toast.error(`${message}: ${error.message}`);

@@ -16,7 +16,13 @@ export default function MensualidadesSocioPage() {
 
     const location = useLocation();
     const rol = useSelector(state => state.credenciales.Rol);
-    const documento = (rol === 2 || rol === 3) ? useSelector(state => state.user.Documento) : location.state.documento;
+    let documento;
+
+    if (Number(rol) === 2 || Number(rol) === 3) {
+        documento = useSelector(state => state.user.Documento);
+    } else {
+        documento = location?.state?.documento || null;
+    }
 
     const { titulo, loading, listado, mensualidad, preferencia, openFactura, factura, user, openModal, busquedaAño, touched,
         toggleModal, handleChange, cargar, pagoManual, crearPreferencia, toggleModalFactura, cargarFactura,
@@ -25,8 +31,10 @@ export default function MensualidadesSocioPage() {
     const columns = MensualidadesColumn(cargar, cargarFactura);
 
     useEffect(() => {
-        getMensualidadesUsuario(documento);
-        initMercadoPago('APP_USR-875d925e-726f-4b39-a039-b65c60392fe8', { locale: 'es-CO' });
+        if (documento) {
+            getMensualidadesUsuario(documento);
+            initMercadoPago('APP_USR-15c9751a-5ad6-4f44-adff-dee8ec1c8d56', { locale: 'es-CO' });
+        }
     }, [documento])
 
     return (
@@ -38,7 +46,7 @@ export default function MensualidadesSocioPage() {
             </div>
             <ModalSencillo size={'7xl'} openModal={openModal} cerrarModal={toggleModal} titulo={'Pagar mensualidad'} >
                 {
-                    (rol === 2 || rol === 3) ?
+                    (Number(rol) === 2 || Number(rol) === 3) ?
                         <>
                             <FormMensualidad mensualidad={mensualidad} loading={loading} getPago={crearPreferencia}
                                 touched={touched} handleChange={handleChange} handleChangeCheck={handleChangeCheck} />

@@ -67,7 +67,7 @@ function useLogin() {
                 navigate(PrivateRoutes.DASHBOARD, { replace: true });
             }
         } catch (error) {
-            setLoading(false);
+            setLoading(false);console.log(error)
             alertError("login" + error.message);
         }
     };

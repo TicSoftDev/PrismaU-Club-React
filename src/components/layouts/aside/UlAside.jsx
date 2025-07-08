@@ -12,9 +12,13 @@ function UlAside() {
     return (
         <ul className="space-y-2 font-medium">
             <LinkInicio />
-            {
-                items.map((item) => (
-                    <Link menu={item} key={item.texto} activeSubroutes={item.activeSubroutes} />
+            {items.map((menu, index) =>
+                menu.isTitle ? (
+                    <li key={`title-${index}`} className="text-gray-500 uppercase text-xs font-semibold mt-4 mb-2">
+                        {menu.texto}
+                    </li>
+                ) : (
+                    <Link menu={menu} key={menu.texto} activeSubroutes={menu.activeSubroutes} />
                 ))
             }
         </ul>

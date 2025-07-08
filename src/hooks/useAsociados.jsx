@@ -102,19 +102,15 @@ function useAsociados() {
     const handleSubmit = async (e) => {
         try {
             setTouched(true);
-            if (asociado.Nombre === "" || asociado.Apellidos === "" || asociado.Documento === "" || asociado.TipoDocumento === "" || asociado.Correo === "" || asociado.Telefono === "" || asociado.Sexo === "") {
-                alertWarning("Por favor, ingrese todos los campos");
-                return;
-            }
             setLoading(true);
             const data = await createAsociado(asociado);
             setLoading(false);
             if (data.status) {
+                toggleModal();
                 alertSucces("Creado correctamente");
                 await getListadoAsociados();
-                toggleModal();
-            } else if (data.status === false && data.message === 'Existe') {
-                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
+            } else {
+                data.errors.forEach((err) => alertWarning(err));
             }
         } catch (error) {
             alertError("Ocurrió un error al crear el asociado: " + error.message);
@@ -183,20 +179,16 @@ function useAsociados() {
     const handleUpdate = async (e) => {
         try {
             setTouched(true);
-            if (asociado.Nombre === "" || asociado.Apellidos === "" || asociado.Documento === "" || asociado.TipoDocumento === "" || asociado.Correo === "" || asociado.Telefono === "" || asociado.Sexo === "") {
-                alertWarning("Por favor, ingrese todos los campos");
-                return;
-            }
             e.preventDefault();
             setLoading(true);
-            const resultado = await updateAsociado(asociado, asociado.user_id);
+            const resultado = await updateAsociado(asociado, asociado.id);
             setLoading(false);
             if (resultado.status) {
                 toggleModal();
                 alertSucces("Actualizado correctamente");
                 await getListadoAsociados();
-            } else if (resultado.status === false && resultado.message === 'Existe') {
-                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
+            } else {
+                resultado.errors.forEach((err) => alertWarning(err));
             }
         } catch (error) {
             setLoading(false);
@@ -321,7 +313,6 @@ function useAsociados() {
                     if (resultado.status) {
                         alertSucces("Eliminado correctamente");
                         await getListadoAsociados();
-                        await getListadoAsociadosInactivos();
                     } else {
                         alertWarning("No se pudo eliminar");
                     }

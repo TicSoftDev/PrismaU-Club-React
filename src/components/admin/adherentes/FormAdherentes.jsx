@@ -12,7 +12,7 @@ function FormAdherentes({ socio, adherente, hanleChange, handleChangeSelect, tou
     }));
 
     const inputClass = (value) => (
-        touched && value.trim() === '' && 'border border-red-500 rounded-lg'
+        touched && value?.trim() === '' && 'border border-red-500 rounded-lg'
     );
 
     return (
@@ -52,6 +52,7 @@ function FormAdherentes({ socio, adherente, hanleChange, handleChangeSelect, tou
                         <Label htmlFor="codigo" value="Código" />
                     </div>
                     <TextInput id="codigo" type="text" icon={FaCode} onChange={hanleChange} name='Codigo'
+                        className={inputClass(adherente.Codigo)}
                         value={adherente.Codigo ? adherente.Codigo : ""} placeholder="Escribe el código..." />
                     <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                 </div>

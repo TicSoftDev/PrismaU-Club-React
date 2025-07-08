@@ -64,7 +64,7 @@ export default function useCuotasBaile(consultarSocios) {
             const response = await createPreferencia(pago);
             if (response) {
                 setOpenModal(true);
-                setPreferencia(response);
+                setPreferencia(response.preference_id);
             }
         } catch (error) {
             alertError(error.message);

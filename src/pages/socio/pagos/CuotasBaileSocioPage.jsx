@@ -16,7 +16,13 @@ export default function CuotasBaileSocioPage() {
 
     const location = useLocation();
     const rol = useSelector(state => state.credenciales.Rol);
-    const documento = (rol === 2 || rol === 3) ? useSelector(state => state.user.Documento) : location.state.documento;
+    let documento;
+
+    if (Number(rol) === 2 || Number(rol) === 3) {
+        documento = useSelector(state => state.user.Documento);
+    } else {
+        documento = location?.state?.documento || null;
+    }
 
     const { titulo, loading, listado, busqueda, openModal, user, cuota, preferencia, openFactura, factura,
         getCuotasBaile, toggleModal, cargar, handleChange, pagoManual, crearPreferencia, cargarFactura,
@@ -25,9 +31,11 @@ export default function CuotasBaileSocioPage() {
     const columns = CuotasBaileColumn({ cargar, cargarFactura });
 
     useEffect(() => {
-        getCuotasBaile(documento);
-        initMercadoPago('APP_USR-875d925e-726f-4b39-a039-b65c60392fe8', { locale: 'es-CO' });
-    }, [documento])
+        if (documento) {
+            getCuotasBaile(documento);
+            initMercadoPago('APP_USR-15c9751a-5ad6-4f44-adff-dee8ec1c8d56', { locale: 'es-CO' });
+        }
+    }, [documento]);
 
     return (
         <>
@@ -38,14 +46,12 @@ export default function CuotasBaileSocioPage() {
             </div>
             <ModalSencillo size={'7xl'} openModal={openModal} cerrarModal={toggleModal} titulo={'Pagar Cuotas'} >
                 {
-                    (rol === 2 || rol === 3) ?
+                    (Number(rol) === 2 || Number(rol) === 3) ?
                         <>
                             <FormPagarCuota cuota={cuota} handleChange={handleChange} loading={loading}
                                 pagar={crearPreferencia} />
-                            {
-                                preferencia && <Wallet initialization={{ preferenceId: preferencia }}
-                                    customization={{ texts: { valueProp: 'smart_option' } }} />
-                            }
+                            {preferencia && <Wallet initialization={{ preferenceId: preferencia }}
+                                customization={{ texts: { valueProp: 'smart_option' } }} />}
                         </> :
                         <FormPagoCuota cuota={cuota} documento={documento} loading={loading} pagar={pagoManual}
                             handleChange={handleChange} handleChangeImagen={handleChangeImagen} />

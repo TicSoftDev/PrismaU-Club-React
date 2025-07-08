@@ -1,5 +1,4 @@
 import { Label, Select, TextInput } from 'flowbite-react';
-import React from 'react';
 import { FaCalendarAlt, FaCity, FaEnvelope, FaIdCard, FaKeyboard, FaMapMarkerAlt, FaMercury, FaPhoneAlt, FaSuitcase, FaUserTag } from 'react-icons/fa';
 import { FaMapLocation } from 'react-icons/fa6';
 import { MdFamilyRestroom } from "react-icons/md";
@@ -161,7 +160,7 @@ function FormFamiliar({ familiar, hanleChange, touched }) {
                         <option value={'Sobrino (a)'}>Sobrino (a)</option>
                         <option value={'Tió (a)'}>Tio (a)</option>
                         <option value={'Suegro (a)'}>Suegro (a)</option>
-                        <option value={'Escolta'}>Escolta</option>
+                        <option value={'Chofer'}>Chofer</option>
                         <option value={'Niñera'}>Niñera</option>
                         <option value={'Escolta'}>Escolta</option>
                     </Select>

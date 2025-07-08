@@ -19,7 +19,7 @@ export const MensualidadesColumn = (cargar, cargarFactura) => {
             cell: row => (
                 <div className="flex">
                     {
-                        row.estado === 1 ?
+                        row.estado == 1 ?
                             <Button onClick={() => cargarFactura(row)} className='rounded-full w-9 bg-green-500 text-white' title='Ver Pago'>
                                 <FaEye />
                             </Button>

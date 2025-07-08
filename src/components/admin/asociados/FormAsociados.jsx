@@ -6,7 +6,7 @@ import { FaMapLocation } from 'react-icons/fa6';
 function FormAsociados({ asociado, hanleChange, touched }) {
 
     const inputClass = (value) => (
-        touched && value.trim() === '' && 'border border-red-500 rounded-lg'
+        touched && value?.trim() === '' && 'border border-red-500 rounded-lg'
     );
 
     return (
@@ -35,7 +35,8 @@ function FormAsociados({ asociado, hanleChange, touched }) {
                         <Label htmlFor="codigo" value="Código" />
                     </div>
                     <TextInput id="codigo" type="text" icon={FaCode} onChange={hanleChange} name='Codigo'
-                        value={asociado.Codigo ? asociado.Codigo : ""} placeholder="Escribe el codigo..." />
+                        className={inputClass(asociado.Codigo)} value={asociado.Codigo ? asociado.Codigo : ""}
+                        placeholder="Escribe el codigo..." />
                     <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                 </div>
             </div>

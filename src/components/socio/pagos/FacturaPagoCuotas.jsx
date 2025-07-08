@@ -264,7 +264,9 @@ export default function FacturaPagoCuotas({ pago, user }) {
                         </h3>
                         {
                             pago.pago.map((pago) => (
-                                <img src={RouteBack + pago.soporte} alt="soporte" key={pago.id} />
+                                pago.soporte
+                                    ? <img src={RouteBack + pago.soporte} alt="soporte" key={pago.id} className="mb-2 max-h-80 object-contain border rounded" />
+                                    : <p key={pago.id} className="text-sm text-gray-500">El pago se realizó con el metodo de pago: {pago.metodo_pago}</p>
                             ))
                         }
                     </Card>
