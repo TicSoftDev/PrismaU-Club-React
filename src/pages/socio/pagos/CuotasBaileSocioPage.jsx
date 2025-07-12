@@ -24,16 +24,16 @@ export default function CuotasBaileSocioPage() {
         documento = location?.state?.documento || null;
     }
 
-    const { titulo, loading, listado, busqueda, openModal, user, cuota, preferencia, openFactura, factura,
+    const { titulo, loading, listado, busqueda, openModal, user, cuota, preferencia, openFactura, factura, touched,
         getCuotasBaile, toggleModal, cargar, handleChange, pagoManual, crearPreferencia, cargarFactura,
-        toggleModalFactura, handleBusqueda, handleChangeImagen } = useCuotasBaile();
+        handleChangeCheck, toggleModalFactura, handleBusqueda, handleChangeImagen } = useCuotasBaile();
 
     const columns = CuotasBaileColumn({ cargar, cargarFactura });
 
     useEffect(() => {
         if (documento) {
             getCuotasBaile(documento);
-            initMercadoPago('APP_USR-15c9751a-5ad6-4f44-adff-dee8ec1c8d56', { locale: 'es-CO' });
+            initMercadoPago('APP_USR-34029fe8-d96f-4cb4-83a0-4d0de529d758', { locale: 'es-CO' });
         }
     }, [documento]);
 
@@ -48,13 +48,14 @@ export default function CuotasBaileSocioPage() {
                 {
                     (Number(rol) === 2 || Number(rol) === 3) ?
                         <>
-                            <FormPagarCuota cuota={cuota} handleChange={handleChange} loading={loading}
-                                pagar={crearPreferencia} />
+                            <FormPagarCuota cuota={cuota} handleChange={handleChange} loading={loading} touched={touched}
+                                handleChangeCheck={handleChangeCheck} pagar={crearPreferencia} />
                             {preferencia && <Wallet initialization={{ preferenceId: preferencia }}
                                 customization={{ texts: { valueProp: 'smart_option' } }} />}
                         </> :
                         <FormPagoCuota cuota={cuota} documento={documento} loading={loading} pagar={pagoManual}
-                            handleChange={handleChange} handleChangeImagen={handleChangeImagen} />
+                            handleChange={handleChange} handleChangeImagen={handleChangeImagen}
+                            touched={touched} handleChangeCheck={handleChangeCheck} />
                 }
             </ModalSencillo>
             <ModalSencillo size={'full'} openModal={openFactura} cerrarModal={toggleModalFactura}

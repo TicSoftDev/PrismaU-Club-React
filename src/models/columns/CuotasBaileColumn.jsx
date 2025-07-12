@@ -27,8 +27,8 @@ export const CuotasBaileColumn = ({ cargar, cargarFactura }) => {
             ),
         },
         {
-            name: "Año",
-            selector: row => row.año,
+            name: "Descripción",
+            selector: row => row.descripcion,
         },
         {
             name: "Valor",

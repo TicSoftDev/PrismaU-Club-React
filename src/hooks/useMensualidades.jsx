@@ -64,9 +64,13 @@ export default function useMensualidades(consultarSocios) {
         setLoading(true);
         try {
             const response = await createPreferencia(pago);
-            if (response) {
+            if (response.status) {
                 setOpenModal(true);
                 setPreferencia(response.preference_id);
+            }else{
+                response.errors.forEach((error) => {
+                    alertWarning(error);
+                })
             }
         } catch (error) {
             alertError(error.message);
@@ -95,24 +99,12 @@ export default function useMensualidades(consultarSocios) {
     };
 
     const pagoManual = async (documento) => {
-        if (!pago.metodo_pago || !pago.soporte || !pago.referencia_pago) {
-            alertWarning("Debe llenar todos los campos");
-            return;
-        }
-        if (mensualidad.total_pagos != 0 && !pago.valor) {
-            alertWarning("Debe ingresar un valor");
-            return;
-        }
-        if (touched && pago.valor < mensualidad.restante) {
-            alertWarning("El valor no puede ser menor al restante");
-            return;
-        }
         setLoading(true);
         try {
             const formData = new FormData();
-            formData.append('mensualidad_id', pago.mensualidad_id);
-            formData.append('metodo_pago', pago.metodo_pago);
-            formData.append('referencia_pago', pago.referencia_pago);
+            if (pago.mensualidad_id !== null) formData.append('mensualidad_id', pago.mensualidad_id);
+            if (pago.metodo_pago !== null) formData.append('metodo_pago', pago.metodo_pago);
+            if (pago.referencia_pago !== null) formData.append('referencia_pago', pago.referencia_pago);
             const valor = pago.valor !== null ? parseFloat(pago.valor) : null;
             if (valor !== null) {
                 formData.append('valor', valor);
@@ -121,14 +113,15 @@ export default function useMensualidades(consultarSocios) {
                 formData.append('soporte', pago.soporte);
             }
             const response = await pagarManual(formData);
-            console.log(response);
 
             if (response.status) {
                 setOpenModal(false);
                 await getMensualidadesUsuario(documento);
                 alertSucces(response.message);
             } else {
-                alertWarning("No se pudo realizar el pago");
+                response.errors.forEach((error) => {
+                    alertWarning(error);
+                })
             }
         } catch (error) {
             alertError(error.message);

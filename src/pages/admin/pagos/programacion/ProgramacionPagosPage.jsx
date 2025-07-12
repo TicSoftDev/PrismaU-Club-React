@@ -8,15 +8,15 @@ import TituloPage from '../../../../utilities/helpers/TituloPage';
 export default function ProgramacionPagosPage() {
 
     const titulo = "Programación de pagos";
-    const { programacion, loading, handleChangeProgramacion, handleProgramar } = usePagos();
+    const { programacion, loading, handleChange, handleChangeRubro, handleProgramar } = usePagos();
     const { rubros } = useRubros();
 
     return (
         <>
             <TituloPage titulo={titulo} />
             <Container>
-                <FormProgramacion programacion={programacion} handleChange={handleChangeProgramacion} rubros={rubros}
-                    loading={loading} handleSubmit={handleProgramar} />
+                <FormProgramacion programacion={programacion} handleChange={handleChange} rubros={rubros}
+                    handleChangeRubro={handleChangeRubro} loading={loading} handleSubmit={handleProgramar} />
             </Container>
         </>
     )

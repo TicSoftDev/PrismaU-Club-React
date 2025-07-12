@@ -24,10 +24,18 @@ export default function usePagos() {
 
     /*=========== Programar mensualidad ==============================*/
 
-    const handleChangeProgramacion = ({ target }) => {
+    const handleChange = ({ target }) => {
         setProgramacion({
             ...programacion,
             [target.name]: target.value
+        });
+    }
+    
+    const handleChangeRubro = (rubro) => {
+        setProgramacion({
+            ...programacion,
+            rubro_id: rubro.id,
+            rubro: rubro.rubro
         });
     }
 
@@ -36,6 +44,7 @@ export default function usePagos() {
         try {
             const response = await generarFactura(programacion);
             if (response.status) {
+                recargar();
                 alertSucces(response.message);
             } else {
                 alertWarning(response.message);
@@ -133,7 +142,8 @@ export default function usePagos() {
         loading,
         programacion,
         busqueda,
-        handleChangeProgramacion,
+        handleChange,
+        handleChangeRubro,
         handleProgramar,
         handleBusqueda
     }

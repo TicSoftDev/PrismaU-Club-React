@@ -1,12 +1,11 @@
-import { Button, Label, Select, TextInput } from 'flowbite-react'
-import React from 'react'
+import { Button, Checkbox, Label, Select, TextInput } from 'flowbite-react'
 import { FaCalendarAlt, FaCreditCard, FaDollarSign, FaKey, FaMoneyBill } from 'react-icons/fa'
 import { AportesCuotasColumn } from '../../../../models/columns/AportesCuotasColumn'
 import { formatearMoneda } from '../../../../models/FormateadorModel'
 import DataTableComponent from '../../../../utilities/dataTable/DataTableComponent'
 import Spinner from '../../../../utilities/spinner/Spinner'
 
-export default function FormPagoCuota({ cuota, handleChange, pagar, documento, loading, handleChangeImagen }) {
+export default function FormPagoCuota({ cuota, handleChange, pagar, documento, loading, handleChangeImagen, handleChangeCheck, touched }) {
 
     const columns = AportesCuotasColumn();
 
@@ -21,9 +20,9 @@ export default function FormPagoCuota({ cuota, handleChange, pagar, documento, l
                 </div>
                 <div className="w-full">
                     <div className="mb-2 block">
-                        <Label htmlFor="mes" value="Año" />
+                        <Label htmlFor="mes" value="Descripcion" />
                     </div>
-                    <TextInput id="mes" type="text" icon={FaCalendarAlt} value={cuota.año} disabled />
+                    <TextInput id="mes" type="text" icon={FaCalendarAlt} value={cuota.descripcion} disabled />
                 </div>
                 <div className="w-full">
                     <div className="mb-2 block">
@@ -63,13 +62,20 @@ export default function FormPagoCuota({ cuota, handleChange, pagar, documento, l
                             <option value="Transferencia">Transferencia</option>
                         </Select>
                     </div>
-                    <div className="w-full">
-                        <div className="mb-2 block">
-                            <Label htmlFor="monto" value="Monto a pagar" />
+                    <div className="w-1/2">
+                        <div className="flex items-center gap-2 mt-10">
+                            <Checkbox id="agregarValor" checked={touched} onChange={handleChangeCheck} />
+                            <Label htmlFor="agregarValor">¿Cambiar valor?</Label>
                         </div>
-                        <TextInput id="monto" type="number" icon={FaDollarSign} name='valor' onChange={handleChange}
-                            placeholder='Ingrese el monto...' />
                     </div>
+                    {(touched || cuota.total_pagos != 0) && (
+                        <div className="w-full">
+                            <div className="mb-2 block">
+                                <Label htmlFor="nuevoValor" value="Nuevo Valor" />
+                            </div>
+                            <TextInput id="nuevoValor" type="number" icon={FaDollarSign} onChange={handleChange} name='valor' />
+                        </div>
+                    )}
                 </div>
                 <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4 mt-5">
                     <div className="w-full">

@@ -1,5 +1,3 @@
-import React from 'react'
-
 function FormMenu({ handleChange, menu }) {
 
     return (
@@ -22,6 +20,7 @@ function FormMenu({ handleChange, menu }) {
                         <option disabled>Escoja una Opción</option>
                         <option value="portal">Portal Autogestión</option>
                         <option value="bienestar">Bienestar Laboral</option>
+                        <option value="pagos">Pagos</option>
                         <option value="perfil">Perfil de Socio</option>
                     </select>
                     <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="Descripcion_help">*Requerido.</p>

@@ -16,13 +16,14 @@ export default function useCuotasBaile(consultarSocios) {
     const [busqueda, setBusqueda] = useState('');
     const [cuota, setCuota] = useState({});
     const [preferencia, setPreferencia] = useState(null);
+    const [touched, setTouched] = useState(false);
     const [factura, setFactura] = useState(null);
     const [pago, setPago] = useState({
-        cuotas_baile_id: "",
-        valor: "",
-        metodo_pago: "",
+        cuotas_baile_id: null,
+        valor: null,
+        metodo_pago: null,
         soporte: null,
-        referencia_pago: "",
+        referencia_pago: null,
     });
     const [valorCuota, setValorCuota] = useState('');
     const [editingCuotaBaile, setEditingCuotaBaile] = useState(null);
@@ -33,12 +34,13 @@ export default function useCuotasBaile(consultarSocios) {
         setLoading(false);
         setOpenModal(false);
         setCuota({});
+        setTouched(false);
         setPago({
-            cuotas_baile_id: "",
-            valor: "",
-            metodo_pago: "",
+            cuotas_baile_id: null,
+            valor: null,
+            metodo_pago: null,
             soporte: null,
-            referencia_pago: "",
+            referencia_pago: null,
         });
     }
 
@@ -51,22 +53,20 @@ export default function useCuotasBaile(consultarSocios) {
     /*=========== Crear Preferencia ==============================*/
 
     const crearPreferencia = async () => {
-        if (!pago.valor) {
-            alertWarning("Debe ingresar un valor");
-            return;
-        }
-        if (pago.valor > cuota.restante) {
-            alertWarning("El valor no puede ser mayor al restante");
-            return;
-        }
         setLoading(true);
         try {
+            console.log(pago)
             const response = await createPreferencia(pago);
-            if (response) {
+            if (response.status) {
                 setOpenModal(true);
                 setPreferencia(response.preference_id);
+            } else {
+                response.errors.forEach((error) => {
+                    alertWarning(error);
+                })
             }
         } catch (error) {
+            console.log(error.message)
             alertError(error.message);
         }
         setLoading(false);
@@ -82,13 +82,13 @@ export default function useCuotasBaile(consultarSocios) {
     const cargar = (cuota) => {
         setOpenModal(true);
         setCuota(cuota);
+        setPago({ ...pago, cuotas_baile_id: cuota.id });
     }
 
     const handleChange = ({ target }) => {
         setPago({
             ...pago,
             [target.name]: target.value,
-            cuotas_baile_id: cuota.id
         })
     }
 
@@ -97,30 +97,28 @@ export default function useCuotasBaile(consultarSocios) {
         setPago({ ...pago, soporte: file });
     };
 
+    const handleChangeCheck = () => {
+        setTouched(!touched);
+        pago.valor = null;
+    }
+
     const pagoManual = async (documento) => {
-        if (!pago.metodo_pago || !pago.valor || !pago.referencia_pago || !pago.soporte) {
-            alertWarning("Debe llenar todos los campos");
-            return;
-        }
-        if (pago.valor > cuota.restante) {
-            alertWarning("El valor no puede ser mayor al restante");
-            return;
-        }
         setLoading(true);
         try {
             const formData = new FormData();
-            formData.append("soporte", pago.soporte);
-            formData.append("referencia_pago", pago.referencia_pago);
-            formData.append("metodo_pago", pago.metodo_pago);
-            formData.append("valor", pago.valor);
-            formData.append("cuotas_baile_id", pago.cuotas_baile_id);
+            if (pago.cuotas_baile_id !== null) { formData.append("cuotas_baile_id", pago.cuotas_baile_id); }
+            if (pago.referencia_pago !== null) { formData.append("referencia_pago", pago.referencia_pago); }
+            if (pago.metodo_pago !== null) { formData.append("metodo_pago", pago.metodo_pago); }
+            const valor = pago.valor !== null ? parseFloat(pago.valor) : null;
+            if (valor !== null) { formData.append('valor', valor); }
+            if (pago.soporte) { formData.append('soporte', pago.soporte); }
             const response = await pagarCuota(formData);
             if (response.status) {
-                setOpenModal(false);
+                recargar();
                 await getCuotasBaile(documento);
                 alertSucces(response.message);
             } else {
-                alertWarning("No se pudo realizar el pago");
+                response.errors.forEach((error) => { alertWarning(error); })
             }
         } catch (error) {
             alertError(error.message);
@@ -150,7 +148,7 @@ export default function useCuotasBaile(consultarSocios) {
     }
 
     const filtroBusqueda = () => {
-        return cuotasBaile.filter((cuota) => cuota.año.toLowerCase().includes(busqueda.toLowerCase()));
+        return cuotasBaile.filter((cuota) => cuota?.descripcion?.toLowerCase().includes(busqueda.toLowerCase()));
     }
 
     const listado = filtroBusqueda();
@@ -211,6 +209,8 @@ export default function useCuotasBaile(consultarSocios) {
         factura,
         valorCuota,
         editingCuotaBaile,
+        touched,
+        handleChangeCheck,
         handleBusqueda,
         toggleModal,
         getCuotasBaile,

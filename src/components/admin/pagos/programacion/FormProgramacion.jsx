@@ -1,9 +1,8 @@
 import { Label, Select, TextInput } from 'flowbite-react'
-import React from 'react'
-import { FaCalendarAlt, FaKeyboard } from 'react-icons/fa'
+import { FaCalendarAlt, FaHashtag, FaKeyboard } from 'react-icons/fa'
 import Spinner from '../../../../utilities/spinner/Spinner'
 
-export default function FormProgramacion({ programacion, handleChange, handleSubmit, rubros, loading }) {
+export default function FormProgramacion({ programacion, handleChange, handleChangeRubro, handleSubmit, rubros, loading }) {
 
     return (
         <>
@@ -19,8 +18,8 @@ export default function FormProgramacion({ programacion, handleChange, handleSub
                     <div className="mb-2 block">
                         <Label htmlFor="Rubro" value="Escoja el rubro" />
                     </div>
-                    <Select id="Rubro" type="text" icon={FaKeyboard} name='rubro_id' onChange={handleChange}
-                        value={programacion.rubro_id || ""}>
+                    <Select id="Rubro" type="text" icon={FaKeyboard} name='rubro_id' value={programacion.rubro_id || ""}
+                        onChange={(e) => handleChangeRubro(rubros.find(rubro => rubro.id === parseInt(e.target.value)))}>
                         <option value="" disabled>Seleccione una opción...</option>
                         {
                             rubros.map((rubro) => (
@@ -29,6 +28,15 @@ export default function FormProgramacion({ programacion, handleChange, handleSub
                         }
                     </Select>
                 </div>
+                {programacion?.rubro && programacion.rubro.includes("Cuota de baile") &&
+                    <div className="w-full">
+                        <div className="mb-2 block">
+                            <Label htmlFor="cuotas" value="Ingrese el numero de cuotas" />
+                        </div>
+                        <TextInput id="cuotas" type="text" icon={FaHashtag} name='cuotas' onChange={handleChange}
+                            value={programacion.cuotas} placeholder="Escribe el numero de cuotas..." />
+                    </div>
+                }
             </div>
             <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4 sm:mt-10">
                 <div className="w-full flex justify-end items-end">

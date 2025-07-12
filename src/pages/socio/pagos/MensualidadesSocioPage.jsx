@@ -33,7 +33,7 @@ export default function MensualidadesSocioPage() {
     useEffect(() => {
         if (documento) {
             getMensualidadesUsuario(documento);
-            initMercadoPago('APP_USR-15c9751a-5ad6-4f44-adff-dee8ec1c8d56', { locale: 'es-CO' });
+            initMercadoPago('APP_USR-34029fe8-d96f-4cb4-83a0-4d0de529d758', { locale: 'es-CO' });
         }
     }, [documento])
 

@@ -32,6 +32,7 @@ function useRubros() {
     }
 
     const handleChange = ({ target }) => {
+        console.log(target.value)
         setRubro({
             ...rubro,
             [target.name]: target.value
