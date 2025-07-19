@@ -6,7 +6,7 @@ import { createAcceso, resetAcceso } from "../redux/credencialSlice";
 import { createUser, resetUser } from "../redux/userSlice";
 import { iniciarSesion } from "../services/LoginService";
 import { alertError, alertWarning } from "../utilities/alerts/Alertas";
-import { crearStorage, removerStorage, } from "../utilities/localstorage/localstorage";
+import { crearStorageString, removerStorage } from "../utilities/localstorage/localstorage";
 import { useAppDispatch } from "./useStore";
 
 function useLogin() {
@@ -62,12 +62,12 @@ function useLogin() {
                 alertError("Usuario inactivo");
             } else {
                 dispatch(createUser(resultado.user));
-                crearStorage("@token", resultado.token);
+                crearStorageString("@token", resultado.token);
                 dispatch(createAcceso(resultado.credenciales));
                 navigate(PrivateRoutes.DASHBOARD, { replace: true });
             }
         } catch (error) {
-            setLoading(false);console.log(error)
+            setLoading(false); console.log(error)
             alertError("login" + error.message);
         }
     };

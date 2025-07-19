@@ -1,10 +1,10 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import FormImagenAdherente from '../../../components/admin/adherentes/FormImagenAdherente';
 import DataTableEmpleados from '../../../components/admin/empleados/DataTableEmpleados';
 import FormEmpleados from '../../../components/admin/empleados/FormEmpleados';
 import MenuEmpleados from '../../../components/admin/empleados/MenuEmpleados';
 import useEmpleado from '../../../hooks/useEmpleado';
+import useUsuario from '../../../hooks/useUsuario';
 import Container from '../../../utilities/helpers/Container';
 import TituloPage from '../../../utilities/helpers/TituloPage';
 import VentanaModal from '../../../utilities/modals/VentanaModal';
@@ -18,6 +18,8 @@ function EmpleadosPage() {
     } = useEmpleado();
     const handler = empleado.id ? handleUpdate : handleSubmit;
 
+    const { resetearPassword } = useUsuario();
+
     return (
         <>
             <TituloPage titulo={titulo} />
@@ -29,7 +31,7 @@ function EmpleadosPage() {
                     <FormEmpleados touched={touched} empleado={empleado} hanleChange={handleChange} />
                 </VentanaModal>
                 <DataTableEmpleados cargarEmpleado={cargarEmpleado} usuarios={lista} eliminar={eliminarEmpleado}
-                    cargar={cargarImagen} loading={loading} rol={rol} />
+                    cargar={cargarImagen} loading={loading} rol={rol} reset={resetearPassword} />
                 <VentanaModal size={'2xl'} titulo={tituloModalImage} openModal={openModalImage} cerrarModal={toggleModalImage}
                     hanleSubmit={handleUpdateImage} loading={loading}>
                     <FormImagenAdherente handleChangeImage={handleChangeImagen} />

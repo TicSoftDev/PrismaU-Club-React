@@ -8,7 +8,7 @@ import Container from '../../../utilities/helpers/Container';
 import TituloPage from '../../../utilities/helpers/TituloPage';
 import VentanaModal from '../../../utilities/modals/VentanaModal';
 
-function NoticiasPage() {
+function EventosPage() {
 
     const rol = useSelector((state) => state.credenciales.Rol);
     const { titulo, lista, loading, tituloModal, openModal, noticia, touched, busqueda,
@@ -31,4 +31,4 @@ function NoticiasPage() {
     )
 }
 
-export default NoticiasPage
+export default EventosPage

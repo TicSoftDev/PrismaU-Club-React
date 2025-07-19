@@ -51,6 +51,6 @@ export function getCardsByRole(role) {
         case 3:
             return SOCIOS_CARDS(contFamiliaresSocio, contInvitadosSocio, contEspacios);
         default:
-            return null;
+            return [];
     }
 }   

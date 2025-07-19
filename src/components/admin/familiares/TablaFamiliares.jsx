@@ -1,10 +1,9 @@
 import { Button } from 'flowbite-react';
-import React from 'react';
-import { FaEdit, FaRegImages, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaLock, FaRegImages, FaTrash } from 'react-icons/fa';
 import { RouteBack } from '../../../models/RutasModel';
 import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 
-function TablaFamiliares({ usuarios, cargarEmpleado, eliminar, loading, cargar }) {
+function TablaFamiliares({ usuarios, cargarEmpleado, eliminar, loading, cargar, reset }) {
 
     if (loading) {
         return (
@@ -45,6 +44,7 @@ function TablaFamiliares({ usuarios, cargarEmpleado, eliminar, loading, cargar }
                                             <Button onClick={() => cargarEmpleado(user)} className='rounded-full w-9 bg-blue-700 text-white' title='Editar' > <FaEdit /> </Button>
                                             <Button onClick={() => eliminar(user.user_id)} className='rounded-full w-9 bg-red-600 text-white' title='Eliminar'> <FaTrash /> </Button>
                                             <Button onClick={() => cargar(user.id)} className='rounded-full w-9 bg-fuchsia-600 text-white' title='Cambiar Imagen'> <FaRegImages />  </Button>
+                                            <Button onClick={() => reset(user.user_id)} className='rounded-full w-9 bg-yellow-500 text-white' title='Resetear Contraseña'> <FaLock />  </Button>
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">

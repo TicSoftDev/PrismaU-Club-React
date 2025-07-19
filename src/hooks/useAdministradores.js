@@ -3,12 +3,15 @@ import Swal from "sweetalert2";
 import apiQueryAdministradores from "../api/apiQueryAdministradores";
 import { normalizeText } from "../models/FormateadorModel";
 import { alertError, alertSucces, alertWarning } from "../utilities/alerts/Alertas";
+import { changePassword } from "../services/usuariosService";
 
 function useAdministradores() {
     let lista = [];
     const titulo = "Administradores";
     const [openModal, setOpenModal] = useState(false);
+    const [openModalClave, setOpenModalClave] = useState(false);
     const [busqueda, setBusqueda] = useState("");
+    const [loading, setLoading] = useState(false);
     const [admin, setAdmin] = useState({
         Nombre: "",
         Apellidos: "",
@@ -17,6 +20,10 @@ function useAdministradores() {
         Correo: "",
         Telefono: "",
         Rol: 1,
+    });
+    const [usuario, setUsuario] = useState({
+        id: null,
+        password: "",
     });
     const tituloModal = admin.id ? "Editar Administrador" : "Crear Administrador";
     const { admins, isLoading, isCreating, isUpdating, cambiarEstadoMutation,
@@ -34,6 +41,13 @@ function useAdministradores() {
             Telefono: "",
             Rol: 1,
         });
+        setUsuario({
+            id: null,
+            password: "",
+        });
+        setBusqueda("");
+        setOpenModal(false);
+        setOpenModalClave(false);
     };
 
     /*=========== Agregar ==============================*/
@@ -139,6 +153,40 @@ function useAdministradores() {
         }
     };
 
+    /*=========== Cambiar Clave ==============================*/
+
+    const cargarUser = (id) => {
+        usuario.id = id;
+        setOpenModalClave(true);
+    };
+
+    const toggleModalClave = () => {
+        recargar();
+        setOpenModalClave(!openModalClave);
+    };
+
+    const handleChangeClave = ({ target }) => {
+        setUsuario({
+            ...usuario,
+            [target.name]: target.value,
+        });
+    };
+
+    const cambiarClave = async () => {
+        try {
+            setLoading(true);
+            const resultado = await changePassword(usuario.id, usuario);
+            if (resultado.message === "hecho") {
+                alertSucces("Contraseña actualizada correctamente");
+                recargar();
+            }
+        } catch (error) {
+            alertError("Algo salio mal");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     /*=========== Eliminar ==============================*/
 
     const handleDelete = async (id) => {
@@ -173,6 +221,13 @@ function useAdministradores() {
         isLoading,
         isCreating,
         isUpdating,
+        usuario,
+        openModalClave,
+        loading,
+        cambiarClave,
+        cargarUser,
+        toggleModalClave,
+        handleChangeClave,
         handleChange,
         handleSubmit,
         toggleModal,

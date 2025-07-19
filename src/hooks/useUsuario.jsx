@@ -63,7 +63,6 @@ function useUsuario() {
     const cambiarClave = async () => {
         try {
             const resultado = await changePassword(id, usuario);
-            console.log(resultado);
             if (resultado.message === "hecho") {
                 alertSucces("Contraseña actualizada correctamente");
                 recargar();

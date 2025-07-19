@@ -7,3 +7,16 @@ export const VerifyGuard = () => {
 
     return usuario.Nombre ? <Navigate replace to={PrivateRoutes.DASHBOARD} /> : <Outlet />;
 };
+
+let sesionExpirada = false;
+
+export const marcarSesionExpirada = () => {
+    sesionExpirada = true;
+};
+
+export const sesionYaExpirada = () => sesionExpirada;
+
+export const resetSesionExpirada = () => {
+    sesionExpirada = false;
+};
+

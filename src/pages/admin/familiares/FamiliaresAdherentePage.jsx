@@ -1,10 +1,10 @@
-import React from 'react';
 import { useLocation } from 'react-router-dom';
 import FormImagenAdherente from '../../../components/admin/adherentes/FormImagenAdherente';
 import FormFamiliar from '../../../components/admin/familiares/FormFamiliar';
 import TablaFamiliares from '../../../components/admin/familiares/TablaFamiliares';
 import MenuSencillo from '../../../components/layouts/menu/MenuSencillo';
 import useFamiliares from '../../../hooks/useFamiliares';
+import useUsuario from '../../../hooks/useUsuario';
 import Container from '../../../utilities/helpers/Container';
 import TituloPage from '../../../utilities/helpers/TituloPage';
 import VentanaModal from '../../../utilities/modals/VentanaModal';
@@ -17,6 +17,7 @@ function FamiliaresAdherentePage() {
         toggleModal, handleChange, handleSubmit, handleUpdate, cargarFamiliar, eliminarFamiliar, toggleModalImage,
         handleChangeImagen, cargarImagen, handleUpdateImage } = useFamiliares(id, codigo, estado, 'Adherente');
     const handler = familiar.id ? handleUpdate : handleSubmit;
+    const { resetearPassword } = useUsuario();
 
     return (
         <>
@@ -28,7 +29,7 @@ function FamiliaresAdherentePage() {
                     <FormFamiliar familiar={familiar} hanleChange={handleChange} touched={touched} />
                 </VentanaModal>
                 <TablaFamiliares cargarEmpleado={cargarFamiliar} usuarios={familiares} eliminar={eliminarFamiliar}
-                    loading={loading} cargar={cargarImagen} />
+                    loading={loading} cargar={cargarImagen} reset={resetearPassword} />
                 <VentanaModal size={'2xl'} titulo={tituloModalImage} openModal={openModalImage} cerrarModal={toggleModalImage}
                     hanleSubmit={handleUpdateImage} loading={loading}>
                     <FormImagenAdherente handleChangeImage={handleChangeImagen} />

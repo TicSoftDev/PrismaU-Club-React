@@ -1,7 +1,6 @@
-import React from 'react';
-import { FaEdit, FaTrash, FaUser, FaUserSlash } from 'react-icons/fa';
+import { FaEdit, FaLock, FaTrash, FaUser, FaUserSlash } from 'react-icons/fa';
 
-export default function AdministradoresColumns(cargarAdmin, eliminar, change) {
+export default function AdministradoresColumns(cargarAdmin, eliminar, change, password) {
 
     return [
         {
@@ -11,6 +10,7 @@ export default function AdministradoresColumns(cargarAdmin, eliminar, change) {
                     <button onClick={() => cargarAdmin(row.admin)} className="rounded-full w-9 h-9 bg-blue-700 text-white flex justify-center items-center" title="Editar"><FaEdit /></button>
                     <button onClick={() => eliminar(row.id)} className="rounded-full w-9 h-9 bg-red-600 text-white flex justify-center items-center" title="Eliminar"><FaTrash /></button>
                     <button onClick={() => change(row.admin.id)} className='rounded-full w-9 h-9 bg-yellow-400 text-white flex justify-center items-center' title={row.admin.Estado == 1 ? 'Inactivar' : 'Activar'}> {row.admin.Estado == 1 ? <FaUserSlash /> : <FaUser />}   </button>
+                    <button onClick={() => password(row.id)} className='rounded-full w-9 h-9 bg-purple-600 text-white flex justify-center items-center' title="Cambiar Contraseña">  <FaLock />   </button>
                 </div>
             ),
             width: '180px'

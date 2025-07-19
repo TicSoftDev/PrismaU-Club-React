@@ -1,6 +1,6 @@
-import React from 'react';
 import MenuEmpleados from '../../../components/admin/empleados/MenuEmpleados';
 import FormAdmin from '../../../components/superAdmin/administradores/FormAdmin';
+import FormClave from '../../../components/superAdmin/administradores/FormClave';
 import useAdministradores from '../../../hooks/useAdministradores';
 import AdministradoresColumns from '../../../models/columns/AdministradoresColumns';
 import DataTableComponent from '../../../utilities/dataTable/DataTableComponent';
@@ -10,12 +10,12 @@ import VentanaModal from '../../../utilities/modals/VentanaModal';
 
 function AdministradoresPage() {
 
-    const { titulo, tituloModal, openModal, lista, busqueda, admin, isLoading, isCreating, isUpdating,
-        handleChange, handleSubmit, toggleModal, cargar, handleDelete, handleUpdate, handleBusqueda, changeState
-    } = useAdministradores();
+    const { titulo, tituloModal, openModal, lista, busqueda, admin, isLoading, isCreating, isUpdating, usuario,
+        handleChange, handleSubmit, toggleModal, cargar, handleDelete, handleUpdate, handleBusqueda, changeState,
+        openModalClave, loading, handleChangeClave, cargarUser, toggleModalClave, cambiarClave } = useAdministradores();
     const handler = admin.id ? handleUpdate : handleSubmit;
-    const loading = admin.id ? isUpdating : isCreating;
-    const columns = AdministradoresColumns(cargar, handleDelete, changeState);
+    const loading2 = admin.id ? isUpdating : isCreating;
+    const columns = AdministradoresColumns(cargar, handleDelete, changeState, cargarUser);
     return (
         <>
             <TituloPage titulo={titulo} />
@@ -24,8 +24,12 @@ function AdministradoresPage() {
                     entidad={true} titulo={titulo} data={lista} />
                 <DataTableComponent columns={columns} data={lista} loading={isLoading} />
                 <VentanaModal size={'7xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal}
-                    hanleSubmit={handler} loading={loading}>
+                    hanleSubmit={handler} loading={loading2}>
                     <FormAdmin admin={admin} hanleChange={handleChange} />
+                </VentanaModal>
+                <VentanaModal size={'xl'} titulo={'Cambiar Clave'} openModal={openModalClave} cerrarModal={toggleModalClave}
+                    hanleSubmit={cambiarClave} loading={loading}>
+                    <FormClave usuario={usuario} hanleChange={handleChangeClave} />
                 </VentanaModal>
             </Contenido>
         </>

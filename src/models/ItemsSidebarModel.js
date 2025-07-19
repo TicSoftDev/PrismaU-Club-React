@@ -12,7 +12,7 @@ const ADMIN_ITEMS = [
     { icono: "users", texto: "Empleados", color: "yellow", opacidad: '400', link: PrivateRoutes.EMPLEADOS },
     { isTitle: true, texto: "Espacios y Comunicaciones" },
     { icono: "map-marked-alt", texto: "Espacios", color: "green", opacidad: '600', link: PrivateRoutes.ESPACIOS, activeSubroutes: [PrivateRoutes.DISPONIBILIDAD_ESPACIO] },
-    { icono: "newspaper", texto: "Noticias", color: "purple", opacidad: '600', link: PrivateRoutes.NOTICIAS },
+    { icono: "bullhorn", texto: "Eventos", color: "purple", opacidad: '600', link: PrivateRoutes.NOTICIAS },
     { isTitle: true, texto: "Seguridad y Finanzas" },
     { icono: "user-clock", texto: "Invitaciones", color: "red", opacidad: '600', link: PrivateRoutes.INVITACIONES },
     { icono: "id-badge", texto: "Control de Accesos", color: "yellow", opacidad: '400', link: PrivateRoutes.ACCESOS },
@@ -48,6 +48,6 @@ export function getMenuItemsByRole(role) {
         case 3:
             return SOCIO_ITEMS;
         default:
-            return null;
+            return [];
     }
 }

@@ -5,7 +5,7 @@ import { alertError, alertSucces, alertWarning } from '../utilities/alerts/Alert
 
 function useNoticia() {
 
-    const titulo = 'Noticias';
+    const titulo = 'Eventos';
     let lista = [];
     const [touched, setTouched] = useState(false);
     const [openModal, setOpenModal] = useState(false);

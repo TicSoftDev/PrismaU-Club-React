@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Plantilla from '../components/layouts/Plantilla';
 import { PrivateRoutes, PublicRoutes } from '../models/RutasModel';
@@ -15,10 +14,10 @@ import RespuestasPage from '../pages/admin/encuestas/RespuestasPage';
 import RespuestasUserEncuestaPage from '../pages/admin/encuestas/RespuestasUserEncuestaPage';
 import EspaciosPage from '../pages/admin/espacios/EspaciosPage';
 import LogEstadosPage from '../pages/admin/estados/LogEstadosPage';
+import EventosPage from '../pages/admin/eventos/EventosPage';
 import FamiliaresAdherentePage from '../pages/admin/familiares/FamiliaresAdherentePage';
 import FamiliaresAsociadoPage from '../pages/admin/familiares/FamiliaresAsociadoPage';
 import InvitacionesPage from '../pages/admin/invitaciones/InvitacionesPage';
-import NoticiasPage from '../pages/admin/noticias/NoticiasPage';
 import PagarPage from '../pages/admin/pagos/pagar/PagarPage';
 import HistorialPagosCuotasPage from '../pages/admin/pagos/pagos/HistorialPagosCuotasPage';
 import HistorialPagosPage from '../pages/admin/pagos/pagos/HistorialPagosPage';
@@ -43,7 +42,7 @@ import AdministradoresPage from '../pages/superAdmin/administradores/Administrad
 import ContratacionesPage from '../pages/superAdmin/contrataciones/ContratacionesPage';
 import HobbiesPage from '../pages/superAdmin/hobbies/HobbiesPage';
 import RolesPage from '../pages/superAdmin/roles/RolesPage';
-import AuthGuard from '../utilities/guards/AuthGuard';
+import { AuthGuard } from '../utilities/guards/AuthGuard';
 import { AdminGuard, AdminSocioGuard, SocioGuard, SuperadminGuard } from '../utilities/guards/RolGuard';
 import { VerifyGuard } from '../utilities/guards/VerifyGuard';
 
@@ -78,7 +77,7 @@ const Rutas = () => {
                             <Route element={<EspaciosPage />} path={PrivateRoutes.ESPACIOS} />
                             <Route element={<InvitacionesPage />} path={PrivateRoutes.INVITACIONES} />
                             <Route element={<LogEstadosPage />} path={PrivateRoutes.ESTADOS} />
-                            <Route element={<NoticiasPage />} path={PrivateRoutes.NOTICIAS} />
+                            <Route element={<EventosPage />} path={PrivateRoutes.NOTICIAS} />
                             <Route element={<BusquedaUserPage />} path={PrivateRoutes.BUSCAR_USER} />
                             <Route element={<SolicitudesPage />} path={PrivateRoutes.SOLICITUDES} />
                             <Route element={<ReservasPage />} path={PrivateRoutes.RESERVAS} />

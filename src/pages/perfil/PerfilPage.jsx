@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import FormPerfil from '../../components/perfil/FormPerfil';
 import useUsuario from '../../hooks/useUsuario';
