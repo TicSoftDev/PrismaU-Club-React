@@ -61,6 +61,7 @@ export default function FormPagar({ touched, handleChangeCheck, documento, mensu
                         <option value="Efectivo">Efectivo</option>
                         <option value="Tarjeta de Credito">Tarjeta de Credito</option>
                         <option value="Transferencia">Transferencia</option>
+                        <option value="Canje">Canje</option>
                     </Select>
                 </div>
                 <div className="w-1/2">
@@ -69,14 +70,14 @@ export default function FormPagar({ touched, handleChangeCheck, documento, mensu
                         <Label htmlFor="agregarValor">¿Cambiar valor?</Label>
                     </div>
                 </div>
-                {/* {(touched || mensualidad?.total_pagos != 0) && (
+                {(touched || mensualidad?.total_pagos != 0) && (
                     <div className="w-full">
                         <div className="mb-2 block">
                             <Label htmlFor="nuevoValor" value="Nuevo Valor" />
                         </div>
                         <TextInput id="nuevoValor" type="number" icon={FaDollarSign} onChange={handleChange} name='valor' />
                     </div>
-                )} */}
+                )}
             </div>
             <div className="max-w-full flex flex-col sm:flex-row sm:space-x-4 mt-5">
                 <div className="w-full">

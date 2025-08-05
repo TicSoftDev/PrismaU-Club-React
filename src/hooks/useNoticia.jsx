@@ -17,8 +17,14 @@ function useNoticia() {
         Descripcion: "",
         Imagen: null,
         Vencimiento: "",
+        correo: false,
+        push: false,
+        Destinatario: "",
+        Fecha : "",
+        Hora: "",
+        Tipo: "",
     });
-    const tituloModal = noticia.id ? "Actualizar Noticia" : "Crear Noticia";
+    const tituloModal = noticia.id ? "Actualizar Evento" : "Crear Evento";
 
     const recargar = () => {
         setNoticia({
@@ -26,6 +32,12 @@ function useNoticia() {
             Descripcion: "",
             Imagen: null,
             Vencimiento: "",
+            correo: false,
+            push: false,
+            Destinatario: "",
+            Fecha : "",
+            Hora: "",
+            Tipo: "",
         });
         setTouched(false);
     };
@@ -46,6 +58,13 @@ function useNoticia() {
         });
     };
 
+    const handleChangeCheck = ({ target }) => {
+        setNoticia({
+            ...noticia,
+            [target.name]: !noticia[target.name]
+        });
+    };
+
     const handleChangeImage = ({ target }) => {
         const file = target.files[0];
         setNoticia({
@@ -58,26 +77,15 @@ function useNoticia() {
         try {
             setTouched(true);
             e.preventDefault();
-            if (!noticia.Titulo || !noticia.Descripcion || !noticia.Vencimiento) {
-                alertWarning("Por favor, ingrese todos los campos. ");
-                return;
-            }
-            // const formData = new FormData();
-            // formData.append('Titulo', noticia.Titulo);
-            // formData.append('Descripcion', noticia.Descripcion);
-            // if (noticia.Imagen) {
-            //     formData.append('Imagen', noticia.Imagen);
-            // }
-            // formData.append('Vencimiento', noticia.Vencimiento);
             setLoading(true);
             const data = await createNoticia(noticia);
             setLoading(false);
             if (data.status) {
                 toggleModal();
-                alertSucces("Creado correctamente");
+                alertSucces(data.message);
                 await getListadoNoticias();
             } else {
-                alertWarning("No se pudo crear la noticia");
+                data.errors.forEach((err) => alertWarning(err));
             }
         } catch (error) {
             setLoading(false);
@@ -105,19 +113,15 @@ function useNoticia() {
     const handleUpdate = async (e) => {
         setTouched(true);
         e.preventDefault();
-        if (!noticia.Titulo || !noticia.Descripcion || !noticia.Vencimiento) {
-            alertWarning("Por favor, ingrese todos los campos. ");
-            return;
-        }
         setLoading(true);
         try {
             const resultado = await updateNoticia(noticia, noticia.id);
             if (resultado.status) {
                 toggleModal();
-                alertSucces("Actualizado correctamente");
+                alertSucces(resultado.message);
                 await getListadoNoticias();
             } else {
-                alertWarning("No se pudo actualizar la noticia");
+                resultado.errors.forEach((err) => alertWarning(err));
             }
         } catch (error) {
             setLoading(false);
@@ -184,7 +188,9 @@ function useNoticia() {
 
     return {
         titulo, tituloModal, openModal, noticia, lista, busqueda, loading, touched,
-        handleChangeImage, toggleModal, handleChange, handleBusqueda, handleSubmit, cargarNoticia, handleUpdate, eliminarNoticia
+        handleChangeImage, toggleModal, handleChange, handleBusqueda, handleSubmit, cargarNoticia,
+        handleChangeCheck,
+        handleUpdate, eliminarNoticia
     };
 }
 

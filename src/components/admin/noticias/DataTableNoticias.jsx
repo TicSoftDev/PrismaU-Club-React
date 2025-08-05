@@ -1,6 +1,6 @@
-import React from 'react';
 import DataTable from 'react-data-table-component';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import { formatearFecha, formatearHora } from '../../../models/FormateadorModel';
 import TableSkeleton from '../../../utilities/skeletons/TableSkeleton';
 
 function DataTableNoticias({ data, rol, loading, editar, eliminar }) {
@@ -14,15 +14,23 @@ function DataTableNoticias({ data, rol, loading, editar, eliminar }) {
                     {rol == 0 && <button onClick={() => eliminar(row.id)} className="rounded-full w-9 h-9 bg-red-600 text-white flex justify-center items-center" title="Eliminar"><FaTrash /></button>}
                 </div>
             ),
-            width: '200px'
+            width: '100px'
         },
         {
             name: "Titulo",
             cell: row => row.Titulo,
         },
         {
+            name: "Tipo",
+            cell: row => row.Tipo,
+        },
+        {
+            name: "Fecha del evento",
+            cell: row => `${formatearFecha((row.Fecha))} - ${formatearHora(row.Hora)}`,
+        },
+        {
             name: "Vencimiento",
-            cell: row => row.Vencimiento,
+            cell: row => formatearFecha(row.Vencimiento),
         }
     ];
 

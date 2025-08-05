@@ -12,8 +12,8 @@ function EventosPage() {
 
     const rol = useSelector((state) => state.credenciales.Rol);
     const { titulo, lista, loading, tituloModal, openModal, noticia, touched, busqueda,
-        toggleModal, handleChange, handleChangeImage, handleSubmit, cargarNoticia, handleUpdate, eliminarNoticia, handleBusqueda
-    } = useNoticia();
+        toggleModal, handleChange, handleChangeImage, handleSubmit, cargarNoticia, handleUpdate, eliminarNoticia,
+        handleChangeCheck, handleBusqueda } = useNoticia();
     const handler = !noticia.id ? handleSubmit : handleUpdate;
 
     return (
@@ -24,7 +24,8 @@ function EventosPage() {
                 <DataTableNoticias data={lista} loading={loading} editar={cargarNoticia} eliminar={eliminarNoticia} rol={rol} />
                 <VentanaModal size={'7xl'} titulo={tituloModal} openModal={openModal} cerrarModal={toggleModal}
                     hanleSubmit={handler} loading={loading}>
-                    <FormNoticias hanleChange={handleChange} noticia={noticia} touched={touched} handleChangeImage={handleChangeImage} />
+                    <FormNoticias hanleChange={handleChange} noticia={noticia} touched={touched}
+                        handleChangeCheck={handleChangeCheck} handleChangeImage={handleChangeImage} />
                 </VentanaModal>
             </Container>
         </>

@@ -60,6 +60,7 @@ export default function FormPagoCuota({ cuota, handleChange, pagar, documento, l
                             <option value="Efectivo">Efectivo</option>
                             <option value="Tarjeta de Credito">Tarjeta de Credito</option>
                             <option value="Transferencia">Transferencia</option>
+                            <option value="Canje">Canje</option>
                         </Select>
                     </div>
                     <div className="w-1/2">

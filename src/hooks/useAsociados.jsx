@@ -249,6 +249,7 @@ function useAsociados() {
                 alertWarning("No se pudo cambiar");
             }
         } catch (error) {
+            console.log(error)
             setLoading(false);
             alertError("Update estado: " + error.message);
         }

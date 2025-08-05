@@ -8,6 +8,7 @@ import imagen from '../../../assets/img/imagen';
 import { formatearMoneda } from '../../../models/FormateadorModel';
 import { RouteBack } from '../../../models/RutasModel';
 import FacturaPDF from '../../admin/pagos/facturas/FacturaPDF';
+import FilePreview from './FilePreview';
 
 export default function FacturaPago({ pago, user }) {
 
@@ -215,7 +216,7 @@ export default function FacturaPago({ pago, user }) {
                         {
                             pago.pago.map((pago) => (
                                 pago.soporte
-                                    ? <img src={RouteBack + pago.soporte} alt="soporte" key={pago.id} className="mb-2 max-h-80 object-contain border rounded" />
+                                    ? <FilePreview key={pago.id} fileUrl={RouteBack + pago.soporte} />
                                     : <p key={pago.id} className="text-sm text-gray-500">El pago se realizó con el metodo de pago: {pago.metodo_pago}</p>
                             ))
                         }
