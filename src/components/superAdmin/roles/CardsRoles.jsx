@@ -5,8 +5,8 @@ function CardsRoles({ consultar }) {
     const roles = [
         { id: 2, descripcion: 'Asociado', icono: <FaUserTie className='text-2xl' />, color: { bg: 'from-yellow-400 to-orange-300', icon: 'text-purple-50' } },
         { id: 3, descripcion: 'Adherente', icono: <FaUserTie className='text-2xl' />, color: { bg: 'from-green-400 to-emerald-500', icon: 'text-cyan-50' } },
-        { id: 4, descripcion: 'Familiar', icono: <FaUsers className='text-2xl' />, color: { bg: 'from-purple-400 to-fuchsia-500', icon: 'text-cyan-50' } },
-        { id: 5, descripcion: 'Empleado', icono: <FaUser className='text-2xl' />, color: { bg: 'from-red-500 to-red-400', icon: 'text-cyan-50' } },
+        { id: 4, descripcion: 'Empleado', icono: <FaUser className='text-2xl' />, color: { bg: 'from-red-500 to-red-400', icon: 'text-cyan-50' } },
+        { id: 5, descripcion: 'Familiar', icono: <FaUsers className='text-2xl' />, color: { bg: 'from-purple-400 to-fuchsia-500', icon: 'text-cyan-50' } },
         { id: 6, descripcion: 'Portero', icono: <FaUser className='text-2xl' />, color: { bg: 'from-yellow-400 to-orange-300', icon: 'text-cyan-50' } },
         { id: 7, descripcion: 'Administrativo', icono: <FaUser className='text-2xl' />, color: { bg: 'from-purple-400 to-fuchsia-500', icon: 'text-cyan-50' } },
     ];

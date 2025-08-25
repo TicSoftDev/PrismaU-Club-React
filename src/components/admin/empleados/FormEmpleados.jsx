@@ -151,11 +151,11 @@ function FormEmpleados({ empleado, hanleChange, touched }) {
                         <option value="" disabled>Escoja una opción...</option>
                         <option value={7}>Administrativo</option>
                         <option value={6}>Portero</option>
-                        <option value={5}>Otro</option>
+                        <option value={4}>Otro</option>
                     </Select>
                     <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                 </div>
-                {(empleado.Rol === 5 || empleado.Rol === 7) &&
+                {(Number(empleado.Rol) === 4 || Number(empleado.Rol) === 7) &&
                     <div className="w-full">
                         <div className="mb-2 block">
                             <Label htmlFor="cargo" value="Cargo" />
@@ -164,7 +164,6 @@ function FormEmpleados({ empleado, hanleChange, touched }) {
                             className={inputClass(empleado.Cargo)} value={empleado.Cargo}
                             name='Cargo' placeholder="Escriba el cargo que ocupa" />
                         <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
-                        {empleado.Cargo == 'Portero'}
                     </div>
                 }
                 <div className="w-full">
