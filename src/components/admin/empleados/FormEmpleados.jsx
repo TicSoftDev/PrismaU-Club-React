@@ -1,12 +1,11 @@
 import { Label, Select, TextInput } from 'flowbite-react';
-import React from 'react';
 import { FaBriefcase, FaCalendarAlt, FaCity, FaEnvelope, FaEye, FaIdCard, FaKeyboard, FaMapMarkerAlt, FaMercury, FaPhoneAlt, FaUserTag } from 'react-icons/fa';
 import { FaMapLocation } from 'react-icons/fa6';
 
 function FormEmpleados({ empleado, hanleChange, touched }) {
 
     const inputClass = (value) => (
-        touched && value.trim() === '' && 'border border-red-500 rounded-lg'
+        touched && (!value || (typeof value === 'string' && value.trim() === '')) ? 'border border-red-500 rounded-lg' : ''
     );
 
     return (
@@ -145,17 +144,18 @@ function FormEmpleados({ empleado, hanleChange, touched }) {
                 </div>
                 <div className="w-full">
                     <div className="mb-2 block">
-                        <Label htmlFor="Portero" value="¿Es un portero?" />
+                        <Label htmlFor="Portero" value="Tipo de Empleado" />
                     </div>
                     <Select id="Portero" onChange={hanleChange} name='Rol' className={inputClass(empleado.Rol)}
                         value={empleado.Rol} >
                         <option value="" disabled>Escoja una opción...</option>
-                        <option value={6}>Si</option>
-                        <option value={4}>No </option>
+                        <option value={7}>Administrativo</option>
+                        <option value={6}>Portero</option>
+                        <option value={5}>Otro</option>
                     </Select>
                     <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>
                 </div>
-                {empleado.Rol === '4' &&
+                {(empleado.Rol === 5 || empleado.Rol === 7) &&
                     <div className="w-full">
                         <div className="mb-2 block">
                             <Label htmlFor="cargo" value="Cargo" />

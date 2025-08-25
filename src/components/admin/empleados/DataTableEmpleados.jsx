@@ -17,7 +17,7 @@ export default function DataTableEmpleados({ usuarios, rol, cargarEmpleado, elim
                     <Button onClick={() => reset(row.user_id)} className='rounded-full w-9 bg-red-600 text-white' title='Resetear Contraseña'> <FaLock />  </Button>
                 </div>
             ),
-            width: '150px'
+            width: '180px'
         },
         {
             name: "Estado",

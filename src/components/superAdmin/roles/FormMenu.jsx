@@ -22,6 +22,7 @@ function FormMenu({ handleChange, menu }) {
                         <option value="bienestar">Bienestar Laboral</option>
                         <option value="pagos">Pagos</option>
                         <option value="perfil">Perfil de Socio</option>
+                        <option value="finanzas">Finanzas</option>
                     </select>
                     <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="Descripcion_help">*Requerido.</p>
                 </div>

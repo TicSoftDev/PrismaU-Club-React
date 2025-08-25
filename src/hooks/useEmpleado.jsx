@@ -68,21 +68,15 @@ function useEmpleado() {
         try {
             e.preventDefault();
             setTouched(true);
-            if (empleado.Nombre === "" || empleado.Apellidos === "" || empleado.Documento === "" || empleado.TipoDocumento === "" || empleado.Correo === "" || empleado.Telefono === "" || empleado.FechaNacimiento === "" || empleado.LugarNacimiento === "" || empleado.Sexo === "" || empleado.DireccionResidencia === "" || empleado.CiudadResidencia === "" || empleado.Cargo === "" || empleado.Estado === "") {
-                alertWarning("Por favor, ingrese todos los campos");
-                return;
-            }
             setLoading(true);
             const data = await createEmpleado(empleado);
             setLoading(false);
             if (data.status) {
                 toggleModal();
-                alertSucces("Creado correctamente");
+                alertSucces(data.message);
                 await getListadoEmpleados();
-            } else if (data.status === false && data.message === 'Existe') {
-                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
             } else {
-                alertWarning("No se pudo crear el Empleado");
+                data.errors.forEach((err) => alertWarning(err));
             }
         } catch (error) {
             setLoading(false);
@@ -92,16 +86,16 @@ function useEmpleado() {
 
     const handleChange = ({ target }) => {
         const { name, value } = target;
-        const updatedEmpleado = {
-            ...empleado,
-            [name]: value
-        };
-        if (name === 'Rol' && value === '6') {
-            updatedEmpleado.Cargo = 'Portero';
-        } else if (name === 'Rol' && value !== '6') {
-            updatedEmpleado.Cargo = '';
-        }
-        setEmpleado(updatedEmpleado);
+        setEmpleado((prev) => {
+            const parsedValue = name === "Rol" ? Number(value) : value;
+            const updated = { ...prev, [name]: parsedValue };
+            if (name === "Rol" && Number(value) === 6) {
+                updated.Cargo = "Portero"
+            } else if (name === "Rol" && Number(value) !== 6) {
+                updated.Cargo = ""
+            }
+            return updated;
+        });
     };
 
     const getListadoEmpleados = async () => {
@@ -117,30 +111,23 @@ function useEmpleado() {
     };
 
     const cargarEmpleado = async (empleado) => {
-        setEmpleado({
-            ...empleado,
-            Rol: empleado.Cargo === 'Portero' ? '6' : '4'
-        });
+        setEmpleado(empleado);
         setOpenModal(true);
     };
 
     const handleUpdate = async (e) => {
+        e.preventDefault();
         try {
             setTouched(true);
-            if (empleado.Nombre === "" || empleado.Apellidos === "" || empleado.Documento === "" || empleado.TipoDocumento === "" || empleado.Correo === "" || empleado.Telefono === "" || empleado.FechaNacimiento === "" || empleado.LugarNacimiento === "" || empleado.Sexo === "" || empleado.DireccionResidencia === "" || empleado.CiudadResidencia === "" || empleado.Cargo === "" || empleado.Estado === "") {
-                alertWarning("Por favor, ingrese todos los campos");
-                return;
-            }
-            e.preventDefault();
             setLoading(true);
             const resultado = await updateEmpleado(empleado, empleado.user_id);
             setLoading(false);
             if (resultado.status) {
                 toggleModal();
-                alertSucces("Actualizado correctamente");
+                alertSucces(resultado.message);
                 await getListadoEmpleados();
-            } else if (resultado.status === false && resultado.message === 'Existe') {
-                alertWarning("Por favor, revisa el formulario, hay campos con valores que ya existen. ");
+            } else {
+                resultado.errors.forEach((err) => alertWarning(err));
             }
         } catch (error) {
             setLoading(false);

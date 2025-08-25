@@ -292,6 +292,7 @@ function useAsociados() {
             }
         } catch (error) {
             setLoading(false);
+            console.log(error);
             alertError("update image: " + error.message);
         }
     }

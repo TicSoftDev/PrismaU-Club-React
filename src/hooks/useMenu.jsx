@@ -176,7 +176,7 @@ function useMenu() {
             });
 
         } catch (error) {
-            console.log("Pregunta", error.message);
+            console.log("Menu", error.message);
             alertError("Eliminar menu: " + error.message);
         }
     }
