@@ -30,6 +30,11 @@ export default function DataTableEmpleados({ usuarios, rol, cargarEmpleado, elim
             width: '100px'
         },
         {
+            name: "Cargo",
+            selector: row => row.Cargo,
+            width: '190px'
+        },
+        {
             name: "Nombre Completo",
             cell: row => (
                 <div className="flex items-center space-x-3 w-full">

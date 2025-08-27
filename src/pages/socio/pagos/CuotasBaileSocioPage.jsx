@@ -33,7 +33,7 @@ export default function CuotasBaileSocioPage() {
     useEffect(() => {
         if (documento) {
             getCuotasBaile(documento);
-            initMercadoPago('APP_USR-34029fe8-d96f-4cb4-83a0-4d0de529d758', { locale: 'es-CO' });
+            initMercadoPago('APP_USR-90ac2c5a-f087-419c-9e69-684aa12359ca', { locale: 'es-CO' });
         }
     }, [documento]);
 
