@@ -63,4 +63,4 @@ export default function MensualidadesSocioPage() {
             </ModalSencillo>
         </>
     )
-}s
+}
