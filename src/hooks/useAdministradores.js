@@ -27,7 +27,7 @@ function useAdministradores() {
     });
     const tituloModal = admin.id ? "Editar Administrador" : "Crear Administrador";
     const { admins, isLoading, isCreating, isUpdating, cambiarEstadoMutation,
-        createAdminMutation, actualizarAdminMutation, eliminarAdminMutation } = apiQueryAdministradores(setOpenModal);
+        createAdminMutation, actualizarAdminMutation, eliminarAdminMutation } = apiQueryAdministradores();
 
     /*=========== Recargar ==============================*/
 
@@ -46,8 +46,6 @@ function useAdministradores() {
             password: "",
         });
         setBusqueda("");
-        setOpenModal(false);
-        setOpenModalClave(false);
     };
 
     /*=========== Agregar ==============================*/
