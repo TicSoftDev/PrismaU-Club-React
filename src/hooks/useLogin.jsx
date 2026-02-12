@@ -64,7 +64,7 @@ function useLogin() {
                 dispatch(createUser(resultado.user));
                 crearStorageString("@token", resultado.token);
                 dispatch(createAcceso(resultado.credenciales));
-                navigate(PrivateRoutes.DASHBOARD, { replace: true });
+                navigate(PrivateRoutes.HOME, { replace: true });
             }
         } catch (error) {
             setLoading(false);

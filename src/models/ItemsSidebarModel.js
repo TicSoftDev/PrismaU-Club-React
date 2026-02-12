@@ -36,6 +36,30 @@ const SOCIO_ITEMS = [
     { icono: "credit-card", texto: "Cuotas de baile", color: "green", opacidad: '600', link: PrivateRoutes.PAGOS_CUOTAS_BAILE },
 ];
 
+const GERENTE_RESTAURANTE_ITEMS = [
+    { isTitle: true, texto: "Gestión de espacios" },
+    { icono: "fire", texto: "Cocinas", color: "purple", opacidad: '600', link: PrivateRoutes.COCINAS },
+    { icono: "map-marked-alt", texto: "Ubicaciones", color: "red", opacidad: '600', link: PrivateRoutes.UBICACIONES, activeSubroutes: [PrivateRoutes.MESA] },
+    { isTitle: true, texto: "Productos" },
+    { icono: "utensils", texto: "Comidas", color: "yellow", opacidad: '400', link: PrivateRoutes.COMIDAS },
+    { icono: "glass-cheers", texto: "Bebidas", color: "green", opacidad: '600', link: PrivateRoutes.BEBIDAS },
+    { isTitle: true, texto: "Inventario" },
+    { icono: "clipboard-list", texto: "Preinventarios", color: "purple", opacidad: '600', link: PrivateRoutes.PREINVENTARIO, activeSubroutes: [PrivateRoutes.DETALLES_PREINVENTARIO] },
+    { icono: "clipboard-check", texto: "Inventarios", color: "red", opacidad: '600', link: PrivateRoutes.INVENTARIO, activeSubroutes: [PrivateRoutes.DETALLES_INVENTARIO] },
+];
+
+const MESERO_RESTAURANTE_ITEMS = [
+    { isTitle: true, texto: "Gestión de pedidos " },
+    { icono: "plus", texto: "Crear Pedido", color: "purple", opacidad: '600', link: PrivateRoutes.CREAR_PEDIDO },
+    { icono: "receipt", texto: "Pedidos Abiertos", color: "red", opacidad: '600', link: PrivateRoutes.PEDIDOS_ABIERTOS, activeSubroutes: [PrivateRoutes.DETALLE_PEDIDO] },
+    { icono: "clipboard-check", texto: "Pedidos Cerrados", color: "yellow", opacidad: '400', link: PrivateRoutes.PEDIDOS_CERRADOS },
+];
+
+const COCINERO_RESTAURANTE_ITEMS = [
+    { isTitle: true, texto: "Gestión de pedidos " },
+    { icono: "receipt", texto: "Pedidos", color: "purple", opacidad: '600', link: PrivateRoutes.PEDIDOS },
+];
+
 export function getMenuItemsByRole(role) {
     const numericRole = Number(role);
     switch (numericRole) {
@@ -47,6 +71,12 @@ export function getMenuItemsByRole(role) {
             return SOCIO_ITEMS;
         case 3:
             return SOCIO_ITEMS;
+        case 8:
+            return GERENTE_RESTAURANTE_ITEMS;
+        case 9:
+            return COCINERO_RESTAURANTE_ITEMS;
+        case 10:
+            return MESERO_RESTAURANTE_ITEMS;
         default:
             return [];
     }

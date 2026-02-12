@@ -34,6 +34,15 @@ function useEmpleado() {
     const tituloModal = empleado.id ? "Actualizar Empleado" : "Crear Empleado";
     const tituloModalImage = "Actualizar Imagen";
 
+    const TIPOS_EMPLEADOS = {
+        4: "",
+        6: "Portero",
+        7: "",
+        8: "Gerente Restaurante",
+        9: "Cocinero",
+        10: "Mesero",
+    };
+
     const recargar = () => {
         setEmpleado({
             Nombre: "",
@@ -89,10 +98,8 @@ function useEmpleado() {
         setEmpleado((prev) => {
             const parsedValue = name === "Rol" ? Number(value) : value;
             const updated = { ...prev, [name]: parsedValue };
-            if (name === "Rol" && Number(value) === 6) {
-                updated.Cargo = "Portero"
-            } else if (name === "Rol" && Number(value) !== 6) {
-                updated.Cargo = ""
+            if (name === "Rol") {
+                updated.Cargo = TIPOS_EMPLEADOS[parsedValue] ?? prev.Cargo;
             }
             return updated;
         });

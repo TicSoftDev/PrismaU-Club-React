@@ -5,7 +5,7 @@ import { PrivateRoutes } from '../../models/RutasModel';
 export const VerifyGuard = () => {
     const usuario = useSelector((state) => state.user);
 
-    return usuario.Nombre ? <Navigate replace to={PrivateRoutes.DASHBOARD} /> : <Outlet />;
+    return usuario.Nombre ? <Navigate replace to={PrivateRoutes.HOME} /> : <Outlet />;
 };
 
 let sesionExpirada = false;

@@ -34,6 +34,18 @@ import PerfilPage from '../pages/perfil/PerfilPage';
 import ChangePassword from '../pages/reset/ChangePassword';
 import RecuperacionPage from '../pages/reset/RecuperacionPage';
 import VerifyCodePage from '../pages/reset/VerifyCodePage';
+import PedidosCocinaPage from '../pages/restaurante/cocinero/pedidos/PedidosCocinaPage';
+import BebidasPage from '../pages/restaurante/gerente/bebidas/BebidasPage';
+import CocinasPage from '../pages/restaurante/gerente/cocinas/CocinasPage';
+import ComidasPage from '../pages/restaurante/gerente/comidas/ComidasPage';
+import DetallePreinventariosPage from '../pages/restaurante/gerente/detallePreinventarios/DetallePreinventariosPage';
+import InventariosPage from '../pages/restaurante/gerente/Inventarios/InventariosPage';
+import MesasPage from '../pages/restaurante/gerente/mesas/MesasPage';
+import PreinventariosPage from '../pages/restaurante/gerente/preinventarios/PreinventariosPage';
+import UbicacionesPage from '../pages/restaurante/gerente/ubicaciones/UbicacionesPage';
+import CrearPedidoPage from '../pages/restaurante/mesero/crearPedido/CrearPedidoPage';
+import PedidosPage from '../pages/restaurante/mesero/pedidos/PedidosPage';
+import PedidosCerradosPage from '../pages/restaurante/mesero/pedidosCerrados/PedidosCerradosPage';
 import FamiliaresPage from '../pages/socio/familiares/FamiliaresPage';
 import InvitadosPage from '../pages/socio/invitados/InvitadosPage';
 import CuotasBaileSocioPage from '../pages/socio/pagos/CuotasBaileSocioPage';
@@ -43,9 +55,11 @@ import ContratacionesPage from '../pages/superAdmin/contrataciones/Contratacione
 import HobbiesPage from '../pages/superAdmin/hobbies/HobbiesPage';
 import RolesPage from '../pages/superAdmin/roles/RolesPage';
 import { AuthGuard } from '../utilities/guards/AuthGuard';
-import { AdminGuard, AdminSocioGuard, SocioGuard, SuperadminGuard } from '../utilities/guards/RolGuard';
+import { RedirectByRol } from '../utilities/guards/RedirectGuard';
+import { AdminGuard, AdminSocioGuard, CocineroGuard, GerenteRestauranteGuard, MeseroGuard, SocioGuard, SuperadminGuard } from '../utilities/guards/RolGuard';
 import { VerifyGuard } from '../utilities/guards/VerifyGuard';
-
+import DetalleInventariosPage from '../pages/restaurante/gerente/detalleInventarios/DetalleInventariosPage';
+import DetallePedidoPage from '../pages/restaurante/mesero/detallePedido/DetallePedidoPage';
 
 const Rutas = () => {
     return (
@@ -59,6 +73,7 @@ const Rutas = () => {
                 <Route element={<ChangePassword />} path={PublicRoutes.RESET} />
                 <Route element={<AuthGuard />}>
                     <Route element={<Plantilla />}>
+                        <Route path={PrivateRoutes.HOME} element={<RedirectByRol />} />
                         <Route element={<DashboardPage />} path={PrivateRoutes.DASHBOARD} />
                         <Route element={<PerfilPage />} path={PrivateRoutes.PERFIL} />
                         <Route element={<SuperadminGuard />}>
@@ -102,6 +117,26 @@ const Rutas = () => {
                         <Route element={<AdminSocioGuard />}>
                             <Route element={<MensualidadesSocioPage />} path={PrivateRoutes.PAGOS_SOCIOS} />
                             <Route element={<CuotasBaileSocioPage />} path={PrivateRoutes.PAGOS_CUOTAS_BAILE} />
+                        </Route>
+                        <Route element={<GerenteRestauranteGuard />}>
+                            <Route element={<CocinasPage />} path={PrivateRoutes.COCINAS} />
+                            <Route element={<UbicacionesPage />} path={PrivateRoutes.UBICACIONES} />
+                            <Route element={<MesasPage />} path={PrivateRoutes.MESA} />
+                            <Route element={<ComidasPage />} path={PrivateRoutes.COMIDAS} />
+                            <Route element={<BebidasPage />} path={PrivateRoutes.BEBIDAS} />
+                            <Route element={<PreinventariosPage />} path={PrivateRoutes.PREINVENTARIO} />
+                            <Route element={<DetallePreinventariosPage />} path={PrivateRoutes.DETALLES_PREINVENTARIO} />
+                            <Route element={<InventariosPage />} path={PrivateRoutes.INVENTARIO} />
+                            <Route element={<DetalleInventariosPage />} path={PrivateRoutes.DETALLES_INVENTARIO} />
+                        </Route>
+                        <Route element={<MeseroGuard />}>
+                            <Route element={<CrearPedidoPage />} path={PrivateRoutes.CREAR_PEDIDO} />
+                            <Route element={<PedidosPage />} path={PrivateRoutes.PEDIDOS_ABIERTOS} />
+                            <Route element={<DetallePedidoPage />} path={PrivateRoutes.DETALLE_PEDIDO} />
+                            <Route element={<PedidosCerradosPage />} path={PrivateRoutes.PEDIDOS_CERRADOS} />
+                        </Route>
+                        <Route element={<CocineroGuard />}>
+                            <Route element={<PedidosCocinaPage />} path={PrivateRoutes.PEDIDOS} />
                         </Route>
                     </Route>
                     <Route element={<Page403 />} path={PrivateRoutes.PAGE403} />

@@ -15,8 +15,8 @@ function Plantilla() {
     return (
         <>
             <Navbar toggleAside={toggleAside} credenciales={credenciales} usuario={usuario} logout={logout} />
-            <Sidebar open={openAside} />
-            <ContainerContenido>
+            {credenciales.Rol != 9 && <Sidebar open={openAside} />}
+            <ContainerContenido rol={credenciales.Rol}>
                 <Outlet />
             </ContainerContenido>
         </>

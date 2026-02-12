@@ -1,31 +1,22 @@
-import React from 'react';
+import { useMemo } from 'react';
 import DataTable from 'react-data-table-component';
 import TableSkeleton from '../skeletons/TableSkeleton';
 
-function DataTableComponent({ data, columns, loading }) {
+function DataTableComponent({ data, columns, loading, keyField }) {
 
-    const customStyles = {
-        headCells: {
-            style: {
-                backgroundColor: '#f0f0f0',
-                color: 'gray',
-                fontSize: '15px',
-            },
-        },
-        cells: {
-            style: {
-                fontSize: '13px',
-            },
-        },
-    };
+    const customStyles = useMemo(() => ({
+        headCells: { style: { color: "gray", fontSize: "15px" } },
+        cells: { style: { fontSize: "13px" } },
+    }), []);
 
     return (
         <div className="border border-gray-200 rounded-lg shadow w-full dark:border-gray-700 dark:bg-gray-800">
             <DataTable
+                keyField={keyField ?? "id"}
                 columns={columns}
                 data={data}
                 noDataComponent={<div className='flex justify-center font-bold my-20 text-gray-500'>No hay datos</div>}
-                progressPending={loading}
+                progressPending={!!loading}
                 progressComponent={<TableSkeleton />}
                 customStyles={customStyles}
                 pagination

@@ -149,8 +149,11 @@ function FormEmpleados({ empleado, hanleChange, touched }) {
                     <Select id="Portero" onChange={hanleChange} name='Rol' className={inputClass(empleado.Rol)}
                         value={empleado.Rol} >
                         <option value="" disabled>Escoja una opción...</option>
-                        <option value={7}>Administrativo</option>
                         <option value={6}>Portero</option>
+                        <option value={7}>Administrativo</option>
+                        <option value={8}>Gerente Restaurante</option>
+                        <option value={9}>Cocinero</option>
+                        <option value={10}>Mesero</option>
                         <option value={4}>Otro</option>
                     </Select>
                     <p className="text-sm text-gray-800 dark:text-gray-300" id="motivo_help">*Requerido*.</p>

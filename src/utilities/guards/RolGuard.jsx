@@ -23,3 +23,18 @@ export const AdminSocioGuard = () => {
     const rol = useSelector((state) => state.credenciales.Rol);
     return (rol == 1 || rol == 0 || rol == 2 || rol == 3) ? <Outlet /> : prohibido;
 }
+
+export const GerenteRestauranteGuard = () => {
+    const rol = useSelector((state) => state.credenciales.Rol);
+    return rol == 8 ? <Outlet /> : prohibido;
+}
+
+export const CocineroGuard = () => {
+    const rol = useSelector((state) => state.credenciales.Rol);
+    return rol == 9 ? <Outlet /> : prohibido;
+}
+
+export const MeseroGuard = () => {
+    const rol = useSelector((state) => state.credenciales.Rol);
+    return rol == 10 ? <Outlet /> : prohibido;
+}
