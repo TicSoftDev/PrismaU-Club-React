@@ -6,8 +6,8 @@ export default function FormPedido({ pedido }) {
 
     const ubicacionLabel = `${pedido?.mesa?.ubicacion?.ubicacion ?? "N/A"}${pedido?.mesa?.numero ? ` · Mesa ${pedido.mesa.numero}` : ""}`;
     const estadoPedido = pedido?.estado || "Abierto";
-    const itemsCount = pedido?.detalle_pedido.reduce((acc, d) => acc + (Number(d?.cantidad) || 0), 0);
-    const subtotalCalc = pedido?.detalle_pedido.reduce((acc, d) => acc + (Number(d?.precio) || 0) * (Number(d?.cantidad) || 0), 0);
+    const itemsCount = pedido?.pedido_detalle.reduce((acc, d) => acc + (Number(d?.cantidad) || 0), 0);
+    const subtotalCalc = pedido?.pedido_detalle.reduce((acc, d) => acc + (Number(d?.precio) || 0) * (Number(d?.cantidad) || 0), 0);
     const imagen = pedido.usuario.imagen ? `${RouteBack + pedido.usuario.imagen}` : pedido.usuario.Sexo == "Femenino" ? "https://cdn-icons-png.flaticon.com/128/4140/4140047.png" : "https://cdn-icons-png.flaticon.com/128/3135/3135715.png";
     const usuario = pedido?.usuario ?? {};
 
@@ -31,7 +31,7 @@ export default function FormPedido({ pedido }) {
                             </div>
                             <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1 text-sm text-slate-600 dark:text-slate-300">
                                 <InlineMeta label="Fecha" value={formatearFechaHora(pedido?.created_at)} />
-                                <InlineMeta label="Platos" value={pedido?.detalle_pedido?.length} />
+                                <InlineMeta label="Platos" value={pedido?.pedido_detalle?.length} />
                                 <InlineMeta label="Ítems" value={itemsCount} />
                             </div>
                         </div>
@@ -85,7 +85,7 @@ export default function FormPedido({ pedido }) {
                             </p>
                         </div>
 
-                        {pedido?.detalle_pedido.length === 0 ? (
+                        {pedido?.pedido_detalle.length === 0 ? (
                             <div className="p-10 text-center text-slate-600 dark:text-slate-300">
                                 No hay platos registrados en este pedido.
                             </div>
@@ -103,9 +103,9 @@ export default function FormPedido({ pedido }) {
                                     </thead>
 
                                     <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
-                                        {pedido?.detalle_pedido.map((dish, idx) => {
-                                            const nombre = dish?.itemable?.comida || dish?.itemable?.bebida || "Ítem";
-                                            const img = dish?.itemable?.imagen ? (RouteBack + dish.itemable.imagen) : null;
+                                        {pedido?.pedido_detalle.map((dish, idx) => {
+                                            const nombre = dish?.producto?.nombre;
+                                            const img = dish?.producto?.imagen ? (RouteBack + dish.producto.imagen) : null;
 
                                             const cantidad = Number(dish?.cantidad) || 0;
                                             const precio = Number(dish?.precio_unitario) || 0;

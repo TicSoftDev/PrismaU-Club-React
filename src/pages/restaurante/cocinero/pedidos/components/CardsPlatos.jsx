@@ -4,14 +4,14 @@ import { RouteBack } from "../../../../../models/RutasModel";
 import Spinner from "../../../../../utilities/spinner/Spinner";
 import { getDishStatusStyle } from "./cardStyle";
 
-export default function CardsPlatos({ pedido, accion, loadingPlato, cambiarEstadoPlato }) {
+export default function CardsPlatos({ pedido = [], accion, loadingPlato, cambiarEstadoPlato }) {
     return (
         <div className="p-6 space-y-4">
-            {pedido?.detalle_pedido.map(dish => (
+            {pedido?.pedido_detalle?.map(dish => (
                 <div key={dish.id} className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 hover:border-gray-300">
                     <div className="flex gap-4">
                         <div className="relative w-32 h-32 flex-shrink-0">
-                            <img src={`${RouteBack}${dish.itemable.imagen}`} alt={dish.tipo} className="w-full h-full object-cover" />
+                            <img src={`${RouteBack}${dish.producto.imagen}`} alt={dish.tipo} className="w-full h-full object-cover" />
                             <div className="absolute top-2 left-2 bg-white/95 backdrop-blur-sm text-gray-800 text-xs font-bold px-2.5 py-1 rounded-lg shadow-md">
                                 x{dish.cantidad}
                             </div>
@@ -20,7 +20,7 @@ export default function CardsPlatos({ pedido, accion, loadingPlato, cambiarEstad
                         <div className="flex-1 p-3 flex flex-col justify-between">
                             <div>
                                 <div className="flex items-start justify-between gap-2 mb-1">
-                                    <h3 className="font-bold text-gray-800 text-md leading-tight">{dish.itemable.comida || dish.itemable.bebida}</h3>
+                                    <h3 className="font-bold text-gray-800 text-md leading-tight">{dish.producto.nombre}</h3>
                                     <span className={`${getDishStatusStyle(dish.estado)} px-3 py-0 rounded-lg text-xs font-bold shadow-md whitespace-nowrap`}>
                                         {dish.estado === 'Pendiente' && 'Pendiente'}
                                         {dish.estado === 'En Preparacion' && 'Preparando'}

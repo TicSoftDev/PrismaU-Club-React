@@ -25,7 +25,7 @@ export const DetallePedidoService = {
         return response.data;
     },
     delete: async (data) => {
-        const res = await axios.delete(`${URL}/detalle/${data.id}/${data.inventario_id}`);
+        const res = await axios.delete(`${URL}/detalle/${data.id}/${data.presentacion_id}`);
         return res.data;
     }
 }

@@ -30,7 +30,7 @@ export default function PedidoInfo({ pedido, itemsCount, subtotalCalc, countsByS
                         </div>
                         <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1 text-sm text-slate-600 dark:text-slate-300">
                             <InlineMeta label="Fecha" value={formatearFechaHora(pedido?.created_at)} />
-                            <InlineMeta label="Platos" value={pedido?.detalle_pedido?.length} />
+                            <InlineMeta label="Platos" value={pedido?.pedido_detalle?.length} />
                             <InlineMeta label="Ítems" value={itemsCount} />
                         </div>
                     </div>

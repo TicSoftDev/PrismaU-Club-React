@@ -1,4 +1,5 @@
 import LoadingComponent from "../../../../utilities/loading/LoadingComponent";
+import ModalSencillo from "../../../../utilities/modals/ModalSencillo";
 import VentanaModal from "../../../../utilities/modals/VentanaModal";
 import Spinner from "../../../../utilities/spinner/Spinner";
 import CardsProductos from "../crearPedido/components/CardsProductos";
@@ -31,18 +32,20 @@ export default function DetallePedidoPage() {
                     handleDelete={handleDelete} loadingPlato={loadingPlato} cambiarEstadoPlato={cambiarEstadoPlato}
                     agregar={agregar} />
             </div>
+
             <VentanaModal titulo={tituloModal} size="3xl" openModal={openModal} cerrarModal={toggleModal}
                 loading={isPending} hanleSubmit={handleUpdate}>
                 <FormDetalle item={item} handleChange={handleChange} />
             </VentanaModal>
-            {order.detalle_pedido.length > 0 && order.estado !== 'Servido' && order.detalle_pedido.every(d => d.estado === 'Servido') &&
+
+            {order.pedido_detalle.length > 0 && order.estado !== 'Servido' && order.pedido_detalle.every(d => d.estado === 'Servido') &&
                 <button className="bg-green-500 w-full py-2 rounded-xl text-white text-md font-semibold uppercase"
                     onClick={() => cambiarEstadoPedido(order.id, 'Servido')}>
                     {loadingPedido ? <Spinner /> : 'Marcar como servido'}
                 </button>
             }
-            <VentanaModal titulo={tituloModalAgregar} size="full" openModal={openModalAgregar} cerrarModal={toggleModalAgregar}
-                loading={isPending} hanleSubmit={handleUpdate}>
+            <ModalSencillo titulo={tituloModalAgregar} size="full" openModal={openModalAgregar} loading={isPending}
+                cerrarModal={toggleModalAgregar}>
                 <div className="grid grid-cols-4 gap-12">
                     <div className="col-span-3">
                         <div className='w-full border border-green-200 rounded-lg p-4 flex flex-col gap-4'>
@@ -57,7 +60,7 @@ export default function DetallePedidoPage() {
                             hayPedido={false} noShowTotal={true} />
                     </div>
                 </div>
-            </VentanaModal>
+            </ModalSencillo>
             <VentanaModal size={'7xl'} titulo={tituloModalObs} openModal={openModalObs}
                 hanleSubmit={guardarObservacion} cerrarModal={toggleModalObs}
             >

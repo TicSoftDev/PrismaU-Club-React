@@ -13,7 +13,7 @@ export default function usePedido() {
 
     const { data: ubicaciones, loading: loadingUbicaciones } = apiQueryUbicacion();
 
-    const { isLoading, pedidosAbiertos, isPending, isChanging, pagarPedidoMutation, cambiarEstadoMutation,
+    const { isLoading, pedidosAbiertos, isPending, isChanging, pagarPedidoMutation, cancelarPedidoMutation,
         cambiarMesaMutation } = apiQueryPedido();
 
     const [pedido, setPedido] = useState(null);
@@ -40,14 +40,18 @@ export default function usePedido() {
         };
     }
 
-    //============= Cambiar estado =====================
+    //============= Cancelar pedido =====================
 
-    const cambiarEstado = async (id, estado) => {
-        if (await alertConfirm('¿Estás seguro de cambiar el estado de este pedido?', 'Sí, cambiar')) {
-            cambiarEstadoMutation({ id, estado }, {
+    const cancelarPedido = async (id) => {
+        if (await alertConfirm('¿Estás seguro de cancelar este pedido?', 'Sí, Cancelar')) {
+            cancelarPedidoMutation(id, {
                 onSuccess: (data) => {
-                    alertSucces(data.message);
-                    navigate(PrivateRoutes.PEDIDOS_CERRADOS);
+                    if (data.status) {
+                        alertSucces(data.message);
+                        navigate(PrivateRoutes.PEDIDOS_CERRADOS);
+                    } else {
+                        data.errors.forEach((err) => alertWarning(err));
+                    }
                 },
                 onError: (error) => { alertError(`Error: ${error.message}`); }
             });
@@ -80,7 +84,7 @@ export default function usePedido() {
                         recargar();
                     }
                 },
-                onError: (error) => { console.log(error); alertError(`Error: ${error.message}`); }
+                onError: (error) => { alertError(`Error: ${error.message}`); }
             });
         }
     }
@@ -110,7 +114,7 @@ export default function usePedido() {
                     data.errors.forEach((err) => alertWarning(err));
                 }
             },
-            onError: (error) => {console.log(error); alertError(`Error: ${error.message}`); }
+            onError: (error) => { alertError(`Error: ${error.message}`); }
         });
     };
 
@@ -138,7 +142,7 @@ export default function usePedido() {
         isPending,
         venta,
         pagarPedido,
-        cambiarEstado,
+        cancelarPedido,
         toggleModalMesa,
         cargarPedidoMesa,
         selectLocation,

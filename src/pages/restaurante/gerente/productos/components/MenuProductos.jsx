@@ -1,11 +1,11 @@
 import { FaFilter, FaSearch, FaUserPlus } from 'react-icons/fa';
 
-function MenuComidas({ busqueda, handleBusqueda, toggleModal, setFiltro }) {
+export default function MenuProductos({ busqueda, handleBusqueda, toggleModal, tipo, setFiltro }) {
 
     return (
         <div className="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
             <div className="inline-flex rounded-md shadow-sm" role="group">
-                <button onClick={toggleModal} type="button" className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-blue-600 rounded-s-lg hover:bg-white hover:text-blue-600 hover:border-blue-600 focus:z-10 focus:ring-2  dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
+                <button onClick={toggleModal} type="button" className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-blue-600 rounded-lg hover:bg-white hover:text-blue-600 hover:border-blue-600 focus:z-10 focus:ring-2  dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
                     <FaUserPlus className='me-2' />
                     Crear
                 </button>
@@ -16,13 +16,13 @@ function MenuComidas({ busqueda, handleBusqueda, toggleModal, setFiltro }) {
                         <FaFilter className="w-4 h-4 text-gray-500 dark:text-gray-400" />
                     </div>
                     <select className="p-2 ps-10 text-sm text-gray-900 border sm:border-r-0 border-gray-300 sm:rounded-s-lg w-30 bg-gray-50 focus:ring-gray-300 focus:border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        onChange={setFiltro}>
+                        onChange={setFiltro} value={tipo ?? "Todos"}>
                         <option value="Todos">Todas</option>
                         <option value="Entrada">Entrada</option>
                         <option value="Desayuno">Desayuno</option>
                         <option value="Almuerzo">Almuerzo</option>
                         <option value="Cena">Cena</option>
-                        <option value="Postre">Postre</option>
+                        <option value="Bebida">Bebida</option>
                     </select>
                 </div>
                 <div className="relative">
@@ -35,5 +35,3 @@ function MenuComidas({ busqueda, handleBusqueda, toggleModal, setFiltro }) {
         </div>
     );
 }
-
-export default MenuComidas

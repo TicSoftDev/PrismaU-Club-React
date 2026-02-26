@@ -1,5 +1,7 @@
 import { FaEye, FaListOl } from "react-icons/fa";
 import { formatearFechaHora, formatearMoneda } from "../../../../../models/FormateadorModel";
+import { Badge } from "flowbite-react";
+import { getStylePedidoBadge } from "../../../../../utilities/helpers/PedidoStyles";
 
 export const PedidosColumn = ({ cargarPedido }) => {
 
@@ -21,6 +23,11 @@ export const PedidosColumn = ({ cargarPedido }) => {
         {
             name: "Socio",
             selector: row => `${row.usuario?.Nombre} ${row.usuario?.Apellidos}`,
+        },
+        {
+            name: "Estado",
+            selector: row => <Badge className={`${getStylePedidoBadge(row.estado)} ring-1 ring-inset`}>{row.estado}</Badge>,
+            width: '120px',
         },
         {
             name: "Ubicación",

@@ -40,14 +40,11 @@ const GERENTE_RESTAURANTE_ITEMS = [
     { isTitle: true, texto: "Gestión de espacios" },
     { icono: "fire", texto: "Cocinas", color: "purple", opacidad: '600', link: PrivateRoutes.COCINAS },
     { icono: "map-marked-alt", texto: "Ubicaciones", color: "red", opacidad: '600', link: PrivateRoutes.UBICACIONES, activeSubroutes: [PrivateRoutes.MESA] },
-    { isTitle: true, texto: "Productos" },
-    { icono: "utensils", texto: "Comidas", color: "yellow", opacidad: '400', link: PrivateRoutes.COMIDAS },
-    { icono: "glass-cheers", texto: "Bebidas", color: "green", opacidad: '600', link: PrivateRoutes.BEBIDAS },
     { isTitle: true, texto: "Inventario" },
-    { icono: "clipboard-list", texto: "Preinventarios", color: "purple", opacidad: '600', link: PrivateRoutes.PREINVENTARIO, activeSubroutes: [PrivateRoutes.DETALLES_PREINVENTARIO] },
-    { icono: "clipboard-check", texto: "Inventarios", color: "red", opacidad: '600', link: PrivateRoutes.INVENTARIO, activeSubroutes: [PrivateRoutes.DETALLES_INVENTARIO] },
+    { icono: "seedling", texto: "Insumos", color: "yellow", opacidad: '400', link: PrivateRoutes.INSUMOS, activeSubroutes: [PrivateRoutes.INSUMOS_PRESENTACION] },
+    { icono: "utensils", texto: "Productos", color: "green", opacidad: '600', link: PrivateRoutes.PRODUCTOS },
 ];
-
+    
 const MESERO_RESTAURANTE_ITEMS = [
     { isTitle: true, texto: "Gestión de pedidos " },
     { icono: "plus", texto: "Crear Pedido", color: "purple", opacidad: '600', link: PrivateRoutes.CREAR_PEDIDO },

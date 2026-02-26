@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useAppLocation } from '../../../../../hooks/useStore';
+import { normalizeText } from '../../../../../models/FormateadorModel';
 import { alertConfirm, alertError, alertSucces, alertWarning } from '../../../../../utilities/alerts/Alertas';
+import apiQueryProducto from '../../../gerente/productos/api/apiQueryProducto';
 import apiQueryDetallePedido from '../api/apiQueryDetallePedido';
-import { fechaHoy, normalizeText } from '../../../../../models/FormateadorModel';
-import apiQueryDetalleInventario from '../../../gerente/detalleInventarios/api/apiQueryDetalleInventario';
-import { id } from 'date-fns/locale';
 
 export default function useDetallePedido() {
 
@@ -13,14 +12,14 @@ export default function useDetallePedido() {
     const { isPending, loadingPlato, loadingPedido, isCreating, getPedidoQuery, actualizarDetalleMutation,
         createDetalleMutation, cambiarEstadoPlatoMutation, cambiarEstadoMutation, eliminarDetalleMutation } = apiQueryDetallePedido();
 
-    const { productos, isLoading: loadingProductos } = apiQueryDetalleInventario(fechaHoy());
+    const { productosDisponibles: productos, isLoadingDisponibles: loadingProductos } = apiQueryProducto();
 
     const [openModal, setOpenModal] = useState(false);
     const [openModalAgregar, setOpenModalAgregar] = useState(false);
     const [item, setItem] = useState({});
     const [pedido, setPedido] = useState(getInitialPedido());
     const [busqueda, setBusqueda] = useState('');
-    const [tipoFiltro, setTipoFiltro] = useState('');
+    const [tipoFiltro, setTipoFiltro] = useState('Todos');
     const [openModalObs, setOpenModalObs] = useState(false);
     const [itemSeleccionado, setItemSeleccionado] = useState({});
     const [observaciones, setObservaciones] = useState('');
@@ -30,7 +29,7 @@ export default function useDetallePedido() {
     function getInitialPedido() {
         return {
             id: null,
-            detalle_pedido: [],
+            pedido_detalle: [],
         };
     }
 
@@ -43,7 +42,7 @@ export default function useDetallePedido() {
         setObservaciones('');
         setItem({});
         setBusqueda('');
-        setTipoFiltro('');
+        setTipoFiltro('Todos');
     }
 
     //------------------ Obtener pedido ------------------------------
@@ -51,7 +50,7 @@ export default function useDetallePedido() {
     const { data, isLoading } = getPedidoQuery(ped?.mesa_id);
 
     const usuario = data?.usuario ?? {};
-    const detalle = data?.detalle_pedido ?? [];
+    const detalle = data?.pedido_detalle ?? [];
     const itemsCount = detalle.reduce((acc, d) => acc + (Number(d?.cantidad) || 0), 0);
     const subtotalCalc = detalle.reduce((acc, d) => acc + (Number(d?.precio) || 0) * (Number(d?.cantidad) || 0), 0);
 
@@ -60,19 +59,6 @@ export default function useDetallePedido() {
         acc[e] = (acc[e] || 0) + 1;
         return acc;
     }, {});
-
-    //------------------ Actualizar detalle -----------------------------
-
-    const cargarDetalle = (detalle, inventario_id) => {
-        setItem({ ...detalle, inventario_id });
-        setOpenModal(true);
-    }
-
-    const toggleModal = () => setOpenModal(!openModal);
-
-    const handleChange = ({ target }) => {
-        setItem(prev => ({ ...prev, [target.name]: target.value }));
-    }
 
     //------------------ Actualizar Estado ----------------------------
 
@@ -105,7 +91,10 @@ export default function useDetallePedido() {
         setOpenModalAgregar(true);
     }
 
-    const toggleModalAgregar = () => setOpenModalAgregar(!openModalAgregar);
+    const toggleModalAgregar = () => {
+        setOpenModalAgregar(prev => !prev);
+        recargar();
+    };
 
     const handleChangeBusqueda = ({ target }) => {
         setBusqueda(target.value);
@@ -116,47 +105,30 @@ export default function useDetallePedido() {
         setTipoFiltro(value);
     };
 
-    const filterProductos = (listado, busqueda, tipo) => {
-        if (!Array.isArray(listado)) return [];
+    const filterProductos = (listado = [], busqueda, tipo) => {
+        if (!busqueda && tipo === 'Todos') return listado;
 
-        const hasBusqueda = (busqueda ?? "").trim().length > 0;
-        const nombre = normalizeText(busqueda ?? "");
+        const busquedaNormalizada = normalizeText(busqueda).split(' ').filter(Boolean);
 
-        if (!hasBusqueda && (tipo === "Todos" || !tipo)) return listado;
+        return listado?.filter((dato) => {
+            const nombreNormalizado = normalizeText(dato.nombre);
+            const categoriaNormalizada = normalizeText(dato.categoria);
 
-        return listado.filter((dato) => {
-            const item = dato?.itemable;
-            const itemType = (dato?.itemable_type ?? "").toLowerCase();
+            const cumpleEstado = tipo === 'Todos' || dato.categoria?.toString() === tipo;
 
-            if (!item || !itemType) return false;
+            const cumpleBusqueda = busquedaNormalizada.every(palabra =>
+                nombreNormalizado.includes(palabra) ||
+                categoriaNormalizada.includes(palabra)
+            );
 
-            let cumpleTipo = true;
-
-            if (tipo && tipo !== "Todos") {
-                const tipoLower = tipo.toLowerCase();
-
-                if (tipoLower === "bebida") {
-                    cumpleTipo = itemType === "bebida";
-                } else {
-                    const tipoComida = (item?.tipo ?? "").toString().toLowerCase();
-                    cumpleTipo = itemType === "comida" && tipoComida === tipoLower;
-                }
-            }
-
-            let cumpleBusqueda = true;
-            if (hasBusqueda) {
-                const nombreItem = itemType === "comida" ? (item?.comida ?? "") : (item?.bebida ?? "");
-                cumpleBusqueda = normalizeText(nombreItem).includes(nombre);
-            }
-
-            return cumpleTipo && cumpleBusqueda;
+            return cumpleBusqueda && cumpleEstado;
         });
     };
 
     const listaProductos = filterProductos(productos, busqueda, tipoFiltro);
 
-    const agregarItem = (producto, tipo, idDetalle) => {
-        setItemSeleccionado({ producto, tipo, idDetalle });
+    const agregarItem = (producto) => {
+        setItemSeleccionado({ producto });
         setObservaciones('');
         setOpenModalObs(true);
     }
@@ -164,22 +136,23 @@ export default function useDetallePedido() {
     const guardarObservacion = () => {
         const sel = itemSeleccionado || {};
         const obs = (observaciones || '').trim();
-        const inventarioItemId = sel.idDetalle;
 
         if (sel.mode !== 'edit') {
-            const { producto, tipo } = sel;
-            if (!producto || !tipo) return;
+            const { producto } = sel;
+            if (!producto) return;
+            const insumoPresentacionId = producto.insumo_presentacion.id;
 
             const id = producto.id;
+            const nombre = producto.nombre;
+            const tipo = producto.tipo;
             const key = makeKey(tipo, id, obs);
             const precio = safeNum(producto.precio, 0);
-            const nombre = tipo === 'bebida' ? (producto.bebida ?? '') : (producto.comida ?? '');
 
             setPedido(prev => {
-                const idx = prev.detalle_pedido.findIndex(x => x.key === key);
+                const idx = prev.pedido_detalle.findIndex(x => x.key === key);
 
                 if (idx !== -1) {
-                    const copy = [...prev.detalle_pedido];
+                    const copy = [...prev.pedido_detalle];
                     const row = copy[idx];
 
                     const cantidad = safeNum(row.cantidad, 0) + 1;
@@ -187,30 +160,29 @@ export default function useDetallePedido() {
 
                     copy[idx] = {
                         ...row,
-                        inventario_item_id: row.inventario_item_id ?? inventarioItemId,
+                        insumo_presentacion_id: row.insumo_presentacion_id ?? insumoPresentacionId,
                         cantidad,
                         subtotal: cantidad * price,
                         observaciones: obs,
-                        producto: { ...(row.producto || {}), id, nombre },
+                        producto: { ...(row.producto || {}), id, nombre, tipo },
                     };
 
-                    return { ...prev, detalle_pedido: copy };
+                    return { ...prev, pedido_detalle: copy };
                 }
 
                 const nuevo = {
                     id: null,
                     key,
-                    itemable_type: tipo,
-                    itemable_id: id,
-                    inventario_item_id: inventarioItemId,
+                    producto_id: id,
+                    insumo_presentacion_id: insumoPresentacionId,
                     cantidad: 1,
                     precio_unitario: precio,
                     subtotal: precio,
                     observaciones: obs,
-                    producto: { id, nombre },
+                    producto: { id, nombre, tipo },
                 };
 
-                return { ...prev, detalle_pedido: [...prev.detalle_pedido, nuevo] };
+                return { ...prev, pedido_detalle: [...prev.pedido_detalle, nuevo] };
             });
 
             setOpenModalObs(false);
@@ -219,22 +191,22 @@ export default function useDetallePedido() {
             return;
         }
 
-        const row = sel.row;
-        const oldKey = sel.rowKey;
+        const row = sel.producto;
+        const oldKey = row.key;
         if (!row || !oldKey) return;
 
-        const type = String(row.itemable_type || '').toLowerCase();
-        const id = row.itemable_id;
+        const type = String(row.producto.tipo || '').toLowerCase();
+        const id = row.producto.id;
 
         const newKey = makeKey(type, id, obs);
 
         setPedido(prev => {
-            const oldIdx = prev.detalle_pedido.findIndex(x => x.key === oldKey);
+            const oldIdx = prev.pedido_detalle.findIndex(x => x.key === oldKey);
             if (oldIdx === -1) return prev;
 
-            const existingIdx = prev.detalle_pedido.findIndex(x => x.key === newKey);
+            const existingIdx = prev.pedido_detalle.findIndex(x => x.key === newKey);
 
-            const copy = [...prev.detalle_pedido];
+            const copy = [...prev.pedido_detalle];
 
             if (existingIdx !== -1 && existingIdx !== oldIdx) {
                 const a = copy[existingIdx];
@@ -245,7 +217,7 @@ export default function useDetallePedido() {
 
                 copy[existingIdx] = {
                     ...a,
-                    inventario_item_id: a.inventario_item_id ?? b.inventario_item_id,
+                    insumo_presentacion_id: a.insumo_presentacion_id ?? b.insumo_presentacion_id,
                     cantidad,
                     subtotal: cantidad * price,
                     observaciones: obs,
@@ -254,7 +226,7 @@ export default function useDetallePedido() {
 
                 copy.splice(oldIdx, 1);
 
-                return { ...prev, detalle_pedido: copy };
+                return { ...prev, pedido_detalle: copy };
             }
 
             const price = safeNum(copy[oldIdx].precio_unitario, 0);
@@ -262,13 +234,13 @@ export default function useDetallePedido() {
 
             copy[oldIdx] = {
                 ...copy[oldIdx],
-                inventario_item_id: copy[oldIdx].inventario_item_id,
+                insumo_presentacion_id: copy[oldIdx].insumo_presentacion_id,
                 key: newKey,
                 observaciones: obs,
                 subtotal: cantidad * price,
             };
 
-            return { ...prev, detalle_pedido: copy };
+            return { ...prev, pedido_detalle: copy };
         });
 
         setOpenModalObs(false);
@@ -280,16 +252,16 @@ export default function useDetallePedido() {
 
     const handleChangeObs = (e) => setObservaciones(e.target.value);
 
-    const editarObservacion = (row) => {
-        setItemSeleccionado({ mode: 'edit', row, rowKey: row.key });
-        setObservaciones(row.observaciones || '');
+     const editarObservacion = (producto) => {
+        setItemSeleccionado({ mode: 'edit', producto });
+        setObservaciones(producto.observaciones || '');
         setOpenModalObs(true);
     };
 
     const incrementar = (key) => {
         setPedido(prev => ({
             ...prev,
-            detalle_pedido: prev.detalle_pedido.map(item =>
+            pedido_detalle: prev.pedido_detalle.map(item =>
                 item.key === key ? {
                     ...item,
                     cantidad: item.cantidad + 1,
@@ -302,7 +274,7 @@ export default function useDetallePedido() {
     const disminuir = (key) => {
         setPedido(prev => ({
             ...prev,
-            detalle_pedido: prev.detalle_pedido
+            pedido_detalle: prev.pedido_detalle
                 .map(item =>
                     item.key === key ? {
                         ...item,
@@ -314,12 +286,12 @@ export default function useDetallePedido() {
     };
 
     const eliminar = (key) => {
-        setPedido(prev => ({ ...prev, detalle_pedido: prev.detalle_pedido.filter(item => item.key !== key) }));
+        setPedido(prev => ({ ...prev, pedido_detalle: prev.pedido_detalle.filter(item => item.key !== key) }));
     };
 
     const handleSubmit = () => {
         createDetalleMutation(pedido, {
-            onSuccess: (data) => {
+            onSuccess: (data) => { 
                 if (data.status) {
                     alertSucces(data.message);
                     recargar();
@@ -332,6 +304,17 @@ export default function useDetallePedido() {
     }
 
     //------------------ Actualizar detalle -----------------------------
+
+    const cargarDetalle = (detalle) => {
+        setItem(detalle);
+        setOpenModal(true);
+    }
+
+    const toggleModal = () => setOpenModal(!openModal);
+
+    const handleChange = ({ target }) => {
+        setItem(prev => ({ ...prev, [target.name]: target.value }));
+    }
 
     const handleUpdate = () => {
         actualizarDetalleMutation(item, {
@@ -349,9 +332,9 @@ export default function useDetallePedido() {
 
     //------------------ Eliminar detalle -------------------------------
 
-    const handleDelete = async (id, inventario_id) => {
+    const handleDelete = async (id, presentacion_id) => { 
         if (await alertConfirm('¿Seguro que quiere eliminar este detalle?', 'Si, eliminar')) {
-            eliminarDetalleMutation({ id, inventario_id }, {
+            eliminarDetalleMutation({ id, presentacion_id }, {
                 onSuccess: (data) => {
                     if (data.status) {
                         alertSucces(data.message);
@@ -389,7 +372,7 @@ export default function useDetallePedido() {
         loadingPedido,
         openModalAgregar,
         pedido,
-        tituloModalAgregar: "Agregar Plato",
+        tituloModalAgregar: "Agregar Producto",
         busqueda,
         tipoFiltro,
         listaProductos,

@@ -35,15 +35,12 @@ import ChangePassword from '../pages/reset/ChangePassword';
 import RecuperacionPage from '../pages/reset/RecuperacionPage';
 import VerifyCodePage from '../pages/reset/VerifyCodePage';
 import PedidosCocinaPage from '../pages/restaurante/cocinero/pedidos/PedidosCocinaPage';
-import BebidasPage from '../pages/restaurante/gerente/bebidas/BebidasPage';
 import CocinasPage from '../pages/restaurante/gerente/cocinas/CocinasPage';
-import ComidasPage from '../pages/restaurante/gerente/comidas/ComidasPage';
-import DetallePreinventariosPage from '../pages/restaurante/gerente/detallePreinventarios/DetallePreinventariosPage';
-import InventariosPage from '../pages/restaurante/gerente/Inventarios/InventariosPage';
+import InsumosPage from '../pages/restaurante/gerente/insumos/InsumosPage';
 import MesasPage from '../pages/restaurante/gerente/mesas/MesasPage';
-import PreinventariosPage from '../pages/restaurante/gerente/preinventarios/PreinventariosPage';
 import UbicacionesPage from '../pages/restaurante/gerente/ubicaciones/UbicacionesPage';
 import CrearPedidoPage from '../pages/restaurante/mesero/crearPedido/CrearPedidoPage';
+import DetallePedidoPage from '../pages/restaurante/mesero/detallePedido/DetallePedidoPage';
 import PedidosPage from '../pages/restaurante/mesero/pedidos/PedidosPage';
 import PedidosCerradosPage from '../pages/restaurante/mesero/pedidosCerrados/PedidosCerradosPage';
 import FamiliaresPage from '../pages/socio/familiares/FamiliaresPage';
@@ -58,8 +55,8 @@ import { AuthGuard } from '../utilities/guards/AuthGuard';
 import { RedirectByRol } from '../utilities/guards/RedirectGuard';
 import { AdminGuard, AdminSocioGuard, CocineroGuard, GerenteRestauranteGuard, MeseroGuard, SocioGuard, SuperadminGuard } from '../utilities/guards/RolGuard';
 import { VerifyGuard } from '../utilities/guards/VerifyGuard';
-import DetalleInventariosPage from '../pages/restaurante/gerente/detalleInventarios/DetalleInventariosPage';
-import DetallePedidoPage from '../pages/restaurante/mesero/detallePedido/DetallePedidoPage';
+import InsumoPresentacionesPage from '../pages/restaurante/gerente/insumosPresentacion/InsumoPresentacionPage';
+import ProductosPage from '../pages/restaurante/gerente/productos/ProductosPage';
 
 const Rutas = () => {
     return (
@@ -122,12 +119,13 @@ const Rutas = () => {
                             <Route element={<CocinasPage />} path={PrivateRoutes.COCINAS} />
                             <Route element={<UbicacionesPage />} path={PrivateRoutes.UBICACIONES} />
                             <Route element={<MesasPage />} path={PrivateRoutes.MESA} />
-                            <Route element={<ComidasPage />} path={PrivateRoutes.COMIDAS} />
-                            <Route element={<BebidasPage />} path={PrivateRoutes.BEBIDAS} />
-                            <Route element={<PreinventariosPage />} path={PrivateRoutes.PREINVENTARIO} />
-                            <Route element={<DetallePreinventariosPage />} path={PrivateRoutes.DETALLES_PREINVENTARIO} />
-                            <Route element={<InventariosPage />} path={PrivateRoutes.INVENTARIO} />
-                            <Route element={<DetalleInventariosPage />} path={PrivateRoutes.DETALLES_INVENTARIO} />
+                            <Route element={<InsumosPage />} path={PrivateRoutes.INSUMOS} />
+                            <Route element={<InsumoPresentacionesPage />} path={PrivateRoutes.INSUMOS_PRESENTACION} />
+                            <Route element={<ProductosPage />} path={PrivateRoutes.PRODUCTOS} />
+                            {/* <Route element={<PreinventariosPage />} path={PrivateRoutes.PREINVENTARIO} /> */}
+                            {/* <Route element={<DetallePreinventariosPage />} path={PrivateRoutes.DETALLES_PREINVENTARIO} /> */}
+                            {/* <Route element={<InventariosPage />} path={PrivateRoutes.INVENTARIO} /> */}
+                            {/* <Route element={<DetalleInventariosPage />} path={PrivateRoutes.DETALLES_INVENTARIO} /> */}
                         </Route>
                         <Route element={<MeseroGuard />}>
                             <Route element={<CrearPedidoPage />} path={PrivateRoutes.CREAR_PEDIDO} />

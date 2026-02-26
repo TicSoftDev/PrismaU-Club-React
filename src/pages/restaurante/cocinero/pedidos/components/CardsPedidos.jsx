@@ -4,13 +4,14 @@ import { formatearHoraDate } from "./../../../../../models/FormateadorModel";
 import CardsPlatos from "./CardsPlatos";
 import { getOrderStatusConfig } from "./cardStyle";
 
-export default function CardsPedidos({ pedidos, loading, loadingEstado, accion, cambiarEstado, loadingPlato, cambiarEstadoPlato }) {
-
-    if (loading) return <h1 className="text-center text-2xl font-semibold text-gray-700">Cargando...</h1>
+export default function CardsPedidos({ pedidos = [], loading, loadingEstado, accion, cambiarEstado, loadingPlato,
+    cambiarEstadoPlato }) {
+    
+        if (loading) return <h1 className="text-center text-2xl font-semibold text-gray-700">Cargando...</h1>
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-            {pedidos.map(pedido => {
+            {pedidos?.map(pedido => {
                 const statusConfig = getOrderStatusConfig(pedido.estado);
                 const StatusIcon = statusConfig.icon;
 

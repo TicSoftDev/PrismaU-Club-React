@@ -7,7 +7,6 @@ export default function FiltrosProductos({ filtro, busqueda, handleChangeBusqued
         { name: "Desayuno", icon: "🌅", },
         { name: "Almuerzo", icon: "🍽️", },
         { name: "Cena", icon: "🌙", },
-        { name: "Postre", icon: "🍰", },
         { name: "Bebida", icon: "🍹", },
     ]
 

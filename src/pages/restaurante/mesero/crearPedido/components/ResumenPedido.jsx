@@ -9,15 +9,15 @@ export default function ResumenPedido({ pedido, loading, hayPedido, incrementar,
             <h4 className="text-xl font-extrabold text-gray-800 mb-4 border-b pb-2">Resumen de Orden</h4>
             <div>
                 <label className="block text-sm font-semibold mb-4 text-slate-700 dark:text-slate-300">
-                    Platos Seleccionados ({pedido?.detalle_pedido?.length})
+                    Platos Seleccionados ({pedido?.pedido_detalle?.length})
                 </label>
                 <div className="space-y-2">
-                    {pedido?.detalle_pedido?.map((item, index) => (
+                    {pedido?.pedido_detalle?.map((item, index) => (
                         <div key={index}
                             className="flex items-center justify-between p-4 bg-white/70 dark:bg-slate-800/60 backdrop-blur-sm border border-gray-200 dark:border-slate-700 rounded-xl shadow-sm hover:shadow-md transition-all">
                             <div className="flex-1">
                                 <p className="font-medium text-slate-900 dark:text-white">
-                                    {item?.itemable?.comida ?? item?.itemable?.bebida ?? item?.producto?.nombre ?? 'Producto sin nombre'}
+                                    {item?.producto?.nombre ?? 'Producto sin nombre'}
                                 </p>
 
                                 <p className="text-xs text-slate-600">
@@ -25,7 +25,8 @@ export default function ResumenPedido({ pedido, loading, hayPedido, incrementar,
                                 </p>
                                 <p className="text-xs text-slate-800 font-semibold">
                                     {formatearMoneda(item.subtotal)}</p>
-                                <button onClick={() => editarObservacion(item)} className="text-blue-500 text-sm underline">
+                                <button type="button" onClick={() => editarObservacion(item)} className="text-blue-500 text-sm underline"
+                                    disabled={hayPedido}>
                                     Observaciones
                                 </button>
                             </div>

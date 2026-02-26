@@ -11,11 +11,6 @@ export const PedidoService = {
         return response.data;
     },
 
-    cambiarEstado: async (id, estado) => {
-        const response = await axios.put(`${URL}/estado/${id}/${estado}`, {});
-        return response.data;
-    },
-
     cambiarMesa: async (pedido) => {
         const response = await axios.put(`${URL}/cambiar-mesa/${pedido.id}`, pedido);
         return response.data;
@@ -24,5 +19,10 @@ export const PedidoService = {
     pagar: async (data) => {
         const response = await axios.post(`${URL2}`, data);
         return response.data;
-    }
+    },
+
+    cancelarPedido: async (id) => {
+        const response = await axios.delete(`${URL}/cancelar/${id}`);
+        return response.data;
+    },
 };

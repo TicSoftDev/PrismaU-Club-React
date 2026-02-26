@@ -4,13 +4,14 @@ export const getStylePedidoBadge = (status) => {
         case 'Pendiente':
             return 'bg-yellow-50 text-yellow-400 ring-yellow-300';
         case 'En Preparacion':
-            return 'bg-indigo-50 text-indigo-500';
+            return 'bg-indigo-50 text-indigo-500 ring-indigo-300';
         case 'Preparado':
-            return 'bg-emerald-50 text-emerald-500';
+            return 'bg-emerald-50 text-emerald-500 ring-emerald-300';
         case 'Rechazado':
-            return 'bg-red-50 text-red-500';
+        case 'Cancelado':
+            return 'bg-red-50 text-red-500 ring-red-300';
         default:
-            return 'bg-gray-500 text-white';
+            return 'bg-gray-500 text-white ring-gray-300';
     }
 };
 

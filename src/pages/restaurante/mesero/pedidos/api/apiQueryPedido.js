@@ -10,13 +10,13 @@ export default function apiQueryPedido() {
         queryFn: () => PedidoService.getAbiertos(),
     });
 
-    const { mutate: cambiarEstadoMutation } = useAppMutation({
-        mutationFn: ({ id, estado }) => PedidoService.cambiarEstado(id, estado),
-        onSuccess: () => { queryClient.refetchQueries({ queryKey: ['pedidosCerrados'] }); }
-    });
-
     const { mutate: cambiarMesaMutation, isPending: isChanging } = useAppMutation({
         mutationFn: PedidoService.cambiarMesa,
+        onSuccess: () => { queryClient.refetchQueries({ queryKey: ['pedidosAbiertos'] }); }
+    });
+
+    const { mutate: cancelarPedidoMutation, isPending: isCanceling } = useAppMutation({
+        mutationFn: PedidoService.cancelarPedido,
         onSuccess: () => { queryClient.refetchQueries({ queryKey: ['pedidosAbiertos'] }); }
     });
 
@@ -30,8 +30,9 @@ export default function apiQueryPedido() {
         isLoading,
         isPending,
         isChanging,
+        isCanceling,
         pagarPedidoMutation,
-        cambiarEstadoMutation,
-        cambiarMesaMutation
+        cambiarMesaMutation,
+        cancelarPedidoMutation
     }
 }

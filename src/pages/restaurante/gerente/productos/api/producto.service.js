@@ -1,9 +1,9 @@
 import axios from "axios";
 import { EndPoints } from "../../../../../models/RutasModel";
 
-const URL = EndPoints.COMIDAS;
+const URL = EndPoints.PRODUCTOS;
 
-export const ComidaService = {
+export const ProductoService = {
 
     create: async (data) => {
         const response = await axios.post(URL, data, {
@@ -20,13 +20,13 @@ export const ComidaService = {
     },
 
     getDisponibles: async () => {
-        const response = await axios.get(URL + "/disponibles");
+        const response = await axios.get(`${URL}/disponibles`);
         return response.data;
     },
 
     update: async (id, data) => {
         data.append("_method", "PUT");
-        const response = await axios.post(URL + "/" + id, data, {
+        const response = await axios.post(`${URL}/${id}`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -35,7 +35,7 @@ export const ComidaService = {
     },
 
     delete: async (id) => {
-        const response = await axios.delete(URL + "/" + id);
+        const response = await axios.delete(`${URL}/${id}`);
         return response.data;
     }
 };

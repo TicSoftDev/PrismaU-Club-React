@@ -9,6 +9,7 @@ export default function apiQueryPedido() {
     const { data: pedidos, isLoading } = useAppQuery({
         queryKey: ['pedidosCocina', cocinaId],
         queryFn: () => PedidoService.getPedidos(cocinaId),
+        enabled: !!cocinaId
     });
 
     const { mutate: cambiarEstadoMutation, isPending } = useAppMutation({

@@ -3,7 +3,7 @@ import { FaDollarSign, FaExchangeAlt, FaEye, FaListOl, FaTimes } from "react-ico
 import { formatearFechaHora, formatearMoneda } from "../../../../../models/FormateadorModel";
 import { getStylePedidoBadge } from "../../../../../utilities/helpers/PedidoStyles";
 
-export const PedidosColumn = ({ goDetalle, cambiarEstado, cargarPedidoMesa, pagarPedido }) => {
+export const PedidosColumn = ({ goDetalle, cancelarPedido, cargarPedidoMesa, pagarPedido }) => {
 
     return [
         {
@@ -19,7 +19,7 @@ export const PedidosColumn = ({ goDetalle, cambiarEstado, cargarPedidoMesa, paga
                         <FaEye />
                     </button>
                     {row.estado === 'Abierto' &&
-                        <button onClick={() => cambiarEstado(row.id, 'Cancelado')} className="rounded-full w-8 h-8 bg-red-600 text-white flex justify-center items-center" title="Cancelar pedido">
+                        <button onClick={() => cancelarPedido(row.id)} className="rounded-full w-8 h-8 bg-red-600 text-white flex justify-center items-center" title="Cancelar pedido">
                             <FaTimes />
                         </button>
                     }

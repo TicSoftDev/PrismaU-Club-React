@@ -12,10 +12,10 @@ export default function PedidosPage() {
 
     const { titulo, isLoading, pedidosAbiertos, pedido, openModalMesa, tituloModalMesa, ubicacion, loadingMesas, mesas,
         isChanging, ubicaciones, loadingUbicaciones, openModalPagar, tituloModalPagar, isPending, venta,
-        pagarPedido, cambiarEstado, cargarPedidoMesa, toggleModalMesa, toggleModalPagar, handlePagarPedido,
+        pagarPedido, cancelarPedido, cargarPedidoMesa, toggleModalMesa, toggleModalPagar, handlePagarPedido,
         selectLocation, handleChangeMesa, handleCambiarMesa, goDetalle, handleChangePagar } = usePedido();
 
-    const columns = PedidosColumn({ goDetalle, cambiarEstado, cargarPedidoMesa, pagarPedido });
+    const columns = PedidosColumn({ goDetalle, cancelarPedido, cargarPedidoMesa, pagarPedido });
 
     return (
         <>

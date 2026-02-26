@@ -7,6 +7,7 @@ import apiQueryDetalleInventario from "../../../gerente/detalleInventarios/api/a
 import apiQueryMesa from "../../../gerente/mesas/api/apiQueryMesa";
 import apiQueryUbicacion from "../../../gerente/ubicaciones/api/apiQueryUbicacion";
 import apiQueryCrearPedido from "../api/apiQueryCrearPedido";
+import apiQueryProducto from "../../../gerente/productos/api/apiQueryProducto";
 
 export default function useCrearPedido() {
 
@@ -14,13 +15,13 @@ export default function useCrearPedido() {
 
     const { data: ubicaciones, isLoading: loadingUbicaciones } = apiQueryUbicacion();
     const { socios, loadingSocios, isCreating, getPedidoMesaQuery, createPedidoMutation } = apiQueryCrearPedido();
-    const { productos, isLoading: loadingProductos } = apiQueryDetalleInventario(fechaHoy());
+    const { productosDisponibles: productos, isLoadingDisponibles: loadingProductos } = apiQueryProducto();
 
     const [ubicacion, setUbicacion] = useState({});
     const [pedido, setPedido] = useState(getInitialPedido());
     const [openModal, setOpenModal] = useState(false);
     const [busqueda, setBusqueda] = useState('');
-    const [tipoFiltro, setTipoFiltro] = useState('');
+    const [tipoFiltro, setTipoFiltro] = useState('Todos');
     const [openModalObs, setOpenModalObs] = useState(false);
     const [itemSeleccionado, setItemSeleccionado] = useState({});
     const [observaciones, setObservaciones] = useState('');
@@ -31,11 +32,10 @@ export default function useCrearPedido() {
 
     function getInitialPedido() {
         return {
-            inventario_id: null,
             user_id: null,
             mesa_id: null,
             total: 0,
-            detalle_pedido: [],
+            pedido_detalle: [],
         };
     }
 
@@ -68,7 +68,7 @@ export default function useCrearPedido() {
                 ...prev,
                 ...pedidoServer,
                 mesa_id: mesaId,
-                detalle_pedido: mapFromApi(pedidoServer.detalle_pedido || [])
+                pedido_detalle: mapFromApi(pedidoServer.pedido_detalle || [])
             }));
             return;
         }
@@ -79,18 +79,19 @@ export default function useCrearPedido() {
                 inventario_id: null,
                 mesa_id: mesaId,
                 total: 0,
-                detalle_pedido: []
+                pedido_detalle: []
             }));
         }
     }, [mesaId, pedidoServer?.id, pedidoQuery.isLoading, pedidoQuery.isFetching, pedidoQuery.isFetched]);
+
+    //------------------ CREAR PEDIDO ---------------------
 
     const handleChangeSelect = (name, value) => {
         setPedido(prev => ({ ...prev, [name]: value }));
     }
 
-    const agregarItem = (producto, tipo, idDetalle, inventario_id) => {
-        setPedido(prev => ({ ...prev, inventario_id }));
-        setItemSeleccionado({ producto, tipo, idDetalle });
+    const agregarItem = (producto) => {
+        setItemSeleccionado({ producto });
         setObservaciones('');
         setOpenModalObs(true);
     }
@@ -118,22 +119,23 @@ export default function useCrearPedido() {
     const guardarObservacion = () => {
         const sel = itemSeleccionado || {};
         const obs = (observaciones || '').trim();
-        const inventarioItemId = sel.idDetalle;
 
         if (sel.mode !== 'edit') {
-            const { producto, tipo } = sel;
-            if (!producto || !tipo) return;
+            const { producto } = sel;
+            if (!producto) return;
 
             const id = producto.id;
+            const nombre = producto.nombre;
+            const tipo = producto.tipo;
+            const insumoPresentacionId = tipo === 'COMIDA' ? producto.insumo_presentacion.id : null;
             const key = makeKey(tipo, id, obs);
             const precio = safeNum(producto.precio, 0);
-            const nombre = tipo === 'bebida' ? (producto.bebida ?? '') : (producto.comida ?? '');
 
             setPedido(prev => {
-                const idx = prev.detalle_pedido.findIndex(x => x.key === key);
+                const idx = prev.pedido_detalle.findIndex(x => x.key === key);
 
                 if (idx !== -1) {
-                    const copy = [...prev.detalle_pedido];
+                    const copy = [...prev.pedido_detalle];
                     const row = copy[idx];
 
                     const cantidad = safeNum(row.cantidad, 0) + 1;
@@ -141,30 +143,29 @@ export default function useCrearPedido() {
 
                     copy[idx] = {
                         ...row,
-                        inventario_item_id: row.inventario_item_id ?? inventarioItemId,
+                        insumo_presentacion_id: row.insumo_presentacion_id ?? insumoPresentacionId,
                         cantidad,
                         subtotal: cantidad * price,
                         observaciones: obs,
-                        producto: { ...(row.producto || {}), id, nombre },
+                        producto: { ...(row.producto || {}), id, nombre, tipo },
                     };
 
-                    return { ...prev, detalle_pedido: copy };
+                    return { ...prev, pedido_detalle: copy };
                 }
 
                 const nuevo = {
                     id: null,
                     key,
-                    itemable_type: tipo,
-                    itemable_id: id,
-                    inventario_item_id: inventarioItemId,
+                    producto_id: id,
+                    insumo_presentacion_id: insumoPresentacionId,
                     cantidad: 1,
                     precio_unitario: precio,
                     subtotal: precio,
                     observaciones: obs,
-                    producto: { id, nombre },
+                    producto: { id, nombre, tipo },
                 };
 
-                return { ...prev, detalle_pedido: [...prev.detalle_pedido, nuevo] };
+                return { ...prev, pedido_detalle: [...prev.pedido_detalle, nuevo] };
             });
 
             setOpenModalObs(false);
@@ -173,22 +174,22 @@ export default function useCrearPedido() {
             return;
         }
 
-        const row = sel.row;
-        const oldKey = sel.rowKey;
+        const row = sel.producto;
+        const oldKey = row.key;
         if (!row || !oldKey) return;
 
-        const type = String(row.itemable_type || '').toLowerCase();
-        const id = row.itemable_id;
+        const type = String(row.producto.tipo || '').toLowerCase();
+        const id = row.producto.id;
 
         const newKey = makeKey(type, id, obs);
 
         setPedido(prev => {
-            const oldIdx = prev.detalle_pedido.findIndex(x => x.key === oldKey);
+            const oldIdx = prev.pedido_detalle.findIndex(x => x.key === oldKey);
             if (oldIdx === -1) return prev;
 
-            const existingIdx = prev.detalle_pedido.findIndex(x => x.key === newKey);
+            const existingIdx = prev.pedido_detalle.findIndex(x => x.key === newKey);
 
-            const copy = [...prev.detalle_pedido];
+            const copy = [...prev.pedido_detalle];
 
             if (existingIdx !== -1 && existingIdx !== oldIdx) {
                 const a = copy[existingIdx];
@@ -199,7 +200,7 @@ export default function useCrearPedido() {
 
                 copy[existingIdx] = {
                     ...a,
-                    inventario_item_id: a.inventario_item_id ?? b.inventario_item_id,
+                    insumo_presentacion_id: a.insumo_presentacion_id ?? b.insumo_presentacion_id,
                     cantidad,
                     subtotal: cantidad * price,
                     observaciones: obs,
@@ -208,7 +209,7 @@ export default function useCrearPedido() {
 
                 copy.splice(oldIdx, 1);
 
-                return { ...prev, detalle_pedido: copy };
+                return { ...prev, pedido_detalle: copy };
             }
 
             const price = safeNum(copy[oldIdx].precio_unitario, 0);
@@ -216,13 +217,13 @@ export default function useCrearPedido() {
 
             copy[oldIdx] = {
                 ...copy[oldIdx],
-                inventario_item_id: copy[oldIdx].inventario_item_id,
+                insumo_presentacion_id: copy[oldIdx].insumo_presentacion_id,
                 key: newKey,
                 observaciones: obs,
                 subtotal: cantidad * price,
             };
 
-            return { ...prev, detalle_pedido: copy };
+            return { ...prev, pedido_detalle: copy };
         });
 
         setOpenModalObs(false);
@@ -230,9 +231,9 @@ export default function useCrearPedido() {
         setObservaciones('');
     };
 
-    const editarObservacion = (row) => {
-        setItemSeleccionado({ mode: 'edit', row, rowKey: row.key });
-        setObservaciones(row.observaciones || '');
+    const editarObservacion = (producto) => {
+        setItemSeleccionado({ mode: 'edit', producto });
+        setObservaciones(producto.observaciones || '');
         setOpenModalObs(true);
     };
 
@@ -241,7 +242,7 @@ export default function useCrearPedido() {
     const incrementar = (key) => {
         setPedido(prev => ({
             ...prev,
-            detalle_pedido: prev.detalle_pedido.map(item =>
+            pedido_detalle: prev.pedido_detalle.map(item =>
                 item.key === key ? {
                     ...item,
                     cantidad: item.cantidad + 1,
@@ -254,7 +255,7 @@ export default function useCrearPedido() {
     const disminuir = (key) => {
         setPedido(prev => ({
             ...prev,
-            detalle_pedido: prev.detalle_pedido
+            pedido_detalle: prev.pedido_detalle
                 .map(item =>
                     item.key === key ? {
                         ...item,
@@ -266,16 +267,16 @@ export default function useCrearPedido() {
     };
 
     const eliminar = (key) => {
-        setPedido(prev => ({ ...prev, detalle_pedido: prev.detalle_pedido.filter(item => item.key !== key) }));
+        setPedido(prev => ({ ...prev, pedido_detalle: prev.pedido_detalle.filter(item => item.key !== key) }));
     };
 
     useEffect(() => {
         setPedido(prev => {
-            const total = (prev.detalle_pedido || []).reduce((acc, item) => acc + Number(item.subtotal || 0), 0);
+            const total = (prev.pedido_detalle || []).reduce((acc, item) => acc + Number(item.subtotal || 0), 0);
             if (prev.total === total) return prev;
             return { ...prev, total };
         });
-    }, [pedido?.detalle_pedido]);
+    }, [pedido?.pedido_detalle]);
 
     //------------------ BUSQUEDA PRODUCTOS --------------------
 
@@ -288,40 +289,23 @@ export default function useCrearPedido() {
         setTipoFiltro(value);
     };
 
-    const filterProductos = (listado, busqueda, tipo) => {
-        if (!Array.isArray(listado)) return [];
+    const filterProductos = (listado = [], busqueda, tipo) => {
+        if (!busqueda && tipo === 'Todos') return listado;
 
-        const hasBusqueda = (busqueda ?? "").trim().length > 0;
-        const nombre = normalizeText(busqueda ?? "");
+        const busquedaNormalizada = normalizeText(busqueda).split(' ').filter(Boolean);
 
-        if (!hasBusqueda && (tipo === "Todos" || !tipo)) return listado;
+        return listado?.filter((dato) => {
+            const nombreNormalizado = normalizeText(dato.nombre);
+            const categoriaNormalizada = normalizeText(dato.categoria);
 
-        return listado.filter((dato) => {
-            const item = dato?.itemable;
-            const itemType = (dato?.itemable_type ?? "").toLowerCase();
+            const cumpleEstado = tipo === 'Todos' || dato.categoria?.toString() === tipo;
 
-            if (!item || !itemType) return false;
+            const cumpleBusqueda = busquedaNormalizada.every(palabra =>
+                nombreNormalizado.includes(palabra) ||
+                categoriaNormalizada.includes(palabra)
+            );
 
-            let cumpleTipo = true;
-
-            if (tipo && tipo !== "Todos") {
-                const tipoLower = tipo.toLowerCase();
-
-                if (tipoLower === "bebida") {
-                    cumpleTipo = itemType === "bebida";
-                } else {
-                    const tipoComida = (item?.tipo ?? "").toString().toLowerCase();
-                    cumpleTipo = itemType === "comida" && tipoComida === tipoLower;
-                }
-            }
-
-            let cumpleBusqueda = true;
-            if (hasBusqueda) {
-                const nombreItem = itemType === "comida" ? (item?.comida ?? "") : (item?.bebida ?? "");
-                cumpleBusqueda = normalizeText(nombreItem).includes(nombre);
-            }
-
-            return cumpleTipo && cumpleBusqueda;
+            return cumpleBusqueda && cumpleEstado;
         });
     };
 
@@ -334,8 +318,8 @@ export default function useCrearPedido() {
     const mapFromApi = (rows = []) =>
         rows.map(r => {
             const obs = (r.observaciones || '').trim();
-            const type = String(r.itemable_type || '').toLowerCase();
-            const id = r.itemable_id;
+            const type = String(r.producto.tipo || '').toLowerCase();
+            const id = r.producto.id;
 
             return { ...r, key: makeKey(type, id, obs), };
         });

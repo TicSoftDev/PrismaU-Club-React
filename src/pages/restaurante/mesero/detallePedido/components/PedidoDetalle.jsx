@@ -43,12 +43,12 @@ export default function PedidoDetalle({ pedido, detalle, itemsCount, loadingPlat
 
                             <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
                                 {detalle.map((dish, idx) => {
-                                    const nombre = dish?.itemable?.comida || dish?.itemable?.bebida || "Ítem";
-                                    const img = dish?.itemable?.imagen ? (RouteBack + dish.itemable.imagen) : null;
-
+                                    const nombre = dish?.producto.nombre;
+                                    const img = RouteBack + dish?.producto.imagen;
+                                    const presentacion_id = dish?.producto.insumo_presentacion_id;
                                     const cantidad = Number(dish?.cantidad) || 0;
                                     const precio = Number(dish?.precio_unitario) || 0;
-                                    const subtotal = cantidad * precio;
+                                    const subtotal = Number(dish?.subtotal) || 0;
 
                                     return (
                                         <tr key={idx} className="hover:bg-slate-50/70 dark:hover:bg-slate-900/30">
@@ -56,17 +56,17 @@ export default function PedidoDetalle({ pedido, detalle, itemsCount, loadingPlat
                                                 <div className="flex">
                                                     {dish?.estado === 'Pendiente' && <>
                                                         <button className='flex items-center justify-center text-white bg-blue-600 rounded-full h-7 w-7 border hover:border-blue-600 hover:bg-white hover:text-blue-600'
-                                                            onClick={() => cargarDetalle(dish, pedido?.inventario_id)}>
+                                                            onClick={() => cargarDetalle(dish, presentacion_id)}>
                                                             <Edit className='h-4 w-4' />
                                                         </button>
                                                         <button className='flex items-center justify-center text-white bg-red-600 rounded-full h-7 w-7 border hover:border-red-600 hover:bg-white hover:text-red-600'
-                                                            onClick={() => handleDelete(dish.id, pedido?.inventario_id)}>
+                                                            onClick={() => handleDelete(dish.id, presentacion_id)}>
                                                             <Trash2 className='h-4 w-4' />
                                                         </button>
                                                     </>}
                                                     {dish?.estado !== 'Servido' && (
-                                                        (dish?.itemable_type === 'comida' && dish?.estado === 'Preparado') ||
-                                                        dish?.itemable_type === 'bebida'
+                                                        (dish?.producto?.tipo === 'COMIDA' && dish?.estado === 'Preparado') ||
+                                                        dish?.producto?.tipo === 'BEBIDA'
                                                     ) &&
                                                         <button className='flex items-center justify-center text-white bg-green-600 rounded-full h-7 w-7 border hover:border-green-600 hover:bg-white hover:text-green-600'
                                                             onClick={() => cambiarEstadoPlato(dish?.id, 'Servido')}>
@@ -90,7 +90,7 @@ export default function PedidoDetalle({ pedido, detalle, itemsCount, loadingPlat
                                                             {nombre}
                                                         </p>
                                                         <p className="text-xs text-slate-600 dark:text-slate-300 truncate">
-                                                            {dish?.itemable_type === "comida" ? "Comida" : "Bebida"}
+                                                            {dish?.producto?.tipo === "comida" ? "Comida" : "Bebida"}
                                                         </p>
                                                     </div>
                                                 </div>
