@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { generarFactura, getPagos, getPagosCuotaBaile } from "../services/PagosService";
 import { alertError, alertSucces, alertWarning } from "../utilities/alerts/Alertas";
+import { formatearFecha, formatearFechaMes } from "../models/FormateadorModel";
 
 export default function usePagos() {
 
@@ -30,7 +31,7 @@ export default function usePagos() {
             [target.name]: target.value
         });
     }
-    
+
     const handleChangeRubro = (rubro) => {
         setProgramacion({
             ...programacion,
@@ -93,44 +94,64 @@ export default function usePagos() {
         setBusqueda(target.value);
     };
 
-    const normalizeText = (text) => {
-        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    const normalizeText = (text = "") => {
+        return String(text).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    };
+
+    const getNombreUsuarioMensualidad = (dato) => {
+        const asociado = dato?.mensualidad?.user?.asociado;
+        const adherente = dato?.mensualidad?.user?.adherente;
+        if (asociado) return `${asociado.Nombre ?? ""} ${asociado.Apellidos ?? ""}`;
+        if (adherente) return `${adherente.Nombre ?? ""} ${adherente.Apellidos ?? ""}`;
+        return "";
+    };
+
+    const getNombreUsuarioCuotaBaile = (dato) => {
+        const asociado = dato?.cuota?.user?.asociado;
+        const adherente = dato?.cuota?.user?.adherente;
+        if (asociado) return `${asociado.Nombre ?? ""} ${asociado.Apellidos ?? ""}`;
+        if (adherente) return `${adherente.Nombre ?? ""} ${adherente.Apellidos ?? ""}`;
+        return "";
+
+    };
+
+    const cumpleBusquedaTexto = (texto, busqueda) => {
+        if (!busqueda) return true;
+        const busquedaNormalizada = normalizeText(busqueda);
+        const palabrasBusqueda = busquedaNormalizada.split(/\s+/).filter(Boolean);
+        const textoNormalizado = normalizeText(texto);
+        return palabrasBusqueda.every((palabra) =>
+            textoNormalizado.includes(palabra)
+        );
     };
 
     const filterBusqueda = (listado, busqueda) => {
         if (!busqueda) return listado;
-
-        const busquedaNormalizada = normalizeText(busqueda);
-        const palabrasBusqueda = busquedaNormalizada.split(/\s+/);
-
         return listado.filter((dato) => {
-            const nombreCompleto = dato.mensualidad.user.asociado ?
-                `${dato.mensualidad.user.asociado.Nombre} ${dato.mensualidad.user.asociado.Apellidos}` :
-                `${dato.user.mensualidad.user.adherente.Nombre} ${dato.user.mensualidad.user.adherente.Apellidos}`;
-            const nombreNormalizado = normalizeText(nombreCompleto);
-            const cumpleBusqueda = palabrasBusqueda.every(palabra =>
-                nombreNormalizado.includes(palabra)
-            );
-            return cumpleBusqueda;
+            const nombreCompleto = getNombreUsuarioMensualidad(dato);
+            const periodo = formatearFechaMes(dato?.mensualidad?.fecha);
+            const fechaMensualidad = dato?.mensualidad?.fecha ?? "";
+            const textoBusqueda = `
+                ${nombreCompleto}
+                ${periodo}
+                ${fechaMensualidad}
+            `;
+            return cumpleBusquedaTexto(textoBusqueda, busqueda);
         });
     };
 
     const filterBusqueda2 = (listado, busqueda) => {
         if (!busqueda) return listado;
-
-        const busquedaNormalizada = normalizeText(busqueda);
-        const palabrasBusqueda = busquedaNormalizada.split(/\s+/);
-
         return listado.filter((dato) => {
-            const nombreCompleto = dato.cuota.user.asociado ?
-                `${dato.cuota.user.asociado.Nombre} ${dato.cuota.user.asociado.Apellidos}` :
-                `${dato.user.cuota.user.adherente.Nombre} ${dato.user.cuota.user.adherente.Apellidos}`;
-            const nombreNormalizado = normalizeText(nombreCompleto);
-            const cumpleBusqueda = palabrasBusqueda.every(palabra =>
-                nombreNormalizado.includes(palabra)
-            );
-            return cumpleBusqueda;
+            const nombreCompleto = getNombreUsuarioCuotaBaile(dato);
+            const periodo = dato?.cuota?.descripcion ?? "";
+            const textoBusqueda = `
+                ${nombreCompleto}
+                ${periodo}
+            `;
+            return cumpleBusquedaTexto(textoBusqueda, busqueda);
         });
+
     };
 
     const mensualidades = filterBusqueda(listadoPagos, busqueda);

@@ -15,7 +15,8 @@ export const PagosCuotasColumn = () => {
         },
         {
             name: "Perido",
-            selector: row => row.cuota.año
+            selector: row => row.cuota.descripcion,
+            width: '150px',
         },
         {
             name: "Referencia de pago",
